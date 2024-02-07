@@ -31,10 +31,10 @@ func weapon_rotate_to_mouse(target, delta):
 	weapon.rotate(sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
 	if direction.x > 0:
 		sprite.flip_h = true
-		weapon.get_child(0).flip_v = false
+		weapon.get_child(0).scale.y = 1
 	elif direction.x < 0:
 		sprite.flip_h = false
-		weapon.get_child(0).flip_v = true
+		weapon.get_child(0).scale.y = -1
 
 
 func _input(event):
