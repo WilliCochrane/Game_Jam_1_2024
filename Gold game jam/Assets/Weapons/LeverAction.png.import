@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biw46ng4l71y6"
-path="res://.godot/imported/Shotgun.png-00d7ccf21d4036fe0285d976990e99c8.ctex"
+uid="uid://b6qhvpsabsuqx"
+path="res://.godot/imported/LeverAction.png-2b2fb8c7c4b407759d9aa6a676341da3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Weapons/Shotgun.png"
-dest_files=["res://.godot/imported/Shotgun.png-00d7ccf21d4036fe0285d976990e99c8.ctex"]
+source_file="res://Assets/Weapons/LeverAction.png"
+dest_files=["res://.godot/imported/LeverAction.png-2b2fb8c7c4b407759d9aa6a676341da3.ctex"]
 
 [params]
 
