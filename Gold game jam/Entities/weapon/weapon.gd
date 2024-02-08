@@ -91,7 +91,6 @@ func update_weapon_parameters():
 	mana_cost = weapon_machine.current_weapon.mana_cost
 	full_auto = weapon_machine.current_weapon.full_auto
 	projectiles = weapon_machine.current_weapon.projectiles
-	projectile_interval = weapon_machine.current_weapon.projectile_interval
 	
 	cooldown_timer.wait_time = 1/fire_rate
 	
