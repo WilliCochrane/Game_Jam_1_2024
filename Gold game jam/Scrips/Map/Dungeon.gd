@@ -25,6 +25,9 @@ func _generate_gateways(room : Rect2) -> void:
 		pass
 
 
+
+
+
 func _generate_rooms() -> void:
 	player.position = Vector2(128,128)
 	level.clear()
