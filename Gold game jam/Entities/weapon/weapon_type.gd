@@ -11,14 +11,13 @@ var flamethrow : bool = false
 var bullet_type : String
 
 var damage : float
-var projectiles : int = 1
-var projectile_interval : float  = 0
 var fire_rate : float
 var mana_cost : float
 var crit_chance : float
 var bullet_size : float
 var bullet_speed : float
 var bullet_spread : float
+var projectiles : int = 1
 
 func Enter():
 	pass
