@@ -8,6 +8,9 @@ extends Node2D
 
 @onready var level: TileMap = $Level
 
+var level_data : Array = []
+
+
 
 func _ready() -> void:
 	_generate_rooms()
@@ -25,16 +28,17 @@ func _generate_gateways(room : Rect2) -> void:
 		pass
 
 
-
-
-
 func _generate_rooms() -> void:
+	_generate_data()
 	player.position = Vector2(128,128)
 	level.clear()
-	level.set_cells_terrain_connect(0,_generate_data() ,0 ,0 ,false)
+	level.set_cells_terrain_connect(0,level_data,1,0)
+	level.set_cells_terrain_connect(1,_generate_top_data(level_data),1,1)
+	_generate_corners(level_data)
 
 
-func _generate_data() -> Array:
+
+func _generate_data():
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 	var data := {}
@@ -64,8 +68,27 @@ func _generate_data() -> Array:
 				var end = Vector2(mst.get_point_position(conn).x, mst.get_point_position(conn).y)
 				_add_connection(data, start, end)
 		connections.push_back(p)
+	level_data = data.keys()
 
-	return data.keys()
+
+func _generate_top_data(data : Array) -> Array:
+	var top_data : Array = []
+	for cell in data:
+		if level.get_cell_atlas_coords(0,Vector2i(cell.x,cell.y-1)) == Vector2i(-1, -1):
+			top_data.push_back(Vector2(cell.x,cell.y-1))
+	return top_data
+
+
+func _generate_corners(data : Array):
+	for cell in data:
+		if level.get_cell_atlas_coords(0,cell) == Vector2i(4,2):
+			level.set_cell(1,Vector2i(cell.x,cell.y-1),0,Vector2i(5,4))
+		elif level.get_cell_atlas_coords(0,cell) == Vector2i(4,1):
+			level.set_cell(1,Vector2i(cell.x,cell.y-1),0,Vector2i(0,4))
+		elif level.get_cell_atlas_coords(0,cell) == Vector2i(0,1):
+			level.set_cell(1,Vector2i(cell.x,cell.y-1),0,Vector2i(0,0))
+		elif level.get_cell_atlas_coords(0,cell) == Vector2i(5,1):
+			level.set_cell(1,Vector2i(cell.x,cell.y-1),0,Vector2i(5,0))
 
 
 func _get_random_room(rng: RandomNumberGenerator) -> Rect2:
@@ -88,33 +111,54 @@ func _add_room(data: Dictionary, rooms: Array, room: Rect2) -> void:
 
 
 func _add_connection(data: Dictionary, room_center1: Vector2, room_center2: Vector2,) -> void:
-
 	if room_center1.x > room_center2.x:
 		@warning_ignore("narrowing_conversion")
-		_add_corridor(data, room_center1.x, room_center2.x, room_center1.y, Vector2.AXIS_X)
+		_add_corridor(data, room_center1.x+2, room_center2.x-2, room_center1.y, Vector2.AXIS_X)
 		@warning_ignore("narrowing_conversion")
 		_add_corridor(data, room_center1.y, room_center2.y, room_center2.x, Vector2.AXIS_Y)
+		
 		@warning_ignore("narrowing_conversion")
-		_add_corridor(data, room_center1.x+1, room_center2.x-1, room_center1.y+1, Vector2.AXIS_X)
+		_add_corridor(data, room_center1.x+2, room_center2.x-2, room_center1.y+1, Vector2.AXIS_X)
 		@warning_ignore("narrowing_conversion")
 		_add_corridor(data, room_center1.y, room_center2.y, room_center2.x+1, Vector2.AXIS_Y)
 		@warning_ignore("narrowing_conversion")
-		_add_corridor(data, room_center1.x+1, room_center2.x-1, room_center1.y-1, Vector2.AXIS_X)
+		_add_corridor(data, room_center1.x+2, room_center2.x-2, room_center1.y-1, Vector2.AXIS_X)
 		@warning_ignore("narrowing_conversion")
 		_add_corridor(data, room_center1.y, room_center2.y, room_center2.x-1, Vector2.AXIS_Y)
+		
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.x+2, room_center2.x-2, room_center1.y+2, Vector2.AXIS_X)
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.y+2, room_center2.y-2, room_center2.x+2, Vector2.AXIS_Y)
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.x+2, room_center2.x-2, room_center1.y-2, Vector2.AXIS_X)
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.y+2, room_center2.y-2, room_center2.x-2, Vector2.AXIS_Y)
+		
 	else:
 		@warning_ignore("narrowing_conversion")
 		_add_corridor(data, room_center1.y, room_center2.y, room_center1.x, Vector2.AXIS_Y)
 		@warning_ignore("narrowing_conversion")
-		_add_corridor(data, room_center1.x, room_center2.x, room_center2.y, Vector2.AXIS_X)
+		_add_corridor(data, room_center1.x-2, room_center2.x+2, room_center2.y, Vector2.AXIS_X)
+		
 		@warning_ignore("narrowing_conversion")
 		_add_corridor(data, room_center1.y, room_center2.y, room_center1.x+1, Vector2.AXIS_Y)
 		@warning_ignore("narrowing_conversion")
-		_add_corridor(data, room_center1.x-1, room_center2.x+1, room_center2.y+1, Vector2.AXIS_X)
+		_add_corridor(data, room_center1.x-2, room_center2.x+2, room_center2.y+1, Vector2.AXIS_X)
 		@warning_ignore("narrowing_conversion")
 		_add_corridor(data, room_center1.y, room_center2.y, room_center1.x-1, Vector2.AXIS_Y)
 		@warning_ignore("narrowing_conversion")
-		_add_corridor(data, room_center1.x-1, room_center2.x+1, room_center2.y-1, Vector2.AXIS_X)
+		_add_corridor(data, room_center1.x-2, room_center2.x+2, room_center2.y-1, Vector2.AXIS_X)
+		
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.y-2, room_center2.y+2, room_center1.x+2, Vector2.AXIS_Y)
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.x-2, room_center2.x+2, room_center2.y+2, Vector2.AXIS_X )
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.y-2, room_center2.y+2, room_center1.x-2, Vector2.AXIS_Y)
+		@warning_ignore("narrowing_conversion")
+		_add_corridor(data, room_center1.x-2, room_center2.x+2, room_center2.y-2, Vector2.AXIS_X)
+		
 
 func _add_corridor(data: Dictionary, start: int, end: int, constant: int, axis: int) -> void:
 	for t in range(min(start, end), max(start, end) + 1):
@@ -128,7 +172,7 @@ func _add_corridor(data: Dictionary, start: int, end: int, constant: int, axis: 
 func _intersects(rooms: Array, room: Rect2) -> bool:
 	var out := false
 	for room_other in rooms:
-		if room.grow(3).intersects(room_other):
+		if room.grow(5).intersects(room_other):
 			out = true
 			break
 	return out
