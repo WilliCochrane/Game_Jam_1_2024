@@ -341,6 +341,7 @@ _data = {
 }
 
 [node name="Weapon" type="CharacterBody2D" node_paths=PackedStringArray("cooldown_timer", "weapon_machine", "first_bullet", "raycast") groups=["Weapon"]]
+z_index = 2
 scale = Vector2(12, 12)
 script = ExtResource("1_6mjeb")
 bullet = ExtResource("2_nq1jh")

@@ -6,6 +6,8 @@ extends Node2D
 @export var main_rooms_max : int
 @export var player : CharacterBody2D
 @export var gate : PackedScene
+@export var debug_timer : Timer
+@export var gate_perimeter : PackedScene
 
 @onready var level : TileMap = $Level
 @onready var treasue : CharacterBody2D = $Treasure
@@ -16,11 +18,13 @@ var spawn_room : Rect2 = Rect2(0, 0, 16, 16)
 var end_room : Rect2 = Rect2(80, 80, 16, 16)
 var treasure_room : Rect2
 
-var gates_up : bool
+var gates_up : bool = false
+
 
 func _ready() -> void:
 	_generate_rooms()
 	_generate_structures()
+	_generate_gates_close_perimeter()
 
 
 func _generate_structures():
@@ -94,15 +98,13 @@ func _generate_corners():
 func _generate_gateways() -> void:
 	var tile_list : Array = [Vector2i(1,2),Vector2i(1,3),Vector2i(2,2),Vector2i(2,3),Vector2i(3,2),Vector2i(3,3)]
 	for room in room_areas:
-		if room.size == Vector2(16,16) or room.size == Vector2(15,15):
-			pass
-		else:
+		if room.size.x > 16:
 			for xcell in range(room.position.x,room.position.x + room.size.x):
 				for tile in tile_list:
 					if level.get_cell_atlas_coords(0,Vector2i(xcell,room.position.y)) == tile:
 						_spawn_gate(xcell, room.position.y+1)
 					if level.get_cell_atlas_coords(0,Vector2i(xcell,room.position.y + room.size.y)) == tile:
-						_spawn_gate(xcell, room.position.y + room.size.y)
+						_spawn_gate(xcell, room.position.y + room.size.y + 1)
 			
 			for ycell in range(room.position.y,room.position.y + room.size.y):
 				for tile in tile_list:
@@ -111,6 +113,16 @@ func _generate_gateways() -> void:
 					if level.get_cell_atlas_coords(0,Vector2i(room.position.x + room.size.x-1,ycell)) == tile:
 						_spawn_gate(room.position.x + room.size.x-1, ycell+1)
 
+
+func _generate_gates_close_perimeter() -> void:
+	for room in room_areas:
+		if room.size.x > 16:
+			var gp = gate_perimeter.instantiate()
+			add_child(gp)
+			gp.position = Vector2(room.position.x*16 + room.size.x * 8,room.position.y*16 + room.size.y * 8)
+			gp.scale = room.grow(-2).size
+			gp.connect('close_gates',_on_player_enter_perimeter)
+			
 
 @warning_ignore("shadowed_variable")
 func _generate_treasure_room() -> void:
@@ -209,7 +221,11 @@ func _spawn_gate(x,y):
 	var g = gate.instantiate()
 	add_child(g)
 	g.position = Vector2(x*16, y*16)
-	
+
+
+func _on_player_enter_perimeter():
+	gates_up = true
+	debug_timer.start()
 
 
 func find_min_span_tree(areas: Array):
@@ -240,5 +256,4 @@ func find_min_span_tree(areas: Array):
 
 
 func _on_timer_timeout():
-	_generate_data()
-	_generate_rooms()
+	gates_up = false

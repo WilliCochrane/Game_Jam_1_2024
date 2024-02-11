@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnrmiqvhay643"]
+
+[ext_resource type="Script" path="res://Entities/gate/gates_up.gd" id="1_8ghds"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4qfw1"]
+size = Vector2(16, 16)
+
+[node name="gates_up" type="Area2D"]
+script = ExtResource("1_8ghds")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4qfw1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

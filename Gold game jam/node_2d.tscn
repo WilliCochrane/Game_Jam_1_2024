@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c88xjjg5x7iti"]
+[gd_scene load_steps=16 format=3 uid="uid://c88xjjg5x7iti"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Entities/Player/player.tscn" id="1_l5ov3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://48fpkt0wst45" path="res://Entities/Enemy/enemy.tscn" id="4_tckvb"]
 [ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Entities/Treasure/treasure.tscn" id="5_ee60j"]
 [ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Entities/gate/gate.tscn" id="7_to4u6"]
+[ext_resource type="PackedScene" uid="uid://bnrmiqvhay643" path="res://Entities/gate/gates_up.tscn" id="8_w042w"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_ibgmt"]
 tile_data = PackedInt32Array(0, 983041, 8, 65536, 983041, 9, 1, 1048577, 8, 65537, 1048577, 9)
@@ -1266,13 +1267,15 @@ offsets = PackedFloat32Array(0.987207, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_fc07l"]
 gradient = SubResource("Gradient_ukeru")
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "debug_timer")]
 script = ExtResource("1_l1dci")
 level_size = Vector2(100, 80)
 main_rooms_size = Vector2(17, 30)
 main_rooms_max = 1000
 player = NodePath("Player")
 gate = ExtResource("7_to4u6")
+debug_timer = NodePath("Timer")
+gate_perimeter = ExtResource("8_w042w")
 
 [node name="Level" type="TileMap" parent="." groups=["dungeon"]]
 tile_set = SubResource("TileSet_gmpy3")
@@ -1289,7 +1292,8 @@ tile_map = NodePath("../Level")
 [node name="Treasure" parent="." instance=ExtResource("5_ee60j")]
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 5.0
+one_shot = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color(0.0627451, 0.0941176, 0.2, 1)
@@ -1303,5 +1307,8 @@ texture = SubResource("GradientTexture1D_fc07l")
 
 [node name="Gate" parent="." instance=ExtResource("7_to4u6")]
 position = Vector2(-464, -80)
+
+[node name="gates_up" parent="." instance=ExtResource("8_w042w")]
+position = Vector2(-808, -180)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

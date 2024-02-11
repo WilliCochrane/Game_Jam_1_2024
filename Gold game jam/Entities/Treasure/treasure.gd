@@ -7,6 +7,7 @@ var show_instrusctions : bool = false
 
 
 func _process(_delta):
+	instructions.hide()
 	if show_instrusctions == false:
 		instructions.hide()
 	elif show_instrusctions == true:
