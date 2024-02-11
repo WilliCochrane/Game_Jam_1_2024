@@ -3,17 +3,17 @@ extends CharacterBody2D
 @export var instructions : Sprite2D
 @export var anim_player : AnimationPlayer
 
-var show_instrusctions : bool = false
-
+var show_instrusctions : bool
+var first_update : bool = true
 
 func _process(_delta):
-	instructions.hide()
-	if show_instrusctions == false:
-		instructions.hide()
-	elif show_instrusctions == true:
-		instructions.show()
-		anim_player.play("Instructions")
+	if first_update == true:
+		show_instrusctions = false
+		first_update = false
 
+	instructions.visible = show_instrusctions
+	if show_instrusctions == true:
+		anim_player.play("Instructions")
 
 func _on_area_2d_body_entered(body):
 	show_instrusctions = true

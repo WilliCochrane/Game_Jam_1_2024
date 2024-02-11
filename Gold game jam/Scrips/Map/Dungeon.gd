@@ -104,7 +104,7 @@ func _generate_gateways() -> void:
 					if level.get_cell_atlas_coords(0,Vector2i(xcell,room.position.y)) == tile:
 						_spawn_gate(xcell, room.position.y+1)
 					if level.get_cell_atlas_coords(0,Vector2i(xcell,room.position.y + room.size.y)) == tile:
-						_spawn_gate(xcell, room.position.y + room.size.y + 1)
+						_spawn_gate(xcell, room.position.y + room.size.y+1)
 			
 			for ycell in range(room.position.y,room.position.y + room.size.y):
 				for tile in tile_list:
@@ -221,6 +221,8 @@ func _spawn_gate(x,y):
 	var g = gate.instantiate()
 	add_child(g)
 	g.position = Vector2(x*16, y*16)
+	
+	
 
 
 func _on_player_enter_perimeter():
@@ -236,10 +238,10 @@ func find_min_span_tree(areas: Array):
 	path.add_point(path.get_available_point_id(), room_center)
 	
 	while areas:
-		var min_dist = INF # Min distance so far
-		var min_pos = null # Pos of room
-		var min_pos_room = null # Actual room
-		var pos = null # Current pos
+		var min_dist = INF 
+		var min_pos = null 
+		var min_pos_room = null 
+		var pos = null 
 		for point in path.get_point_ids():
 			var point1 = path.get_point_position(point)
 			for point2 in areas:

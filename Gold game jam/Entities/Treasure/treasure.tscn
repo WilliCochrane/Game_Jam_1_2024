@@ -202,7 +202,8 @@ vframes = 10
 frame = 176
 
 [node name="Instructions" type="Sprite2D" parent="."]
-position = Vector2(37, 0)
+z_index = 3
+position = Vector2(32, -32)
 texture = ExtResource("3_jtswi")
 hframes = 2
 
@@ -210,7 +211,6 @@ hframes = 2
 libraries = {
 "": SubResource("AnimationLibrary_v7kv5")
 }
-autoplay = "Instructions"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -0.5)
