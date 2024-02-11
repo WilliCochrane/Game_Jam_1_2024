@@ -96,7 +96,7 @@ func _generate_corners():
 
 
 func _generate_gateways() -> void:
-	var tile_list : Array = [Vector2i(1,2),Vector2i(1,3),Vector2i(2,2),Vector2i(2,3),Vector2i(3,2),Vector2i(3,3)]
+	var tile_list : Array = [Vector2i(1,2),Vector2i(1,3),Vector2i(2,2),Vector2i(2,3),Vector2i(3,2),Vector2i(3,3),Vector2i(0,5),Vector2i(5,5)]
 	for room in room_areas:
 		if room.size.x > 16:
 			for xcell in range(room.position.x,room.position.x + room.size.x):
