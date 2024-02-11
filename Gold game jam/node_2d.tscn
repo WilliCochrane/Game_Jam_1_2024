@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c88xjjg5x7iti"]
+[gd_scene load_steps=15 format=3 uid="uid://c88xjjg5x7iti"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Entities/Player/player.tscn" id="1_l5ov3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dltbgm0q0yxe0" path="res://Assets/TileSet/Dungeonlvl1tile_set.png" id="2_bspjp"]
 [ext_resource type="PackedScene" uid="uid://48fpkt0wst45" path="res://Entities/Enemy/enemy.tscn" id="4_tckvb"]
 [ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Entities/Treasure/treasure.tscn" id="5_ee60j"]
+[ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Entities/gate/gate.tscn" id="7_to4u6"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_ibgmt"]
 tile_data = PackedInt32Array(0, 983041, 8, 65536, 983041, 9, 1, 1048577, 8, 65537, 1048577, 9)
@@ -28,12 +29,14 @@ texture = ExtResource("2_bspjp")
 2:0/0 = 0
 2:0/0/terrain_set = 1
 2:0/0/terrain = 1
+2:0/0/probability = 0.1
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:0/0 = 0
 3:0/0/terrain_set = 1
 3:0/0/terrain = 1
+3:0/0/probability = 0.02
 3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:0/0/physics_layer_0/angular_velocity = 0.0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -65,7 +68,7 @@ texture = ExtResource("2_bspjp")
 2:1/0 = 0
 2:1/0/terrain_set = 1
 2:1/0/terrain = 0
-2:1/0/probability = 0.1
+2:1/0/probability = 0.02
 2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:1/0/physics_layer_0/angular_velocity = 0.0
 2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -77,7 +80,7 @@ texture = ExtResource("2_bspjp")
 3:1/0 = 0
 3:1/0/terrain_set = 1
 3:1/0/terrain = 0
-3:1/0/probability = 0.3
+3:1/0/probability = 0.1
 3:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:1/0/physics_layer_0/angular_velocity = 0.0
 3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -112,6 +115,7 @@ texture = ExtResource("2_bspjp")
 0:2/0 = 0
 0:2/0/terrain_set = 1
 0:2/0/terrain = 0
+0:2/0/probability = 0.1
 0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:2/0/physics_layer_0/angular_velocity = 0.0
 0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -150,7 +154,7 @@ texture = ExtResource("2_bspjp")
 3:2/0 = 0
 3:2/0/terrain_set = 1
 3:2/0/terrain = 0
-3:2/0/probability = 0.02
+3:2/0/probability = 0.01
 3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:2/0/physics_layer_0/angular_velocity = 0.0
 3:2/0/terrains_peering_bit/right_side = 0
@@ -164,6 +168,7 @@ texture = ExtResource("2_bspjp")
 5:2/0 = 0
 5:2/0/terrain_set = 1
 5:2/0/terrain = 0
+5:2/0/probability = 0.1
 5:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:2/0/physics_layer_0/angular_velocity = 0.0
 5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -175,6 +180,7 @@ texture = ExtResource("2_bspjp")
 0:3/0 = 0
 0:3/0/terrain_set = 1
 0:3/0/terrain = 0
+0:3/0/probability = 0.02
 0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:3/0/physics_layer_0/angular_velocity = 0.0
 0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -186,7 +192,7 @@ texture = ExtResource("2_bspjp")
 1:3/0 = 0
 1:3/0/terrain_set = 1
 1:3/0/terrain = 0
-1:3/0/probability = 0.02
+1:3/0/probability = 0.01
 1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:3/0/physics_layer_0/angular_velocity = 0.0
 1:3/0/terrains_peering_bit/right_side = 0
@@ -228,6 +234,7 @@ texture = ExtResource("2_bspjp")
 5:3/0 = 0
 5:3/0/terrain_set = 1
 5:3/0/terrain = 0
+5:3/0/probability = 0.02
 5:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:3/0/physics_layer_0/angular_velocity = 0.0
 5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -274,26 +281,14 @@ texture = ExtResource("2_bspjp")
 5:5/0/terrains_peering_bit/top_right_corner = 0
 0:6/0 = 0
 0:6/0/terrain_set = 1
-0:6/0/terrain = 0
 0:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:6/0/physics_layer_0/angular_velocity = 0.0
 0:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-0:6/0/terrains_peering_bit/right_side = 0
-0:6/0/terrains_peering_bit/bottom_right_corner = 0
-0:6/0/terrains_peering_bit/bottom_side = 0
-0:6/0/terrains_peering_bit/top_side = 0
-0:6/0/terrains_peering_bit/top_right_corner = 0
 5:6/0 = 0
 5:6/0/terrain_set = 1
-5:6/0/terrain = 0
 5:6/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 5:6/0/physics_layer_0/angular_velocity = 0.0
 5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
-5:6/0/terrains_peering_bit/bottom_side = 0
-5:6/0/terrains_peering_bit/bottom_left_corner = 0
-5:6/0/terrains_peering_bit/left_side = 0
-5:6/0/terrains_peering_bit/top_left_corner = 0
-5:6/0/terrains_peering_bit/top_side = 0
 0:7/0 = 0
 0:7/0/terrain_set = 1
 0:7/0/terrain = 0
@@ -317,7 +312,7 @@ texture = ExtResource("2_bspjp")
 2:7/0 = 0
 2:7/0/terrain_set = 1
 2:7/0/terrain = 0
-2:7/0/probability = 0.02
+2:7/0/probability = 0.1
 2:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:7/0/physics_layer_0/angular_velocity = 0.0
 2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -1277,6 +1272,7 @@ level_size = Vector2(100, 80)
 main_rooms_size = Vector2(17, 30)
 main_rooms_max = 1000
 player = NodePath("Player")
+gate = ExtResource("7_to4u6")
 
 [node name="Level" type="TileMap" parent="." groups=["dungeon"]]
 tile_set = SubResource("TileSet_gmpy3")
@@ -1294,7 +1290,6 @@ tile_map = NodePath("../Level")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
-autostart = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 modulate = Color(0.0627451, 0.0941176, 0.2, 1)
@@ -1305,5 +1300,8 @@ offset_right = -70528.0
 offset_bottom = -26200.0
 scale = Vector2(605.561, 2647.39)
 texture = SubResource("GradientTexture1D_fc07l")
+
+[node name="Gate" parent="." instance=ExtResource("7_to4u6")]
+position = Vector2(-464, -80)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
