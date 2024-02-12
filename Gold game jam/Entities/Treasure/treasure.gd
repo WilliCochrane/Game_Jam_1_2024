@@ -7,18 +7,20 @@ var show_instrusctions : bool
 var first_update : bool = true
 
 func _process(_delta):
-	if first_update == true:
-		show_instrusctions = false
-		first_update = false
-
-	instructions.visible = show_instrusctions
-	if show_instrusctions == true:
-		anim_player.play("Instructions")
-
-func _on_area_2d_body_entered(body):
-	show_instrusctions = true
+	pass
 	
-
-
-func _on_area_2d_body_exited(body):
-	show_instrusctions = false
+	#if first_update == true:
+		#show_instrusctions = false
+		#first_update = false
+#
+	#instructions.visible = show_instrusctions
+	#if show_instrusctions == true:
+		#anim_player.play("Instructions")
+#
+#func _on_area_2d_body_entered(body):
+	#show_instrusctions = true
+	#
+#
+#
+#func _on_area_2d_body_exited(body):
+	#show_instrusctions = false

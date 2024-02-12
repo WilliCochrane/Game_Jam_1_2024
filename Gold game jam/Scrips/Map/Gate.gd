@@ -44,9 +44,7 @@ func find_parent_room():
 			
 			for ycell in range(room.position.y,room.position.y + room.size.y):
 				if position == Vector2(room.position.x, ycell+1)*16 or position == Vector2(room.position.x + room.size.x-1, ycell+1)*16:
-					print(position)
 					parent_room = room
-					print(parent_room)
 
 
 func adjust_z_axis():

@@ -1276,7 +1276,7 @@ gradient = SubResource("Gradient_ukeru")
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "debug_timer")]
 script = ExtResource("1_l1dci")
 level_size = Vector2(100, 80)
-main_rooms_size = Vector2(17, 30)
+main_rooms_size = Vector2(17, 24)
 main_rooms_max = 1000
 player = NodePath("Player")
 gate = ExtResource("7_to4u6")
