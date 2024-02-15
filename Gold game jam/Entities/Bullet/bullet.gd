@@ -31,7 +31,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	if flamethrow == true && size < 3:
+	if flamethrow == true && size < 4:
 		size += .03
 			
 	if rotated == false:
