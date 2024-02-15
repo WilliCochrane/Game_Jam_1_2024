@@ -8,6 +8,7 @@ var parent_room : Rect2
 var first_update : bool = true
 var side_facing = false
 
+
 func _process(_delta):
 	if first_update == true:
 		find_parent_room()
@@ -57,3 +58,6 @@ func position_parameters():
 	if position.x == parent_room.position.x*16 or position.x == parent_room.position.x*16 + parent_room.size.x*16-16:
 		collision_shape.rotation_degrees = 90
 		side_facing = true
+
+func on_clear_floor():
+	queue_free()

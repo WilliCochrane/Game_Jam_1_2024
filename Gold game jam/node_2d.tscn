@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c88xjjg5x7iti"]
+[gd_scene load_steps=17 format=3 uid="uid://c88xjjg5x7iti"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Entities/Player/player.tscn" id="1_l5ov3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Entities/Treasure/treasure.tscn" id="5_ee60j"]
 [ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Entities/gate/gate.tscn" id="7_to4u6"]
 [ext_resource type="PackedScene" uid="uid://bnrmiqvhay643" path="res://Entities/gate/gates_up.tscn" id="8_w042w"]
+[ext_resource type="PackedScene" uid="uid://du2y0hi2j4c41" path="res://Entities/Ladder/ladder.tscn" id="9_ve3sl"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_ibgmt"]
 tile_data = PackedInt32Array(0, 983041, 8, 65536, 983041, 9, 1, 1048577, 8, 65537, 1048577, 9)
@@ -1273,12 +1274,13 @@ offsets = PackedFloat32Array(0.987207, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_fc07l"]
 gradient = SubResource("Gradient_ukeru")
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "debug_timer")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "ladder", "debug_timer")]
 script = ExtResource("1_l1dci")
 level_size = Vector2(100, 80)
 main_rooms_size = Vector2(17, 24)
 main_rooms_max = 1000
 player = NodePath("Player")
+ladder = NodePath("Ladder")
 gate = ExtResource("7_to4u6")
 debug_timer = NodePath("Timer")
 gate_perimeter = ExtResource("8_w042w")
@@ -1317,4 +1319,7 @@ position = Vector2(-464, -80)
 [node name="gates_up" parent="." instance=ExtResource("8_w042w")]
 position = Vector2(-808, -180)
 
+[node name="Ladder" parent="." instance=ExtResource("9_ve3sl")]
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="next_floor" from="Ladder" to="." method="_on_ladder_next_floor"]

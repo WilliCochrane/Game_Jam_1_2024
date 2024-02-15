@@ -1,10 +1,12 @@
 extends Node2D
 
+signal clear_floor
 
 @export var level_size : Vector2
 @export var main_rooms_size : Vector2
 @export var main_rooms_max : int
 @export var player : CharacterBody2D
+@export var ladder : StaticBody2D
 @export var gate : PackedScene
 @export var debug_timer : Timer
 @export var gate_perimeter : PackedScene
@@ -28,8 +30,7 @@ func _ready() -> void:
 
 
 func _generate_structures():
-	var ladder := level.tile_set.get_pattern(0)
-	level.set_pattern(1,Vector2i(87,87),ladder)
+	ladder.position = Vector2(1408,1408)
 
 
 func _generate_rooms() -> void:
@@ -221,8 +222,6 @@ func _spawn_gate(x,y):
 	var g = gate.instantiate()
 	add_child(g)
 	g.position = Vector2(x*16, y*16)
-	
-	
 
 
 func _on_player_enter_perimeter():
@@ -259,3 +258,10 @@ func find_min_span_tree(areas: Array):
 
 func _on_timer_timeout():
 	gates_up = false
+
+
+func _on_ladder_next_floor():
+	emit_signal("clear_floor")
+	_generate_rooms()
+	_generate_structures()
+	_generate_gates_close_perimeter()

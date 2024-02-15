@@ -27,7 +27,7 @@ func _physics_process(delta):
 		current_weapon.Physics_Update(delta)
 
 
-func on_child_transition(weapon, new_weapon_name):
+func on_child_transition(_weapon, new_weapon_name):
 	if weapon_type != current_weapon:
 		return
 	
