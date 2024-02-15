@@ -9,6 +9,10 @@ var first_update : bool = true
 var side_facing = false
 
 
+func _ready():
+	get_parent().connect("clear_floor",on_clear_floor)
+
+
 func _process(_delta):
 	if first_update == true:
 		find_parent_room()

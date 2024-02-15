@@ -10,10 +10,8 @@ func _input(event):
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("Player"):
 		player_in_area = true
-		print("yes")
 
 
 func _on_area_2d_body_exited(body):
 	if body.is_in_group("Player"):
 		player_in_area = false
-		print("no")
