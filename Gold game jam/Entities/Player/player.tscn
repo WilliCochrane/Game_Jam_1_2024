@@ -188,7 +188,7 @@ stretch_margin_bottom = 3
 texture_under = ExtResource("5_2y74i")
 texture_over = ExtResource("6_gv1sl")
 texture_progress = ExtResource("5_2y74i")
-tint_under = Color(0.2, 0.227451, 0.305882, 1)
+tint_under = Color(0.101961, 0.117647, 0.164706, 1)
 tint_over = Color(0.521569, 0.384314, 0.278431, 1)
 tint_progress = Color(0.67451, 0.207843, 0.219608, 1)
 

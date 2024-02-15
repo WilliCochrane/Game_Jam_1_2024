@@ -31,8 +31,9 @@ func _ready():
 
 
 func _physics_process(delta):
-	if flamethrow == true && size < 4:
+	if flamethrow == true && size < 5:
 		size += .03
+		speed -= .03
 			
 	if rotated == false:
 		rotation_degrees += randf_range(-spread,spread)
