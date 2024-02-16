@@ -7,10 +7,18 @@ signal shoot_stop
 @export var sprite : Sprite2D
 @export var tile_map : TileMap
 @export var weapon : CharacterBody2D
+@export var health_bar : TextureProgressBar
+@export var damaged_bar : TextureProgressBar
+@export var mana_bar : TextureProgressBar
+@export var mana_usage_bar : TextureProgressBar
 
 var rotation_speed : float = 10
 var move_direction : Vector2 = Vector2.ZERO
 var move_speed : float = 150
+var current_health : float = 100
+var max_health : float = 100
+var current_mana : float = 150
+var max_mana : float = 150
 
 
 func _physics_process(delta):
@@ -45,3 +53,15 @@ func _input(event):
 
 
 
+
+
+func _on_mana_regen_timeout():
+	pass # Replace with function body.
+
+
+func _on_mana_usage_timeout():
+	pass # Replace with function body.
+
+
+func _on_damaged_timeout():
+	pass # Replace with function body.

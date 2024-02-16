@@ -1,9 +1,21 @@
-[gd_scene format=3 uid="uid://48fpkt0wst45"]
+[gd_scene load_steps=3 format=3 uid="uid://48fpkt0wst45"]
 
-[node name="Enemy" type="CharacterBody2D"]
+[ext_resource type="Script" path="res://Entities/Enemy/enemy.gd" id="1_tb1xo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4g8aj"]
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
+script = ExtResource("1_tb1xo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="Detection_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
+shape = SubResource("RectangleShape2D_4g8aj")
