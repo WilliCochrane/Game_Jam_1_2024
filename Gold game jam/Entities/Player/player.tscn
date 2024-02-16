@@ -189,10 +189,8 @@ stretch_margin_left = 3
 stretch_margin_top = 3
 stretch_margin_right = 3
 stretch_margin_bottom = 3
-texture_under = ExtResource("5_2y74i")
 texture_over = ExtResource("6_gv1sl")
 texture_progress = ExtResource("5_2y74i")
-tint_under = Color(0.101961, 0.117647, 0.164706, 1)
 tint_over = Color(0.521569, 0.384314, 0.278431, 1)
 tint_progress = Color(0.67451, 0.207843, 0.219608, 1)
 
@@ -209,11 +207,9 @@ stretch_margin_top = 3
 stretch_margin_right = 3
 stretch_margin_bottom = 3
 texture_under = ExtResource("5_2y74i")
-texture_over = ExtResource("6_gv1sl")
 texture_progress = ExtResource("5_2y74i")
 tint_under = Color(0.101961, 0.117647, 0.164706, 1)
-tint_over = Color(0.521569, 0.384314, 0.278431, 1)
-tint_progress = Color(0.67451, 0.207843, 0.219608, 1)
+tint_progress = Color(0.952941, 0.533333, 0.513726, 1)
 
 [node name="Mana_bar" type="TextureProgressBar" parent="ui"]
 clip_contents = true
@@ -229,10 +225,8 @@ stretch_margin_left = 3
 stretch_margin_top = 3
 stretch_margin_right = 3
 stretch_margin_bottom = 3
-texture_under = ExtResource("5_2y74i")
 texture_over = ExtResource("6_gv1sl")
 texture_progress = ExtResource("5_2y74i")
-tint_under = Color(0.192157, 0.0784314, 0.109804, 1)
 tint_over = Color(0.494118, 0.352941, 0.54902, 1)
 tint_progress = Color(0.282353, 0.4, 0.568627, 1)
 
@@ -249,11 +243,24 @@ stretch_margin_top = 3
 stretch_margin_right = 3
 stretch_margin_bottom = 3
 texture_under = ExtResource("5_2y74i")
-texture_over = ExtResource("6_gv1sl")
 texture_progress = ExtResource("5_2y74i")
 tint_under = Color(0.192157, 0.0784314, 0.109804, 1)
-tint_over = Color(0.494118, 0.352941, 0.54902, 1)
-tint_progress = Color(0.282353, 0.4, 0.568627, 1)
+tint_progress = Color(0.643137, 0.737255, 0.87451, 1)
+
+[node name="Damaged" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="Mana_usage" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="Mana_regen" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
 
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]
+[connection signal="timeout" from="Damaged" to="." method="_on_damaged_timeout"]
+[connection signal="timeout" from="Mana_usage" to="." method="_on_mana_usage_timeout"]
+[connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
