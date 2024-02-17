@@ -10,7 +10,7 @@ func _ready():
 	mana_cost = 3
 	crit_chance = 20
 	bullet_size = .75
-	bullet_speed = 14
+	bullet_speed = 10
 	bullet_spread = 7
 
 

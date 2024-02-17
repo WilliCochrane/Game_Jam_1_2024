@@ -10,6 +10,7 @@ signal clear_floor
 @export var gate : PackedScene
 @export var debug_timer : Timer
 @export var gate_perimeter : PackedScene
+@export var enemy : PackedScene
 
 @onready var level : TileMap = $Level
 @onready var treasue : CharacterBody2D = $Treasure
@@ -123,6 +124,7 @@ func _generate_gates_close_perimeter() -> void:
 			gp.position = Vector2(room.position.x*16 + room.size.x * 8,room.position.y*16 + room.size.y * 8)
 			gp.scale = room.grow(-2).size
 			gp.connect('close_gates',_on_player_enter_perimeter)
+			gp.connect('open_gates',_on_enemies_cleared)
 			
 
 @warning_ignore("shadowed_variable")
@@ -226,7 +228,10 @@ func _spawn_gate(x,y):
 
 func _on_player_enter_perimeter():
 	gates_up = true
-	debug_timer.start()
+
+
+func _on_enemies_cleared():
+	gates_up = false
 
 
 func find_min_span_tree(areas: Array):
@@ -254,10 +259,6 @@ func find_min_span_tree(areas: Array):
 		path.connect_points(path.get_closest_point(pos), n)
 		areas.erase(min_pos_room)
 	return path
-
-
-func _on_timer_timeout():
-	gates_up = false
 
 
 func _on_ladder_next_floor():

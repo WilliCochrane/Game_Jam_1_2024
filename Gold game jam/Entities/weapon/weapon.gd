@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal mana_used
+
 @export var bullet : PackedScene
 @export var cooldown_timer : Timer
 @export var projectile_timer : Timer
@@ -54,6 +56,7 @@ func _on_player_shoot():
 	if can_shoot == true && colliding == false:
 		cooldown_timer.start()
 		can_shoot = false
+		emit_signal("mana_used")
 		if projectiles == 1:
 			spawn_bullet()
 		else:
@@ -99,10 +102,11 @@ func update_weapon_parameters():
 		flamethrow = true
 	else:
 		flamethrow = false
-	
+
 
 func _on_cooldown_timeout():
-	can_shoot = true
-	if full_auto == true && shooting == true:
-		_on_player_shoot()
+	if get_parent().current_mana > 0:
+		can_shoot = true
+		if full_auto == true && shooting == true:
+			_on_player_shoot()
 

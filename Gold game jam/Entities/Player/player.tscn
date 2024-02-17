@@ -139,7 +139,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yr8kw"]
 size = Vector2(117.143, 141.429)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer") groups=["Player"]]
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -148,6 +148,9 @@ health_bar = NodePath("ui/Health_bar")
 damaged_bar = NodePath("ui/Health_bar/Damaged_bar")
 mana_bar = NodePath("ui/Mana_bar")
 mana_usage_bar = NodePath("ui/Mana_bar/Mana_usage_bar")
+damaged_timer = NodePath("Damaged")
+mana_usage_timer = NodePath("Mana_usage")
+mana_regen_timer = NodePath("Mana_regen")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.07, 0.07)
@@ -183,6 +186,7 @@ offset_top = 45.0
 offset_right = 195.0
 offset_bottom = 60.0
 scale = Vector2(2, 2)
+max_value = 150.0
 value = 50.0
 nine_patch_stretch = true
 stretch_margin_left = 3
@@ -195,12 +199,17 @@ tint_over = Color(0.521569, 0.384314, 0.278431, 1)
 tint_progress = Color(0.67451, 0.207843, 0.219608, 1)
 
 [node name="Damaged_bar" type="TextureProgressBar" parent="ui/Health_bar"]
+z_index = -1
 clip_contents = true
 layout_direction = 1
-offset_right = 150.0
-offset_bottom = 15.0
-scale = Vector2(2, 2)
-value = 50.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 150.0
+value = 60.0
 nine_patch_stretch = true
 stretch_margin_left = 3
 stretch_margin_top = 3
@@ -219,6 +228,7 @@ offset_top = 90.0
 offset_right = 195.0
 offset_bottom = 105.0
 scale = Vector2(2, 2)
+max_value = 150.0
 value = 50.0
 nine_patch_stretch = true
 stretch_margin_left = 3
@@ -231,12 +241,13 @@ tint_over = Color(0.494118, 0.352941, 0.54902, 1)
 tint_progress = Color(0.282353, 0.4, 0.568627, 1)
 
 [node name="Mana_usage_bar" type="TextureProgressBar" parent="ui/Mana_bar"]
+z_index = -1
 clip_contents = true
 layout_direction = 1
+layout_mode = 0
 offset_right = 150.0
 offset_bottom = 15.0
-scale = Vector2(2, 2)
-value = 50.0
+max_value = 150.0
 nine_patch_stretch = true
 stretch_margin_left = 3
 stretch_margin_top = 3
@@ -261,6 +272,7 @@ one_shot = true
 
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]
+[connection signal="mana_used" from="Weapon" to="." method="_on_weapon_mana_used"]
 [connection signal="timeout" from="Damaged" to="." method="_on_damaged_timeout"]
 [connection signal="timeout" from="Mana_usage" to="." method="_on_mana_usage_timeout"]
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
