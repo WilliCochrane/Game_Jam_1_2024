@@ -262,14 +262,18 @@ func find_min_span_tree(areas: Array):
 
 
 func _on_ladder_next_floor():
+	player.camera.position_smoothing_enabled = false
 	emit_signal("clear_floor")
 	_generate_rooms()
 	_generate_structures()
 	_generate_gates_close_perimeter()
+	player.camera.position_smoothing_enabled = true
 
 
 func _on_player_restart_game():
+	player.camera.position_smoothing_enabled = false
 	emit_signal("clear_floor")
 	_generate_rooms()
 	_generate_structures()
 	_generate_gates_close_perimeter()
+	player.camera.position_smoothing_enabled = true

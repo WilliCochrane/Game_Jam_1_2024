@@ -15,6 +15,7 @@ signal restart_game
 @export var damaged_timer : Timer
 @export var mana_usage_timer : Timer
 @export var mana_regen_timer : Timer
+@export var camera : Camera2D
 
 var rotation_speed : float = 10
 var move_direction : Vector2 = Vector2.ZERO
@@ -56,6 +57,7 @@ func _physics_process(delta):
 	if mana_regen == true:
 		current_mana += .25
 	
+	
 	if current_mana_usage < current_mana:
 		current_mana_usage = current_mana
 		mana_usage_bar_catchup = false
@@ -69,7 +71,7 @@ func _physics_process(delta):
 			mana_usage_bar_catchup = false
 		elif weapon.shooting == false && weapon.full_auto == false:
 			current_mana_usage -= .75
-	elif current_mana_usage <= current_mana && mana_usage_bar_catchup == true:
+	elif current_mana_usage <= current_mana:
 		mana_usage_bar_catchup = false
 		if mana_regen_timer.is_stopped():
 			mana_regen_timer.start()
@@ -134,8 +136,6 @@ func _on_weapon_mana_used():
 	mana_regen = false
 
 
-
-
 func _on_attract_body_entered(body):
 	if body.is_in_group("melee_enemy"):
 		body.attack_timer.start()
@@ -154,4 +154,4 @@ func _on_attack_body_entered(body):
 
 func _on_attack_body_exited(body):
 	if body.is_in_group("melee_enemy"):
-		body.state = body.SURROUND
+		body.state = body.ATTACK

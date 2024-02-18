@@ -47,4 +47,7 @@ func _on_body_entered(body):
 
 
 func on_clear_floor():
+	emit_signal("open_gates")
+	for child in get_children():
+		child.queue_free()
 	queue_free()

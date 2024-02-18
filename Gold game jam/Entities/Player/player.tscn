@@ -145,7 +145,7 @@ radius = 65.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdn6p"]
 radius = 15.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera") groups=["Player"]]
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -157,6 +157,7 @@ mana_usage_bar = NodePath("ui/Mana_bar/Mana_usage_bar")
 damaged_timer = NodePath("Damaged")
 mana_usage_timer = NodePath("Mana_usage")
 mana_regen_timer = NodePath("Mana_regen")
+camera = NodePath("Camera2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.07, 0.07)

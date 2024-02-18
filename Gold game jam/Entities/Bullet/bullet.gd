@@ -1,14 +1,13 @@
 extends CharacterBody2D
 
 @onready var anim_player : AnimationPlayer = $AnimationPlayer
-
 @onready var weapon : CharacterBody2D = get_tree().get_first_node_in_group("Player").get_child(4)
+
 var damage : float 
 var speed : float 
 var crit_chance : float  
 var size : float
 var spread : float
-var type : String 
 
 var flamethrow : bool
 
@@ -22,15 +21,14 @@ func _ready():
 	crit_chance = weapon.crit_chance
 	size = weapon.bullet_size
 	spread = weapon.bullet_spread
-	type = weapon.bullet_type
 	flamethrow = weapon.flamethrow
-	anim_player.play(type)
 	
 	z_index = -5
 	
 
 
 func _physics_process(delta):
+	
 	if flamethrow == true && size < 5:
 		size += .03
 		speed -= .03
@@ -47,7 +45,9 @@ func _physics_process(delta):
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("Player") == false:
 		if body.is_in_group("Enemy"):
-			body.health -= damage
+			if body.invincible == false:
+				body.health -= damage
 			if flamethrow == false:
 				queue_free()
-		queue_free()
+		else:
+			queue_free()

@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 signal player_damage
 
-@onready var attack_area : CollisionShape2D = $Attack_1/Attack_area_1
+@onready var attack_area_1 : CollisionShape2D = $Attack_1/Attack_area_1
+@onready var attack_area_3 : CollisionShape2D = $Attack_3/Attack_area_3
 @onready var health_bar : TextureProgressBar = $TextureProgressBar
 @onready var nav_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
@@ -14,9 +15,10 @@ var rng = RandomNumberGenerator.new()
 var death_anim_played : bool = false
 var attack_1_damage : float = 10
 var player : CharacterBody2D
-var move_speed : float = 50
+var move_speed : float = 75
 var health : float = 50
 var random_num : float
+var invincible : bool 
 
 
 enum {
@@ -30,11 +32,11 @@ var state = SURROUND
 
 func _ready():
 	player = get_tree().get_first_node_in_group("Player")
-	
 	rng.randomize()
 	random_num = rng.randf()
-	
 	animation.play("spawn")
+	health_bar.hide()
+	invincible = true
 
 
 func _physics_process(delta: float) -> void:
@@ -46,13 +48,17 @@ func _physics_process(delta: float) -> void:
 				move(delta)
 			
 		ATTACK:
+			rng.randomize()
+			random_num = rng.randf()
+			get_circle_position(random_num)
 			if animation.is_playing() == false:
 				animation.play("walk")
 			if animation.get_current_animation() == "walk":
 				move(delta)
 			
 		HIT:
-			animation.play("attack_1")
+			if invincible == false:
+				animation.play("attack_1")
 		
 		DEAD:
 			if death_anim_played == false:
@@ -72,10 +78,12 @@ func _physics_process(delta: float) -> void:
 	if state != DEAD:
 		if player.global_position.x > global_position.x && sprite.flip_h == true:
 			sprite.flip_h = false
-			attack_area.position *= -1
+			attack_area_1.position *= -1
+			attack_area_3.position *= -1
 		elif player.global_position.x <= global_position.x && sprite.flip_h == false:
 			sprite.flip_h = true
-			attack_area.position *= -1
+			attack_area_1.position *= -1
+			attack_area_3.position *= -1
 	
 	move_and_slide()
 
@@ -105,8 +113,7 @@ func make_path():
 			nav_agent.target_position = player.global_position
 		
 		HIT:
-			rng.randomize()
-			random_num = rng.randf()
+			pass
 		
 
 
@@ -119,7 +126,7 @@ func _on_nav_timer_timeout():
 
 
 func _on_attack_1_body_entered(body):
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") && invincible == false: # if the enemy is invincible it can't attack
 		body.current_health -= attack_1_damage
 
 
@@ -128,4 +135,6 @@ func _on_attack_timer_timeout():
 
 
 func _on_animation_player_animation_finished(anim_name):
-	pass # Replace with function body.
+	if anim_name == "spawn":
+		health_bar.show()
+		invincible = false
