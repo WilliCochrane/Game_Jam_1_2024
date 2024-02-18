@@ -48,4 +48,6 @@ func _on_area_2d_body_entered(body):
 	if body.is_in_group("Player") == false:
 		if body.is_in_group("Enemy"):
 			body.health -= damage
+			if flamethrow == false:
+				queue_free()
 		queue_free()

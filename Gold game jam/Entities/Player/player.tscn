@@ -271,7 +271,7 @@ wait_time = 0.4
 one_shot = true
 
 [node name="Mana_regen" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [node name="Attract" type="Area2D" parent="."]

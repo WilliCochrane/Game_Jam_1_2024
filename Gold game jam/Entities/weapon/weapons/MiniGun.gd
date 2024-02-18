@@ -5,7 +5,7 @@ class_name MiniGun
 func _ready():
 	full_auto = true
 	bullet_type = "small"
-	damage = 1.5
+	damage = 4
 	fire_rate = 15
 	mana_cost = 1
 	projectiles = 1

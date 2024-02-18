@@ -52,15 +52,16 @@ func _physics_process(_delta):
 
 
 func _on_player_shoot():
-	shooting = true
-	if can_shoot == true && colliding == false:
-		cooldown_timer.start()
-		can_shoot = false
-		emit_signal("mana_used")
-		if projectiles == 1:
-			spawn_bullet()
-		else:
-			shoot_projectiles()
+	if get_parent().current_mana > 0:
+		shooting = true
+		if can_shoot == true && colliding == false:
+			cooldown_timer.start()
+			can_shoot = false
+			emit_signal("mana_used")
+			if projectiles == 1:
+				spawn_bullet()
+			else:
+				shoot_projectiles()
 
 
 func _on_player_shoot_stop():
@@ -105,8 +106,7 @@ func update_weapon_parameters():
 
 
 func _on_cooldown_timeout():
-	if get_parent().current_mana > 0:
-		can_shoot = true
-		if full_auto == true && shooting == true:
-			_on_player_shoot()
+	can_shoot = true
+	if full_auto == true && shooting == true:
+		_on_player_shoot()
 

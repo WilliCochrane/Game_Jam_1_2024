@@ -63,15 +63,18 @@ func _physics_process(delta):
 		mana_usage_timer.start()
 	elif current_mana_usage > current_mana && mana_usage_bar_catchup == true:
 		if weapon.shooting == false && weapon.full_auto == true:
-			current_mana_usage -= .5
+			current_mana_usage -= .75
 		elif weapon.shooting == true && weapon.full_auto == false:
 			mana_usage_timer.start()
 			mana_usage_bar_catchup = false
 		elif weapon.shooting == false && weapon.full_auto == false:
-			current_mana_usage -= .5
-	elif current_mana_usage == current_mana && mana_usage_bar_catchup == true:
+			current_mana_usage -= .75
+	elif current_mana_usage <= current_mana && mana_usage_bar_catchup == true:
 		mana_usage_bar_catchup = false
-		
+		if mana_regen_timer.is_stopped():
+			mana_regen_timer.start()
+	
+	
 	if current_damage <= current_health:
 		current_damage = current_health
 		damadged_bar_catchup = false
@@ -120,7 +123,6 @@ func _on_mana_regen_timeout():
 
 func _on_mana_usage_timeout():
 	mana_usage_bar_catchup = true
-	mana_regen_timer.start()
 
 
 func _on_damaged_timeout():
