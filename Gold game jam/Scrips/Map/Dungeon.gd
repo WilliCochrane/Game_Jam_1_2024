@@ -122,7 +122,7 @@ func _generate_gates_close_perimeter() -> void:
 			var gp = gate_perimeter.instantiate()
 			add_child(gp)
 			gp.position = Vector2(room.position.x*16 + room.size.x * 8,room.position.y*16 + room.size.y * 8)
-			gp.scale = room.grow(-2).size
+			gp.scale = room.grow(-1).size
 			gp.connect('close_gates',_on_player_enter_perimeter)
 			gp.connect('open_gates',_on_enemies_cleared)
 			
@@ -262,6 +262,13 @@ func find_min_span_tree(areas: Array):
 
 
 func _on_ladder_next_floor():
+	emit_signal("clear_floor")
+	_generate_rooms()
+	_generate_structures()
+	_generate_gates_close_perimeter()
+
+
+func _on_player_restart_game():
 	emit_signal("clear_floor")
 	_generate_rooms()
 	_generate_structures()

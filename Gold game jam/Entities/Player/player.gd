@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal shoot
 signal shoot_stop
+signal restart_game
 
 @export var anim_player : AnimationPlayer
 @export var sprite : Sprite2D
@@ -19,6 +20,7 @@ var rotation_speed : float = 10
 var move_direction : Vector2 = Vector2.ZERO
 var move_speed : float = 100
 var current_health : float = 100
+var current_damage : float = 100
 var max_health : float = 100
 var current_mana : float = 150
 var max_mana : float = 150
@@ -45,6 +47,7 @@ func _physics_process(delta):
 	mana_bar.value = current_mana
 	mana_usage_bar.value = current_mana_usage
 	health_bar.value = current_health
+	damaged_bar.value = current_damage
 	
 	if current_mana > max_mana:
 		mana_regen = false
@@ -69,11 +72,24 @@ func _physics_process(delta):
 	elif current_mana_usage == current_mana && mana_usage_bar_catchup == true:
 		mana_usage_bar_catchup = false
 		
-	if damaged_bar.value < health_bar.value:
-		damaged_bar.value = current_health
+	if current_damage <= current_health:
+		current_damage = current_health
+		damadged_bar_catchup = false
+	elif current_damage > current_health && damadged_bar_catchup == false:
+		if damaged_timer.is_stopped():
+			damaged_timer.start()
+	elif current_damage > current_health && damadged_bar_catchup == true:
+		current_damage -= .5
+	
+	if current_health <= 0:
+		print("you lose")
+		emit_signal("restart_game")
+		current_health = max_health
+		current_mana = max_mana
 	
 	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
 	move_and_slide()
+
 
 func weapon_rotate_to_mouse(target, delta):
 	var direction = (target - weapon.global_position) #target global position if is an entity
@@ -114,3 +130,26 @@ func _on_damaged_timeout():
 func _on_weapon_mana_used():
 	current_mana -= weapon.mana_cost
 	mana_regen = false
+
+
+
+
+func _on_attract_body_entered(body):
+	if body.is_in_group("melee_enemy"):
+		body.attack_timer.start()
+
+
+func _on_attract_body_exited(body):
+	if body.is_in_group("melee_enemy"):
+		body.state = body.SURROUND
+		body.attack_timer.stop()
+
+
+func _on_attack_body_entered(body):
+	if body.is_in_group("melee_enemy"):
+		body.state = body.HIT
+
+
+func _on_attack_body_exited(body):
+	if body.is_in_group("melee_enemy"):
+		body.state = body.SURROUND

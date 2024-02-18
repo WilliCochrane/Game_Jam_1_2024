@@ -1303,7 +1303,7 @@ gradient = SubResource("Gradient_ukeru")
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "ladder")]
 script = ExtResource("1_l1dci")
 level_size = Vector2(100, 80)
-main_rooms_size = Vector2(17, 24)
+main_rooms_size = Vector2(20, 30)
 main_rooms_max = 1000
 player = NodePath("Player")
 ladder = NodePath("Ladder")
@@ -1338,4 +1338,5 @@ position = Vector2(-808, -180)
 
 [node name="Ladder" parent="." instance=ExtResource("9_ve3sl")]
 
+[connection signal="restart_game" from="Player" to="." method="_on_player_restart_game"]
 [connection signal="next_floor" from="Ladder" to="." method="_on_ladder_next_floor"]
