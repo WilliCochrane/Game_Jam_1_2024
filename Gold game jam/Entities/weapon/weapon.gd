@@ -16,19 +16,20 @@ var bullet_spread : float
 var damage : float
 var crit_chance : float
 
+var projectile_interval : float
 var fire_rate : float 
 var mana_cost : float
-var full_auto : bool
 var flamethrow : bool
 var projectiles : int
-var projectile_interval : float
+var full_auto : bool
 
+var projectiles_left : int = 0
 var shooting : bool = false
 var can_shoot : bool = true
 var colliding : bool
-var projectiles_left : int = 0
 
-var count : int = 0
+var camera_shake_strength : float = 10
+var shake_fade : float = 5
 
 func _ready():
 	first_bullet.queue_free()

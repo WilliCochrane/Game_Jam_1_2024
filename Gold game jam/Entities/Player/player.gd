@@ -31,7 +31,6 @@ var mana_usage_bar_catchup : bool = false
 var mana_regen : bool = false
 var current_mana_usage : float
 
-
 func _ready():
 	mana_bar.value = max_mana
 	health_bar.value = max_health 
@@ -57,7 +56,6 @@ func _physics_process(delta):
 	if mana_regen == true:
 		current_mana += .25
 	
-	
 	if current_mana_usage < current_mana:
 		current_mana_usage = current_mana
 		mana_usage_bar_catchup = false
@@ -76,7 +74,6 @@ func _physics_process(delta):
 		if mana_regen_timer.is_stopped():
 			mana_regen_timer.start()
 	
-	
 	if current_damage <= current_health:
 		current_damage = current_health
 		damadged_bar_catchup = false
@@ -94,6 +91,10 @@ func _physics_process(delta):
 	
 	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
 	move_and_slide()
+
+
+func apply_shake():
+	pass
 
 
 func weapon_rotate_to_mouse(target, delta):
