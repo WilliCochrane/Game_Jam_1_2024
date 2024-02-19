@@ -368,7 +368,7 @@ scale = Vector2(0.2, 0.2)
 
 [node name="WeaponMachine" type="Node" parent="." node_paths=PackedStringArray("initial_weapon")]
 script = ExtResource("4_w1n20")
-initial_weapon = NodePath("FlameThrower")
+initial_weapon = NodePath("Shotgun")
 
 [node name="pistol" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_7xyep")
