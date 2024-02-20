@@ -4,7 +4,6 @@ signal mana_used
 
 @export var bullet : PackedScene
 @export var cooldown_timer : Timer
-@export var projectile_timer : Timer
 @export var weapon_machine : Node
 @export var first_bullet : CharacterBody2D
 @export var raycast : RayCast2D

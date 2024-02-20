@@ -110,24 +110,17 @@ func make_path():
 			nav_agent.target_position = get_circle_position(random_num)
 		
 		ATTACK:
-			nav_agent.target_position = player.global_position
+			if randi_range(0,1) == 0:
+				nav_agent.target_position = Vector2(player.global_position.x+15,player.global_position.y)
+			else:
+				nav_agent.target_position = Vector2(player.global_position.x-15,player.global_position.y)
 		
 		HIT:
 			pass
-		
-
-
-
-
 
 
 func _on_nav_timer_timeout():
 	make_path()
-
-
-func _on_attack_1_body_entered(body):
-	if body.is_in_group("Player") && invincible == false: # if the enemy is invincible it can't attack
-		body.current_health -= attack_1_damage
 
 
 func _on_attack_timer_timeout():
@@ -138,3 +131,8 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "spawn":
 		health_bar.show()
 		invincible = false
+
+
+func _on_attack_1_area_entered(area):
+	if area.is_in_group("Player_hitbox") && invincible == false: # if the enemy is invincible it can't attack
+		player.current_health -= attack_1_damage

@@ -1300,7 +1300,7 @@ offsets = PackedFloat32Array(0.987207, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_fc07l"]
 gradient = SubResource("Gradient_ukeru")
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "ladder")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "ladder", "new_floor_timer")]
 script = ExtResource("1_l1dci")
 level_size = Vector2(100, 80)
 main_rooms_size = Vector2(20, 30)
@@ -1308,6 +1308,7 @@ main_rooms_max = 1000
 player = NodePath("Player")
 ladder = NodePath("Ladder")
 gate = ExtResource("7_to4u6")
+new_floor_timer = NodePath("Timer")
 gate_perimeter = ExtResource("8_w042w")
 enemy = ExtResource("4_tckvb")
 
@@ -1338,5 +1339,10 @@ position = Vector2(-808, -180)
 
 [node name="Ladder" parent="." instance=ExtResource("9_ve3sl")]
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
 [connection signal="restart_game" from="Player" to="." method="_on_player_restart_game"]
 [connection signal="next_floor" from="Ladder" to="." method="_on_ladder_next_floor"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -10,12 +10,14 @@ var first_activation : bool = true
 var enemies_spawned : bool = false
 var summon_wave : bool = false
 var alive_enemies : int = 0
+var first_frame : bool = true
 
 func _ready():
 	get_parent().connect("clear_floor",on_clear_floor)
 
 
 func _physics_process(_delta):
+	
 	if summon_wave == true:
 		summon_enemies()
 	if enemies_spawned == true && alive_enemies == 0:

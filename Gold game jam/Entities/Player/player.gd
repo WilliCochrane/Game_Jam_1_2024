@@ -85,6 +85,7 @@ func _physics_process(delta):
 	
 	if current_health <= 0:
 		print("you lose")
+		position = Vector2(128,128)
 		emit_signal("restart_game")
 		current_health = max_health
 		current_mana = max_mana

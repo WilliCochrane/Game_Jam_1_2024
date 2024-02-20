@@ -8,9 +8,10 @@ signal clear_floor
 @export var player : CharacterBody2D
 @export var ladder : StaticBody2D
 @export var gate : PackedScene
-@export var debug_timer : Timer
+@export var new_floor_timer : Timer
 @export var gate_perimeter : PackedScene
 @export var enemy : PackedScene
+
 
 @onready var level : TileMap = $Level
 @onready var treasue : CharacterBody2D = $Treasure
@@ -22,7 +23,6 @@ var end_room : Rect2 = Rect2(80, 80, 16, 16)
 var treasure_room : Rect2
 
 var gates_up : bool = false
-
 
 func _ready() -> void:
 	_generate_rooms()
@@ -262,18 +262,16 @@ func find_min_span_tree(areas: Array):
 
 
 func _on_ladder_next_floor():
-	player.camera.position_smoothing_enabled = false
 	emit_signal("clear_floor")
-	_generate_rooms()
-	_generate_structures()
-	_generate_gates_close_perimeter()
-	player.camera.position_smoothing_enabled = true
+	new_floor_timer.start()
 
 
 func _on_player_restart_game():
-	player.camera.position_smoothing_enabled = false
 	emit_signal("clear_floor")
-	_generate_rooms()
-	_generate_structures()
-	_generate_gates_close_perimeter()
-	player.camera.position_smoothing_enabled = true
+	new_floor_timer.start()
+
+
+func _on_timer_timeout():
+	call_deferred("_generate_rooms")
+	call_deferred("_generate_structures")
+	call_deferred("_generate_gates_close_perimeter")
