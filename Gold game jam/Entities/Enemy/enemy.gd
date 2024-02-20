@@ -9,6 +9,7 @@ signal player_damage
 @onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var animation : AnimationPlayer = $AnimationPlayer
 @onready var attack_timer : Timer = $Attack_timer
+@onready var nav_timer : Timer = $Nav_timer
 @onready var sprite : Sprite2D = $Sprite2D
 
 var rng = RandomNumberGenerator.new()
@@ -17,9 +18,9 @@ var attack_1_damage : float = 10
 var player : CharacterBody2D
 var move_speed : float = 75
 var health : float = 50
+var _velocity : Vector2
 var random_num : float
 var invincible : bool 
-
 
 enum {
 	SURROUND,
@@ -31,6 +32,8 @@ enum {
 var state = SURROUND
 
 func _ready():
+	nav_timer.connect("timeout",make_path)
+	nav_agent.connect("velocity_computed",move)
 	player = get_tree().get_first_node_in_group("Player")
 	rng.randomize()
 	random_num = rng.randf()
@@ -85,13 +88,16 @@ func _physics_process(delta: float) -> void:
 			attack_area_1.position *= -1
 			attack_area_3.position *= -1
 	
+	var direction = (nav_agent.get_next_path_position() - global_position).normalized()
+	var steering = ((direction * move_speed) - _velocity) * delta * 2.5
+	_velocity += steering
+	nav_agent.set_velocity_forced(_velocity)
+	
 	move_and_slide()
 
 
 func move(delta):
-	var direction = (nav_agent.get_next_path_position() - global_position).normalized()
-	var steering = ((direction * move_speed) - velocity) * delta * 2.5
-	velocity += steering
+	velocity = _velocity
 
 
 func get_circle_position(random):
@@ -117,10 +123,6 @@ func make_path():
 		
 		HIT:
 			pass
-
-
-func _on_nav_timer_timeout():
-	make_path()
 
 
 func _on_attack_timer_timeout():

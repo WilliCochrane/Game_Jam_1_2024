@@ -440,8 +440,8 @@ _data = {
 "walk": SubResource("Animation_win4v")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mor5y"]
-size = Vector2(9.45006, 14.1667)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yfq62"]
+height = 27.8463
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4g8aj"]
 size = Vector2(18, 24)
@@ -468,8 +468,9 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5)
-shape = SubResource("RectangleShape2D_mor5y")
+position = Vector2(0, 3.33333)
+scale = Vector2(0.667716, 0.769081)
+shape = SubResource("CapsuleShape2D_yfq62")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 44.36
@@ -477,6 +478,7 @@ target_desired_distance = 44.36
 path_max_distance = 1000.0
 avoidance_enabled = true
 radius = 12.0
+neighbor_distance = 30.0
 time_horizon_obstacles = 1.0
 max_speed = 75.0
 debug_enabled = true
@@ -534,6 +536,7 @@ tint_over = Color(0.584314, 0.345098, 0.0941176, 1)
 tint_progress = Color(0.733333, 0.0862745, 0.14902, 1)
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+visible = false
 position = Vector2(0, 3.33333)
 radius = 12.0
 vertices = PackedVector2Array(-0.833333, -10.8333, -11.6667, -3.33333, -6.66667, 10, 7.5, 9.16667, 11.6667, -2.5)

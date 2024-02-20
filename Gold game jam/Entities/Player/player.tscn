@@ -137,8 +137,8 @@ _data = {
 "Run": SubResource("Animation_4ufjs")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yr8kw"]
-size = Vector2(142.857, 113.572)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v65hl"]
+height = 43.4783
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j0u8h"]
 radius = 65.0
@@ -150,7 +150,6 @@ radius = 16.0
 size = Vector2(8.5, 18)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera") groups=["Player"]]
-scale = Vector2(2, 2)
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -174,14 +173,15 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 6.02499)
-scale = Vector2(0.07, 0.07)
-shape = SubResource("RectangleShape2D_yr8kw")
+position = Vector2(0, 5)
+scale = Vector2(0.469999, 0.23)
+shape = SubResource("CapsuleShape2D_v65hl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
+visible = false
 scale = Vector2(0.6, 0.6)
 
 [node name="ui" type="CanvasLayer" parent="."]
@@ -291,7 +291,7 @@ shape = SubResource("CircleShape2D_mdn6p")
 [node name="Hitbox" type="Area2D" parent="." groups=["Player_hitbox"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0.25, 1)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_2t7im")
 
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
