@@ -96,7 +96,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func move(delta):
+func move(_delta):
 	velocity = _velocity
 
 
@@ -138,3 +138,4 @@ func _on_animation_player_animation_finished(anim_name):
 func _on_attack_1_area_entered(area):
 	if area.is_in_group("Player_hitbox") && invincible == false: # if the enemy is invincible it can't attack
 		player.current_health -= attack_1_damage
+		player.hit = true

@@ -16,6 +16,8 @@ signal restart_game
 @export var mana_usage_timer : Timer
 @export var mana_regen_timer : Timer
 @export var camera : Camera2D
+@export var ui_sprite : Sprite2D
+@export var ui_anim_player : AnimationPlayer
 
 var rotation_speed : float = 10
 var move_direction : Vector2 = Vector2.ZERO
@@ -30,12 +32,14 @@ var damadged_bar_catchup : bool = false
 var mana_usage_bar_catchup : bool = false
 var mana_regen : bool = false
 var current_mana_usage : float
+var hit : bool = false
 
 func _ready():
+	ui_sprite.hide()
 	mana_bar.value = max_mana
 	health_bar.value = max_health 
 
-func _physics_process(delta):
+func _physics_process(delta):	
 	move_direction = Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
 	velocity = move_direction * move_speed  * delta
 	position += velocity
@@ -89,6 +93,11 @@ func _physics_process(delta):
 		emit_signal("restart_game")
 		current_health = max_health
 		current_mana = max_mana
+	
+	if hit == true:
+		ui_sprite.show()
+		ui_anim_player.play("Player_hit")
+		hit = false
 	
 	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
 	move_and_slide()

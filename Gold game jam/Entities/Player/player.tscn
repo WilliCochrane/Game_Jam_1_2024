@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=19 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Texture2D" uid="uid://7ngffy2hjll0" path="res://Assets/Player/Goblin_running.png" id="2_isre5"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c6rheyijs8n4l" path="res://Entities/weapon/weapon.tscn" id="4_q6ram"]
 [ext_resource type="Texture2D" uid="uid://dy1f3lvtumltt" path="res://Assets/UI/progress_bar_filler.png" id="5_2y74i"]
 [ext_resource type="Texture2D" uid="uid://x5tha10n7wx4" path="res://Assets/UI/progress_bar_wrap.png.png" id="6_gv1sl"]
+[ext_resource type="Texture2D" uid="uid://cowsbnx5ja6jf" path="res://Assets/UI/Damaged/player_hit_feedback.png" id="7_em7js"]
 
 [sub_resource type="Animation" id="Animation_803p1"]
 resource_name = "Idle"
@@ -140,6 +141,80 @@ _data = {
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v65hl"]
 height = 43.4783
 
+[sub_resource type="Animation" id="Animation_dv1j7"]
+resource_name = "Player_hit"
+length = 0.200003
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI_Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("7_em7js")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI_Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("UI_Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3, 4]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Sprite2D:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(128.498, 128.498, 128.498, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_l1s83"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI_Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8br1x"]
+_data = {
+"Player_hit": SubResource("Animation_dv1j7"),
+"RESET": SubResource("Animation_l1s83")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_j0u8h"]
 radius = 65.0
 
@@ -149,7 +224,7 @@ radius = 16.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7im"]
 size = Vector2(8.5, 18)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player") groups=["Player"]]
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -162,8 +237,11 @@ damaged_timer = NodePath("Damaged")
 mana_usage_timer = NodePath("Mana_usage")
 mana_regen_timer = NodePath("Mana_regen")
 camera = NodePath("Camera2D")
+ui_sprite = NodePath("ui/UI_Sprite2D")
+ui_anim_player = NodePath("ui/UI_AnimationPlayer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_isre5")
 hframes = 7
 
@@ -181,7 +259,6 @@ shape = SubResource("CapsuleShape2D_v65hl")
 zoom = Vector2(3, 3)
 
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
-visible = false
 scale = Vector2(0.6, 0.6)
 
 [node name="ui" type="CanvasLayer" parent="."]
@@ -263,6 +340,16 @@ texture_under = ExtResource("5_2y74i")
 texture_progress = ExtResource("5_2y74i")
 tint_under = Color(0.192157, 0.0784314, 0.109804, 1)
 tint_progress = Color(0.643137, 0.737255, 0.87451, 1)
+
+[node name="UI_AnimationPlayer" type="AnimationPlayer" parent="ui"]
+libraries = {
+"": SubResource("AnimationLibrary_8br1x")
+}
+
+[node name="UI_Sprite2D" type="Sprite2D" parent="ui"]
+position = Vector2(960, 540)
+texture = ExtResource("7_em7js")
+hframes = 5
 
 [node name="Damaged" type="Timer" parent="."]
 wait_time = 0.4
