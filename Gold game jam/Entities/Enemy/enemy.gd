@@ -4,6 +4,7 @@ signal player_damage
 
 @onready var attack_area_1 : CollisionShape2D = $Attack_1/Attack_area_1
 @onready var attack_area_3 : CollisionShape2D = $Attack_3/Attack_area_3
+@onready var alt_animation : AnimationPlayer = $hit_AnimationPlayer
 @onready var health_bar : TextureProgressBar = $TextureProgressBar
 @onready var nav_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
@@ -18,9 +19,11 @@ var attack_1_damage : float = 10
 var player : CharacterBody2D
 var move_speed : float = 75
 var health : float = 50
-var _velocity : Vector2
+var hit : bool = false
 var random_num : float
 var invincible : bool 
+var can_move : bool
+
 
 enum {
 	SURROUND,
@@ -33,13 +36,13 @@ var state = SURROUND
 
 func _ready():
 	nav_timer.connect("timeout",make_path)
-	nav_agent.connect("velocity_computed",move)
 	player = get_tree().get_first_node_in_group("Player")
 	rng.randomize()
 	random_num = rng.randf()
 	animation.play("spawn")
 	health_bar.hide()
 	invincible = true
+	can_move = false
 
 
 func _physics_process(delta: float) -> void:
@@ -47,8 +50,6 @@ func _physics_process(delta: float) -> void:
 		SURROUND:
 			if animation.is_playing() == false:
 				animation.play("walk")
-			if animation.get_current_animation() == "walk":
-				move(delta)
 			
 		ATTACK:
 			rng.randomize()
@@ -56,12 +57,11 @@ func _physics_process(delta: float) -> void:
 			get_circle_position(random_num)
 			if animation.is_playing() == false:
 				animation.play("walk")
-			if animation.get_current_animation() == "walk":
-				move(delta)
 			
 		HIT:
 			if invincible == false:
 				animation.play("attack_1")
+				can_move = false
 		
 		DEAD:
 			if death_anim_played == false:
@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 				get_parent().alive_enemies -= 1
 				collision.disabled = true
 				health_bar.hide()
-			velocity = Vector2.ZERO
+			can_move = false
 			attack_1_damage = 0
 			
 	health_bar.value = health
@@ -88,16 +88,17 @@ func _physics_process(delta: float) -> void:
 			attack_area_1.position *= -1
 			attack_area_3.position *= -1
 	
-	var direction = (nav_agent.get_next_path_position() - global_position).normalized()
-	var steering = ((direction * move_speed) - _velocity) * delta * 2.5
-	_velocity += steering
-	nav_agent.set_velocity_forced(_velocity)
+	if hit == true:
+		alt_animation.play("hit")
+		hit = false
 	
+	if can_move == true:
+		var direction = (nav_agent.get_next_path_position() - global_position).normalized()
+		var steering = ((direction * move_speed) - velocity) * delta * 2.5
+		velocity += steering
+	else:
+		velocity = Vector2.ZERO
 	move_and_slide()
-
-
-func move(_delta):
-	velocity = _velocity
 
 
 func get_circle_position(random):
@@ -133,7 +134,9 @@ func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "spawn":
 		health_bar.show()
 		invincible = false
-
+		can_move = true
+	if anim_name == "attack_1":
+		can_move = true
 
 func _on_attack_1_area_entered(area):
 	if area.is_in_group("Player_hitbox") && invincible == false: # if the enemy is invincible it can't attack

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://48fpkt0wst45"]
+[gd_scene load_steps=20 format=3 uid="uid://48fpkt0wst45"]
 
 [ext_resource type="Script" path="res://Entities/Enemy/enemy.gd" id="1_tb1xo"]
 [ext_resource type="Texture2D" uid="uid://da0oxrs6buleo" path="res://Assets/Enemy/Dwarf Sprite Sheet 1.3v.png" id="2_s0nf6"]
@@ -440,8 +440,29 @@ _data = {
 "walk": SubResource("Animation_win4v")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yfq62"]
-height = 27.8463
+[sub_resource type="Animation" id="Animation_klfcq"]
+resource_name = "hit"
+length = 0.083335
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(100, 100, 100, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ge7c1"]
+_data = {
+"hit": SubResource("Animation_klfcq")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyvi7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4g8aj"]
 size = Vector2(18, 24)
@@ -467,20 +488,20 @@ libraries = {
 "": SubResource("AnimationLibrary_ybo16")
 }
 
+[node name="hit_AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ge7c1")
+}
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3.33333)
 scale = Vector2(0.667716, 0.769081)
-shape = SubResource("CapsuleShape2D_yfq62")
+shape = SubResource("RectangleShape2D_dyvi7")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 44.36
 target_desired_distance = 44.36
 path_max_distance = 1000.0
-avoidance_enabled = true
-radius = 12.0
-neighbor_distance = 30.0
-time_horizon_obstacles = 1.0
-max_speed = 75.0
 debug_enabled = true
 
 [node name="Attack_1" type="Area2D" parent="."]
@@ -534,12 +555,6 @@ texture_progress = ExtResource("3_lk3vp")
 tint_under = Color(0.105882, 0.2, 0.196078, 1)
 tint_over = Color(0.584314, 0.345098, 0.0941176, 1)
 tint_progress = Color(0.733333, 0.0862745, 0.14902, 1)
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-visible = false
-position = Vector2(0, 3.33333)
-radius = 12.0
-vertices = PackedVector2Array(-0.833333, -10.8333, -11.6667, -3.33333, -6.66667, 10, 7.5, 9.16667, 11.6667, -2.5)
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="area_entered" from="Attack_1" to="." method="_on_attack_1_area_entered"]

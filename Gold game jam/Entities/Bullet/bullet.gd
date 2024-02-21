@@ -47,6 +47,7 @@ func _on_area_2d_body_entered(body):
 		if body.is_in_group("Enemy"):
 			if body.invincible == false:
 				body.health -= damage
+				body.hit = true
 			if flamethrow == false:
 				queue_free()
 		else:
