@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=18 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Texture2D" uid="uid://7ngffy2hjll0" path="res://Assets/Player/Goblin_running.png" id="2_isre5"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dy1f3lvtumltt" path="res://Assets/UI/progress_bar_filler.png" id="5_2y74i"]
 [ext_resource type="Texture2D" uid="uid://x5tha10n7wx4" path="res://Assets/UI/progress_bar_wrap.png.png" id="6_gv1sl"]
 [ext_resource type="Texture2D" uid="uid://cowsbnx5ja6jf" path="res://Assets/UI/Damaged/player_hit_feedback.png" id="7_em7js"]
+[ext_resource type="Texture2D" uid="uid://bjq8hinio3an7" path="res://Assets/UI/Damaged/blurry Blood Overlay.png" id="8_a5rkc"]
 
 [sub_resource type="Animation" id="Animation_803p1"]
 resource_name = "Idle"
@@ -215,16 +216,10 @@ _data = {
 "RESET": SubResource("Animation_l1s83")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_j0u8h"]
-radius = 65.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_mdn6p"]
-radius = 16.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7im"]
 size = Vector2(8.5, 18)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player", "low_health_indicator") groups=["Player"]]
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -239,6 +234,7 @@ mana_regen_timer = NodePath("Mana_regen")
 camera = NodePath("Camera2D")
 ui_sprite = NodePath("ui/UI_Sprite2D")
 ui_anim_player = NodePath("ui/UI_AnimationPlayer")
+low_health_indicator = NodePath("ui/Low_health")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -351,6 +347,11 @@ position = Vector2(960, 540)
 texture = ExtResource("7_em7js")
 hframes = 5
 
+[node name="Low_health" type="Sprite2D" parent="ui"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(960, 540)
+texture = ExtResource("8_a5rkc")
+
 [node name="Damaged" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
@@ -362,18 +363,6 @@ one_shot = true
 [node name="Mana_regen" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
-
-[node name="Attract" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attract"]
-shape = SubResource("CircleShape2D_j0u8h")
-
-[node name="Attack" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
-shape = SubResource("CircleShape2D_mdn6p")
 
 [node name="Hitbox" type="Area2D" parent="." groups=["Player_hitbox"]]
 
@@ -387,7 +376,3 @@ shape = SubResource("RectangleShape2D_2t7im")
 [connection signal="timeout" from="Damaged" to="." method="_on_damaged_timeout"]
 [connection signal="timeout" from="Mana_usage" to="." method="_on_mana_usage_timeout"]
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
-[connection signal="body_entered" from="Attract" to="." method="_on_attract_body_entered"]
-[connection signal="body_exited" from="Attract" to="." method="_on_attract_body_exited"]
-[connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]
-[connection signal="body_exited" from="Attack" to="." method="_on_attack_body_exited"]

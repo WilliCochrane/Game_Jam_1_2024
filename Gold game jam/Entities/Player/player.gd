@@ -18,6 +18,7 @@ signal restart_game
 @export var camera : Camera2D
 @export var ui_sprite : Sprite2D
 @export var ui_anim_player : AnimationPlayer
+@export var low_health_indicator : Sprite2D
 
 var rotation_speed : float = 10
 var move_direction : Vector2 = Vector2.ZERO
@@ -94,6 +95,9 @@ func _physics_process(delta):
 		current_health = max_health
 		current_mana = max_mana
 	
+	if current_health < max_health * .2:
+		low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
+	
 	if hit == true:
 		ui_sprite.show()
 		ui_anim_player.play("Player_hit")
@@ -146,23 +150,3 @@ func _on_weapon_mana_used():
 	current_mana -= weapon.mana_cost
 	mana_regen = false
 
-
-func _on_attract_body_entered(body):
-	if body.is_in_group("melee_enemy"):
-		body.attack_timer.start()
-
-
-func _on_attract_body_exited(body):
-	if body.is_in_group("melee_enemy"):
-		body.state = body.SURROUND
-		body.attack_timer.stop()
-
-
-func _on_attack_body_entered(body):
-	if body.is_in_group("melee_enemy"):
-		body.state = body.HIT
-
-
-func _on_attack_body_exited(body):
-	if body.is_in_group("melee_enemy"):
-		body.state = body.ATTACK

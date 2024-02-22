@@ -80,6 +80,7 @@ func spawn_bullet():
 	owner.owner.add_child(b)
 	b.anim_player.play(bullet_type)
 	b.transform = $Muzzle.global_transform
+	
 
 
 
