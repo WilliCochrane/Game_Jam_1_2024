@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var player : CharacterBody2D
 var speed = 75
-var damage = 15
+var damage = 10
 var scale_factor = 1
 
 func _ready():
@@ -21,4 +21,3 @@ func _on_area_2d_body_entered(body):
 			player.current_health -= damage
 			player.hit = true
 		queue_free()
-		

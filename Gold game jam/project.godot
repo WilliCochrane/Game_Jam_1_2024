@@ -66,6 +66,10 @@ ui_interact={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=3

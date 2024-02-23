@@ -170,8 +170,10 @@ position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_qf8se")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-blend_mode = 2
+color = Color(1, 0.231373, 0.282353, 1)
+energy = 0.2
 shadow_enabled = true
 texture = ExtResource("5_10wes")
+texture_scale = 0.75
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

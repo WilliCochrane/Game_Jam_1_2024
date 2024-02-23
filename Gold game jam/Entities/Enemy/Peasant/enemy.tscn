@@ -443,7 +443,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dyvi7"]
 size = Vector2(8.25, 20)
 
-[node name="Enemy" type="CharacterBody2D" groups=["Enemy", "melee_enemy"]]
+[node name="Peasant" type="CharacterBody2D" groups=["Enemy", "melee_enemy"]]
 scale = Vector2(1.2, 1.2)
 script = ExtResource("1_fotac")
 

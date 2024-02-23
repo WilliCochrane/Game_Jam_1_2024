@@ -2,11 +2,12 @@ extends CharacterBody2D
 
 signal player_damage
 
+@onready var enemy_bullet : PackedScene = preload("res://Entities/Enemy/Peasant/enemy_bullet.tscn")
+@onready var gold : PackedScene = preload("res://Entities/Treasure/gold.tscn")
 @onready var alt_animation : AnimationPlayer = $hit_AnimationPlayer
 @onready var nav_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var animation : AnimationPlayer = $AnimationPlayer
-@onready var enemy_bullet : PackedScene = preload("res://Entities/Enemy/Peasant/enemy_bullet.tscn")
 @onready var attack_timer : Timer = $Attack_timer
 @onready var idle_timer : Timer = $Idle_timer
 @onready var nav_timer : Timer = $Nav_timer
@@ -56,8 +57,7 @@ func _physics_process(delta: float) -> void:
 
 
 	if health <= 0:
-		get_parent().alive_enemies -= 1
-		queue_free()
+		die()
 	
 	if velocity == Vector2.ZERO:
 		animation.play("idle")
@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 	
 	if can_move == true:
 		var direction = (nav_agent.get_next_path_position() - global_position).normalized()
-		var steering = ((direction * move_speed) - velocity) * delta * 2.5
+		var steering = ((direction * move_speed) - velocity) * delta * 1.5
 		velocity += steering
 	else:
 		velocity = Vector2.ZERO
@@ -106,6 +106,14 @@ func get_circle_position(random):
 	var y = kill_circle_center.y + sin(angle) * radius
 	
 	return Vector2(x, y)
+
+func die():
+	get_parent().alive_enemies -= 1
+	for i in range(0,randi_range(3,5)):
+		var gd = gold.instantiate()
+		get_parent().get_parent().add_child(gd)
+		gd.global_position = global_position
+	queue_free()
 
 func _on_attack_timer_timeout():
 	if state != RUN:

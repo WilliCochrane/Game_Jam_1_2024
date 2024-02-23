@@ -19,20 +19,22 @@ signal restart_game
 @export var ui_sprite : Sprite2D
 @export var ui_anim_player : AnimationPlayer
 @export var low_health_indicator : Sprite2D
+@export var gold_lable : Label
 
-var rotation_speed : float = 10
 var move_direction : Vector2 = Vector2.ZERO
-var move_speed : float = 100
 var current_health : float = 100
 var current_damage : float = 100
-var max_health : float = 100
+var rotation_speed : float = 10
 var current_mana : float = 150
+var move_speed : float = 100
+var max_health : float = 100
 var max_mana : float = 150
+var gold : int = 0
 
-var damadged_bar_catchup : bool = false
 var mana_usage_bar_catchup : bool = false
-var mana_regen : bool = false
+var damadged_bar_catchup : bool = false
 var current_mana_usage : float
+var mana_regen : bool = false
 var hit : bool = false
 
 func _ready():
@@ -40,7 +42,7 @@ func _ready():
 	mana_bar.value = max_mana
 	health_bar.value = max_health 
 
-func _physics_process(delta):	
+func _physics_process(delta):
 	move_direction = Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
 	velocity = move_direction * move_speed  * delta
 	position += velocity
@@ -95,8 +97,9 @@ func _physics_process(delta):
 		current_health = max_health
 		current_mana = max_mana
 	
-	if current_health < max_health * .2:
-		low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
+	low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
+	
+	gold_lable.text = str(gold)
 	
 	if hit == true:
 		ui_sprite.show()
@@ -150,3 +153,7 @@ func _on_weapon_mana_used():
 	current_mana -= weapon.mana_cost
 	mana_regen = false
 
+
+func _on_attraction_radius_body_entered(body):
+	if body.is_in_group("Gold"):
+		body.go_to_player = true

@@ -1,11 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=21 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Texture2D" uid="uid://7ngffy2hjll0" path="res://Assets/Player/Goblin_running.png" id="2_isre5"]
 [ext_resource type="Texture2D" uid="uid://38xnxblv6ccg" path="res://Assets/Player/Goblin_idle.png" id="3_4c0k0"]
 [ext_resource type="PackedScene" uid="uid://c6rheyijs8n4l" path="res://Entities/weapon/weapon.tscn" id="4_q6ram"]
 [ext_resource type="Texture2D" uid="uid://dy1f3lvtumltt" path="res://Assets/UI/progress_bar_filler.png" id="5_2y74i"]
+[ext_resource type="Texture2D" uid="uid://d1t8jh7ag0x6q" path="res://Assets/Gold/Coin.png" id="5_cx2o8"]
 [ext_resource type="Texture2D" uid="uid://x5tha10n7wx4" path="res://Assets/UI/progress_bar_wrap.png.png" id="6_gv1sl"]
+[ext_resource type="FontFile" uid="uid://ejil0kwiqa3l" path="res://Assets/UI/m5x7.ttf" id="6_jyu7f"]
 [ext_resource type="Texture2D" uid="uid://cowsbnx5ja6jf" path="res://Assets/UI/Damaged/player_hit_feedback.png" id="7_em7js"]
 [ext_resource type="Texture2D" uid="uid://bjq8hinio3an7" path="res://Assets/UI/Damaged/blurry Blood Overlay.png" id="8_a5rkc"]
 
@@ -140,7 +142,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v65hl"]
-height = 43.4783
+radius = 14.8936
+height = 69.5652
 
 [sub_resource type="Animation" id="Animation_dv1j7"]
 resource_name = "Player_hit"
@@ -217,9 +220,12 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7im"]
-size = Vector2(8.5, 18)
+size = Vector2(12, 26)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player", "low_health_indicator") groups=["Player"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_epq4t"]
+radius = 62.0322
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player", "low_health_indicator", "gold_lable") groups=["Player"]]
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -235,6 +241,7 @@ camera = NodePath("Camera2D")
 ui_sprite = NodePath("ui/UI_Sprite2D")
 ui_anim_player = NodePath("ui/UI_AnimationPlayer")
 low_health_indicator = NodePath("ui/Low_health")
+gold_lable = NodePath("ui/Sprite2D/Gold")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -247,7 +254,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5)
+position = Vector2(0, 7)
 scale = Vector2(0.469999, 0.23)
 shape = SubResource("CapsuleShape2D_v65hl")
 
@@ -258,6 +265,22 @@ zoom = Vector2(3, 3)
 scale = Vector2(0.6, 0.6)
 
 [node name="ui" type="CanvasLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="ui"]
+position = Vector2(60, 150)
+scale = Vector2(2, 2)
+texture = ExtResource("5_cx2o8")
+
+[node name="Gold" type="Label" parent="ui/Sprite2D"]
+offset_left = 12.5
+offset_top = -12.0
+offset_right = 48.5
+offset_bottom = 14.0
+scale = Vector2(0.8, 0.8)
+theme_override_colors/font_color = Color(0.878431, 0.878431, 0.878431, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "100"
 
 [node name="Health_bar" type="TextureProgressBar" parent="ui"]
 clip_contents = true
@@ -370,9 +393,18 @@ one_shot = true
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_2t7im")
 
+[node name="attraction_radius" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attraction_radius"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_epq4t")
+
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]
 [connection signal="mana_used" from="Weapon" to="." method="_on_weapon_mana_used"]
 [connection signal="timeout" from="Damaged" to="." method="_on_damaged_timeout"]
 [connection signal="timeout" from="Mana_usage" to="." method="_on_mana_usage_timeout"]
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
+[connection signal="body_entered" from="attraction_radius" to="." method="_on_attraction_radius_body_entered"]
