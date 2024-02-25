@@ -1,14 +1,17 @@
-[gd_scene load_steps=44 format=3 uid="uid://c88xjjg5x7iti"]
+[gd_scene load_steps=47 format=3 uid="uid://c88xjjg5x7iti"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
-[ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Entities/Player/player.tscn" id="1_l5ov3"]
+[ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Scenes/Player/player.tscn" id="1_l5ov3"]
 [ext_resource type="Texture2D" uid="uid://rkw3uh5arawi" path="res://Assets/TileSet/dungeon_sheet.png" id="2_7vrrn"]
 [ext_resource type="Texture2D" uid="uid://dltbgm0q0yxe0" path="res://Assets/TileSet/Dungeonlvl1tile_set.png" id="2_bspjp"]
-[ext_resource type="PackedScene" uid="uid://48fpkt0wst45" path="res://Entities/Enemy/Peasant/enemy.tscn" id="4_tckvb"]
-[ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Entities/Treasure/treasure.tscn" id="5_ee60j"]
-[ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Entities/gate/gate.tscn" id="7_to4u6"]
-[ext_resource type="PackedScene" uid="uid://bnrmiqvhay643" path="res://Entities/gate/gates_up.tscn" id="8_w042w"]
-[ext_resource type="PackedScene" uid="uid://du2y0hi2j4c41" path="res://Entities/Ladder/ladder.tscn" id="9_ve3sl"]
+[ext_resource type="PackedScene" uid="uid://48fpkt0wst45" path="res://Scenes/Enemy/Peasant/enemy.tscn" id="4_tckvb"]
+[ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Scenes/Treasure/treasure.tscn" id="5_ee60j"]
+[ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Scenes/gate/gate.tscn" id="7_to4u6"]
+[ext_resource type="PackedScene" uid="uid://bnrmiqvhay643" path="res://Scenes/gate/gates_up.tscn" id="8_w042w"]
+[ext_resource type="PackedScene" uid="uid://du2y0hi2j4c41" path="res://Scenes/Ladder/ladder.tscn" id="9_ve3sl"]
+[ext_resource type="Script" path="res://Gui.gd" id="10_fnox1"]
+[ext_resource type="PackedScene" uid="uid://cr3e354qlfmrd" path="res://Scenes/ui/pause_menu.tscn" id="10_scxse"]
+[ext_resource type="PackedScene" uid="uid://xybnlqsiurs" path="res://Scenes/Shop/shop.tscn" id="12_sndxk"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_ibgmt"]
 tile_data = PackedInt32Array(0, 983041, 8, 65536, 983041, 9, 1, 1048577, 8, 65537, 1048577, 9)
@@ -1408,7 +1411,7 @@ offsets = PackedFloat32Array(0.987207, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_fc07l"]
 gradient = SubResource("Gradient_ukeru")
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "ladder", "new_floor_timer")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "ladder", "new_floor_timer", "shop")]
 script = ExtResource("1_l1dci")
 level_size = Vector2(100, 80)
 main_rooms_size = Vector2(20, 30)
@@ -1419,6 +1422,7 @@ gate = ExtResource("7_to4u6")
 new_floor_timer = NodePath("Timer")
 gate_perimeter = ExtResource("8_w042w")
 enemy = ExtResource("4_tckvb")
+shop = NodePath("Menus/Shop")
 
 [node name="Level" type="TileMap" parent="." groups=["dungeon"]]
 tile_set = SubResource("TileSet_gmpy3")
@@ -1454,6 +1458,31 @@ one_shot = true
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.917647, 0.917647, 0.917647, 1)
 
+[node name="Menus" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("10_fnox1")
+
+[node name="Pause_menu" parent="Menus" instance=ExtResource("10_scxse")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -220.0
+offset_right = 220.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="Shop" parent="Menus" instance=ExtResource("12_sndxk")]
+process_mode = 3
+
 [connection signal="restart_game" from="Player" to="." method="_on_player_restart_game"]
 [connection signal="next_floor" from="Ladder" to="." method="_on_ladder_next_floor"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="Menus" method="_on_timer_timeout"]
+[connection signal="closed" from="Menus/Pause_menu" to="." method="_on_pause_menu_closed"]
+[connection signal="shop_closed" from="Menus/Shop" to="." method="_on_shop_shop_closed"]
+[connection signal="shop_closed" from="Menus/Shop" to="Menus/Pause_menu" method="_on_shop_shop_closed"]

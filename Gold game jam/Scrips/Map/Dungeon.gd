@@ -11,7 +11,7 @@ signal clear_floor
 @export var new_floor_timer : Timer
 @export var gate_perimeter : PackedScene
 @export var enemy : PackedScene
-
+@export var shop : Control
 
 @onready var level : TileMap = $Level
 @onready var treasue : CharacterBody2D = $Treasure
@@ -262,6 +262,7 @@ func find_min_span_tree(areas: Array):
 
 
 func _on_ladder_next_floor():
+	shop.open()
 	emit_signal("clear_floor")
 	new_floor_timer.start()
 
@@ -274,3 +275,11 @@ func _on_timer_timeout():
 	call_deferred("_generate_rooms")
 	call_deferred("_generate_structures")
 	call_deferred("_generate_gates_close_perimeter")
+
+
+func _on_pause_menu_closed():
+	get_tree().paused = false
+
+
+func _on_pause_menu_opened():
+	get_tree().paused = true
