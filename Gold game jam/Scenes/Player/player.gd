@@ -23,12 +23,12 @@ signal restart_game
 @export var ability_inventory : Ability_Inventory
 
 var move_direction : Vector2 = Vector2.ZERO
-var current_health : float = 100
+var current_health : float = 5
 var current_damage : float = 100
 var rotation_speed : float = 10
 var current_mana : float = 150
 var move_speed : float = 100
-var max_health : float = 100
+var max_health : float = 5
 var max_mana : float = 150
 var gold : int = 0
 
@@ -41,7 +41,17 @@ var hit : bool = false
 func _ready():
 	ui_sprite.hide()
 	mana_bar.value = max_mana
-	health_bar.value = max_health 
+	mana_bar.max_value = max_mana
+	mana_usage_bar.value = max_mana
+	mana_bar.max_value = max_mana
+	current_mana = max_mana
+	
+	health_bar.value = max_health
+	health_bar.max_value = max_health 
+	damaged_bar.value = max_health
+	damaged_bar.max_value = max_health
+	current_health = max_health
+	
 
 func _physics_process(delta):
 	move_direction = Input.get_vector("ui_left", "ui_right","ui_up","ui_down")

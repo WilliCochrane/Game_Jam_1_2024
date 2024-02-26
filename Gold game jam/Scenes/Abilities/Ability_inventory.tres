@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_nr3kk")
-abilities = Array[Resource]([])
+abilities = Array[Resource("res://Scenes/Abilities/Ability.gd")]([])

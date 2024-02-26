@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 var player : CharacterBody2D
-var speed = 75
-var damage = 10
+var speed = 80
+var damage = 1
 var scale_factor = 1
 
 func _ready():

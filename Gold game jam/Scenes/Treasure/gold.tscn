@@ -283,6 +283,7 @@ collision_mask = 2
 script = ExtResource("1_y2axw")
 
 [node name="Trail" parent="." instance=ExtResource("2_tu2bn")]
+visible = false
 self_modulate = Color(1, 1, 1, 0.580392)
 top_level = true
 

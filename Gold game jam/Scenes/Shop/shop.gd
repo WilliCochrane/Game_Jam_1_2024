@@ -32,7 +32,6 @@ func _ready():
 	player = get_tree().get_first_node_in_group("Player")
 	reroll_shop()
 	update_money()
-	player.gold += 100
 
 func dir_contents(path):
 	var dir = DirAccess.open(path)
