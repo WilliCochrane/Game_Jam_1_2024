@@ -15,6 +15,10 @@ run/main_scene="res://node_2d.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+dungeon_generation="*res://Scrips/Map/Dungeon_generation.gd"
+
 [display]
 
 window/size/viewport_width=1920
@@ -74,6 +78,7 @@ ui_interact={
 
 textures/canvas_textures/default_texture_filter=3
 renderer/rendering_method="mobile"
+renderer/rendering_method.web="mobile"
 anti_aliasing/quality/msaa_2d=2
 anti_aliasing/quality/msaa_3d=2
 anti_aliasing/quality/screen_space_aa=1

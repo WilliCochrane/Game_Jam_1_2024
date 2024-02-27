@@ -246,9 +246,9 @@ gold_lable = NodePath("ui/Sprite2D/Gold")
 ability_inventory = ExtResource("2_o8fdp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_isre5")
-hframes = 7
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("3_4c0k0")
+hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -261,7 +261,6 @@ scale = Vector2(0.469999, 0.23)
 shape = SubResource("CapsuleShape2D_v65hl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
 
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
 scale = Vector2(0.6, 0.6)
