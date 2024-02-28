@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Gold game jam"
+config/name="Guilder_raid"
 run/main_scene="res://node_2d.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
@@ -18,6 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 dungeon_generation="*res://Scrips/Map/Dungeon_generation.gd"
+
+[debug]
+
+gdscript/warnings/narrowing_conversion=0
 
 [display]
 
@@ -61,7 +65,7 @@ ui_down={
 }
 ui_shoot={
 "deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(214, 22),"global_position":Vector2(220, 84),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(147, 20),"global_position":Vector2(153, 82),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
 ui_interact={
@@ -70,15 +74,7 @@ ui_interact={
 ]
 }
 
-[layer_names]
-
-2d_physics/layer_1="player"
-
 [rendering]
 
-textures/canvas_textures/default_texture_filter=3
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
-renderer/rendering_method.web="mobile"
-anti_aliasing/quality/msaa_2d=2
-anti_aliasing/quality/msaa_3d=2
-anti_aliasing/quality/screen_space_aa=1

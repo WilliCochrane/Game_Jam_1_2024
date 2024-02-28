@@ -8,3 +8,7 @@ var connected_rooms = {
 }
 
 var number_of_connections = 0
+
+var start : bool = false
+var end : bool = false
+var treasure : bool = false

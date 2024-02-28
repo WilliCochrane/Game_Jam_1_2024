@@ -38,13 +38,18 @@ func summon_enemies():
 	for i in range(0,randi_range(5,7)):
 		invalid_spawn = true
 		while invalid_spawn == true:
+			invalid_spawn = false
 			xpos = randf_range(position.x-scale.x*8,position.x+scale.x*8)
 			ypos = randf_range(position.y-scale.y*8,position.y+scale.y*8)
-			@warning_ignore("narrowing_conversion")
 			if get_parent().tile_map.get_cell_atlas_coords(0,Vector2i(xpos/16,ypos/16)) == Vector2i(3,3):
-				invalid_spawn = false
-				@warning_ignore("narrowing_conversion")
-				spawn_palces.push_back(Vector2i(xpos/16,ypos/16))
+				for l in spawn_palces:
+					if Vector2i(xpos/16,ypos/16) == l:
+						invalid_spawn = true
+				if invalid_spawn == false:
+					spawn_palces.push_back(Vector2i(xpos/16,ypos/16))
+
+			else:
+				invalid_spawn = true
 		
 		var e = get_parent().enemy.instantiate()
 		e.scale.x *= 1/scale.x

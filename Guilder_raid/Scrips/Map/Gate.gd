@@ -15,12 +15,11 @@ func _ready():
 
 func _process(_delta):
 	if first_update == true:
-		
 		if side_facing == true:
 			anim_player.play("side_gate_idle")
+			collision_shape.rotation_degrees = 90
 		else:
 			anim_player.play("x_facing_idle")
-			
 		first_update = false
 	
 	if get_parent().gates_up == true && open_animation_finished == false:

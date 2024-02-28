@@ -4,8 +4,7 @@ extends Node
 
 var min_number_rooms = 6
 var max_number_rooms = 10
-
-var generation_chance = 20
+var generation_chance = 15
 
 func generate(room_seed):
 	seed(room_seed)
@@ -63,11 +62,25 @@ func connect_rooms(room1, room2, direction):
 func is_interesting(dungeon):
 	var rooms_with_three = 0
 	var rooms_with_one = 0
+	
+	var start_set = false
+	var end_set = false
+	var treasure_set = false
+	
 	for i in dungeon.keys():
 		if dungeon.get(i).number_of_connections >= 3:
 			rooms_with_three += 1
 		elif dungeon.get(i).number_of_connections == 1:
 			rooms_with_one += 1
+			if start_set == false:
+				dungeon.get(i).start = true
+				start_set = true
+			elif treasure_set == false:
+				dungeon.get(i).treasure = true
+				treasure_set = true
+			elif end_set == false:
+				dungeon.get(i).end = true
+				end_set = true
 	if rooms_with_one >= 3 && rooms_with_three >= 2:
 		return true
 	else:

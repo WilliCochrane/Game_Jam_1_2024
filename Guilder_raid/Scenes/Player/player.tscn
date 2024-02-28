@@ -261,6 +261,7 @@ scale = Vector2(0.469999, 0.23)
 shape = SubResource("CapsuleShape2D_v65hl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
 
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
 scale = Vector2(0.6, 0.6)
