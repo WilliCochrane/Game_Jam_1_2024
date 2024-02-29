@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://uk6yrsv45ei4"]
+[gd_scene load_steps=27 format=3 uid="uid://uk6yrsv45ei4"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Scenes/Player/player.tscn" id="1_l5ov3"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://du2y0hi2j4c41" path="res://Scenes/Ladder/ladder.tscn" id="9_ve3sl"]
 [ext_resource type="Script" path="res://Gui.gd" id="10_fnox1"]
 [ext_resource type="PackedScene" uid="uid://cr3e354qlfmrd" path="res://Scenes/ui/pause_menu.tscn" id="10_scxse"]
+[ext_resource type="PackedScene" uid="uid://c21u3b11dd227" path="res://Scenes/ui/start_menu.tscn" id="12_g12ls"]
 [ext_resource type="PackedScene" uid="uid://xybnlqsiurs" path="res://Scenes/Shop/shop.tscn" id="12_sndxk"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_vne1m"]
@@ -373,6 +374,8 @@ size_flags_vertical = 4
 
 [node name="Shop" parent="Menus" instance=ExtResource("12_sndxk")]
 process_mode = 3
+
+[node name="Start_menu" parent="Menus" instance=ExtResource("12_g12ls")]
 
 [connection signal="restart_game" from="Player" to="." method="_on_player_restart_game"]
 [connection signal="next_floor" from="Ladder" to="." method="_on_ladder_next_floor"]

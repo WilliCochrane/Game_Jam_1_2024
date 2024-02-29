@@ -2,6 +2,7 @@ extends Control
 
 signal shop_closed
 
+@export var grid_container : GridContainer
 @export var reroll_button : Button
 @export var shop_item1 : Panel
 @export var shop_item2 : Panel
@@ -54,6 +55,7 @@ func reroll_shop():
 		update_money()
 
 func reset_shop():
+	reroll_button.disabled = false
 	shop_item1.load_item(avalable_abilities.pick_random())
 	shop_item2.load_item(avalable_abilities.pick_random())
 	shop_item3.load_item(avalable_abilities.pick_random())
@@ -62,6 +64,8 @@ func reset_shop():
 
 func update_money():
 	money.text = str(player.gold)
+	if reroll_cost > player.gold:
+			reroll_button.disabled = true
 
 
 func _on_reroll_button_pressed():
