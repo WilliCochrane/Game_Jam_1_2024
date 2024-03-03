@@ -13,6 +13,7 @@ func _ready():
 	
 func _physics_process(delta):
 	position += transform.x * speed * delta
+	z_index = 1
 
 
 func _on_area_2d_body_entered(body):

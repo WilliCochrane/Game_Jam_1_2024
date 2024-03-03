@@ -84,6 +84,7 @@ func _physics_process(delta: float) -> void:
 	else: 
 		state = IDLE
 	
+	z_index = 1
 	weapon_rotate_to_player(delta)
 	move_and_slide()
 

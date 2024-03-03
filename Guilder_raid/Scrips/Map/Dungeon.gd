@@ -33,6 +33,9 @@ func load_map():
 	var cdor_y_md = tile_map.tile_set.get_pattern(4)
 	var cdor_y_en = tile_map.tile_set.get_pattern(5)
 	
+	for child in get_children():
+		if child.is_in_group("Gate"):
+			child.queue_free()
 	
 	for i in dungeon:
 		if dungeon.get(i).start:
@@ -45,7 +48,7 @@ func load_map():
 			tile_map.set_pattern(0, Vector2(34, 26)*i, tile_map.tile_set.get_pattern(6))
 			ladder.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 		else:
-			var rooms = tile_map.tile_set.get_pattern(randi_range(7,8))
+			var rooms = tile_map.tile_set.get_pattern(randi_range(7,13))
 			var gp = gate_perimeter.instantiate()
 			room_size = Vector2(-5,-6)
 			tile_map.set_pattern(0, Vector2(34, 26)*i, rooms)
@@ -60,6 +63,17 @@ func load_map():
 			gp.scale = room_size
 			gp.connect('close_gates',_on_player_enter_perimeter)
 			gp.connect('open_gates',_on_enemies_cleared)
+			
+	#for i in tile_map.get_used_cells(0):
+		#if tile_map.get_cell_atlas_coords(0,i) == Vector2i(6,5):
+			#tile_map.set_cell(1,Vector2i(i.x,i.y-1),2,Vector2i(6,4))
+			#tile_map.set_cell(1,Vector2i(i.x,i.y-2),2,Vector2i(6,3))
+		#elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(7,5):
+			#tile_map.set_cell(1,Vector2i(i.x,i.y-1),2,Vector2i(7,4))
+			#tile_map.set_cell(1,Vector2i(i.x,i.y-2),2,Vector2i(7,3))
+		#elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(8,5):
+			#tile_map.set_cell(1,Vector2i(i.x,i.y-1),2,Vector2i(8,4))
+			#tile_map.set_cell(1,Vector2i(i.x,i.y-2),2,Vector2i(8,3))
 	
 	for i in dungeon.keys():
 		
@@ -122,6 +136,7 @@ func _on_ladder_next_floor():
 
 func _on_player_restart_game():
 	new_floor_timer.start()
+
 
 func _on_timer_timeout():
 	tile_map.clear()

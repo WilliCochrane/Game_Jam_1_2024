@@ -34,7 +34,7 @@ func _physics_process(_delta):
 func summon_enemies():
 	summon_wave = false
 	enemies_spawned = true
-	nav_region.bake_navigation_polygon()
+#	nav_region.bake_navigation_polygon()
 	for i in range(0,randi_range(5,7)):
 		invalid_spawn = true
 		while invalid_spawn == true:

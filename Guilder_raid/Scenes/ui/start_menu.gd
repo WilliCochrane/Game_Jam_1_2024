@@ -11,11 +11,13 @@ func _ready():
 	u_sure.visible = false
 
 func open():
+	get_tree().paused = true
 	visible = true
 	is_open = true
 	opened.emit()
 
 func close():
+	get_tree().paused = false
 	visible = false
 	is_open = false
 	closed.emit()

@@ -393,7 +393,7 @@ _data = {
 "x_facing_open": SubResource("Animation_wflnj")
 }
 
-[node name="Gate" type="StaticBody2D" node_paths=PackedStringArray("anim_player", "collision_shape")]
+[node name="Gate" type="StaticBody2D" node_paths=PackedStringArray("anim_player", "collision_shape") groups=["Gate"]]
 script = ExtResource("1_1d0d3")
 anim_player = NodePath("AnimationPlayer")
 collision_shape = NodePath("CollisionShape2D")
@@ -415,5 +415,4 @@ libraries = {
 }
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-position = Vector2(8, -8)
 radius = 9.0

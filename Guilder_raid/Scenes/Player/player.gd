@@ -38,6 +38,10 @@ var current_mana_usage : float
 var mana_regen : bool = false
 var hit : bool = false
 
+var shake_strength : float = 0.0
+var shake_fade : float = 5.0
+
+
 func _ready():
 	ui_sprite.hide()
 	mana_bar.value = max_mana
@@ -117,12 +121,17 @@ func _physics_process(delta):
 		ui_anim_player.play("Player_hit")
 		hit = false
 	
+	if shake_strength > 0:
+		shake_strength = lerpf(shake_strength,0,shake_fade*delta)
+		
+		camera.offset = random_offset()
+	
 	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
 	move_and_slide()
 
 
-func apply_shake():
-	pass
+func random_offset():
+	return Vector2(randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength))
 
 
 func weapon_rotate_to_mouse(target, delta):

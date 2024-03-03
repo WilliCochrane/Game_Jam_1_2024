@@ -1,11 +1,14 @@
 extends CanvasLayer
 
 @onready var pause_menu = $Pause_menu
+@onready var start_menu = $Start_menu
 @onready var shop = $Shop
 
 func _ready(): 
+	start_menu.open()
 	pause_menu.close()
 	shop.close()
+	get_tree().paused = true
 
 
 func _input(event):

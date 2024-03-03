@@ -33,8 +33,6 @@ var bullet_size_modifier : float = 1
 var fire_rate_modifier : float = 1
 var damage_modifier : float = 1
 
-var camera_shake_strength : float = 10
-var shake_fade : float = 5
 
 func _ready():
 	first_bullet.queue_free()
@@ -64,6 +62,7 @@ func _on_player_shoot():
 			cooldown_timer.start()
 			can_shoot = false
 			emit_signal("mana_used")
+			get_parent().shake_strength = damage/5 * projectiles
 			if projectiles == 1:
 				spawn_bullet()
 			else:
@@ -86,7 +85,7 @@ func spawn_bullet():
 	owner.owner.add_child(b)
 	b.anim_player.play(bullet_type)
 	b.transform = $Muzzle.global_transform
-	
+
 
 
 

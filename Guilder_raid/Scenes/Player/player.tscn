@@ -143,8 +143,8 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v65hl"]
-radius = 14.8936
-height = 69.5652
+radius = 10.6383
+height = 43.4783
 
 [sub_resource type="Animation" id="Animation_dv1j7"]
 resource_name = "Player_hit"
@@ -256,12 +256,12 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 7)
+position = Vector2(0, 8)
 scale = Vector2(0.469999, 0.23)
 shape = SubResource("CapsuleShape2D_v65hl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(4, 4)
 
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
 scale = Vector2(0.6, 0.6)
@@ -392,6 +392,7 @@ one_shot = true
 [node name="Hitbox" type="Area2D" parent="." groups=["Player_hitbox"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_2t7im")
 
@@ -400,6 +401,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attraction_radius"]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_epq4t")
 

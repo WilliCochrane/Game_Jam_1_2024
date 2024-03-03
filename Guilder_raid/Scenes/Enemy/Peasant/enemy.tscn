@@ -444,6 +444,8 @@ _data = {
 size = Vector2(8, 15)
 
 [node name="Peasant" type="CharacterBody2D" groups=["Enemy", "melee_enemy"]]
+z_index = 1
+y_sort_enabled = true
 scale = Vector2(1.2, 1.2)
 script = ExtResource("1_fotac")
 
