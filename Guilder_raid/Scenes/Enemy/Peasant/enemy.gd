@@ -33,7 +33,7 @@ enum {
 var state = IDLE
 
 func _ready():
-	health = 50
+	health = 5
 	player = get_tree().get_first_node_in_group("Player")
 	attack_timer.start(randf_range(2,3))
 	can_move = true

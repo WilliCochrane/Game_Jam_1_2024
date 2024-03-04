@@ -48,7 +48,7 @@ func load_map():
 			tile_map.set_pattern(0, Vector2(34, 26)*i, tile_map.tile_set.get_pattern(6))
 			ladder.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 		else:
-			var rooms = tile_map.tile_set.get_pattern(randi_range(7,13))
+			var rooms = tile_map.tile_set.get_pattern(randi_range(7,12))
 			var gp = gate_perimeter.instantiate()
 			room_size = Vector2(-5,-6)
 			tile_map.set_pattern(0, Vector2(34, 26)*i, rooms)
