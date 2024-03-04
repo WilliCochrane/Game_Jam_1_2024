@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bx3muipehkgd6"]
+[gd_scene load_steps=4 format=3 uid="uid://bx3muipehkgd6"]
 
 [ext_resource type="Texture2D" uid="uid://dlvkeh3lel4p3" path="res://Assets/Effects/spot.png" id="1_stipw"]
 
+[sub_resource type="Curve" id="Curve_hd3hj"]
+_data = [Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="Gradient" id="Gradient_bfyus"]
-offsets = PackedFloat32Array(0, 0.76779, 1)
-colors = PackedColorArray(0.827451, 0, 0, 1, 0.921569, 0.556863, 0, 1, 0.984314, 0.705882, 0, 0.0627451)
+offsets = PackedFloat32Array(0, 0.76779, 0.94702)
+colors = PackedColorArray(0.827451, 0, 0, 1, 1, 0.509804, 0, 1, 0.984314, 0.705882, 0, 0.0627451)
 
 [node name="torch_light" type="PointLight2D"]
 z_index = 10
@@ -19,26 +23,32 @@ texture_scale = 3.0
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(0, -4)
 color = Color(0.992157, 0.776471, 0.643137, 1)
-energy = 0.55
+energy = 0.3
 texture = ExtResource("1_stipw")
-texture_scale = 0.2
+texture_scale = 0.3
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 z_index = 10
 position = Vector2(0, -4)
-randomness = 0.22
+amount = 2
+randomness = 0.5
 emission_shape = 1
 emission_sphere_radius = 2.0
 direction = Vector2(0, -1)
-spread = 18.26
+spread = 20.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 5.0
 initial_velocity_max = 15.0
+angular_velocity_min = -100.0
+angular_velocity_max = 100.0
 orbit_velocity_min = -0.1
 orbit_velocity_max = 0.1
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
 damping_min = 1.5
 damping_max = 7.5
 angle_min = -360.0
 angle_max = 360.0
 scale_amount_max = 1.3
+scale_amount_curve = SubResource("Curve_hd3hj")
 color_ramp = SubResource("Gradient_bfyus")

@@ -24,6 +24,7 @@ func _ready():
 	tile_map.clear()
 	dungeon = dungeon_generation.generate(randf_range(-10,10))
 	load_map()
+	
 
 func load_map():
 	var cdor_x_st = tile_map.tile_set.get_pattern(0)

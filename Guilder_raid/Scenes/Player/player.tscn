@@ -261,12 +261,14 @@ scale = Vector2(0.469999, 0.23)
 shape = SubResource("CapsuleShape2D_v65hl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
+zoom = Vector2(2, 2)
 
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
 scale = Vector2(0.6, 0.6)
 
 [node name="ui" type="CanvasLayer" parent="."]
+scale = Vector2(0.667, 0.667)
+transform = Transform2D(0.667, 0, 0, 0.667, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ui"]
 position = Vector2(60, 150)
@@ -368,8 +370,8 @@ libraries = {
 }
 
 [node name="UI_Sprite2D" type="Sprite2D" parent="ui"]
-position = Vector2(960, 540)
 texture = ExtResource("7_em7js")
+offset = Vector2(960, 540)
 hframes = 5
 
 [node name="Low_health" type="Sprite2D" parent="ui"]
