@@ -9,6 +9,7 @@ signal clear_floor
 @export var gate_perimeter : PackedScene
 @export var enemy : PackedScene
 @export var shop : Control
+@export var torch_light : PackedScene
 
 @onready var tile_map : TileMap = $Level
 @onready var treasue : CharacterBody2D = $Treasure
@@ -64,16 +65,11 @@ func load_map():
 			gp.connect('close_gates',_on_player_enter_perimeter)
 			gp.connect('open_gates',_on_enemies_cleared)
 			
-	#for i in tile_map.get_used_cells(0):
-		#if tile_map.get_cell_atlas_coords(0,i) == Vector2i(6,5):
-			#tile_map.set_cell(1,Vector2i(i.x,i.y-1),2,Vector2i(6,4))
-			#tile_map.set_cell(1,Vector2i(i.x,i.y-2),2,Vector2i(6,3))
-		#elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(7,5):
-			#tile_map.set_cell(1,Vector2i(i.x,i.y-1),2,Vector2i(7,4))
-			#tile_map.set_cell(1,Vector2i(i.x,i.y-2),2,Vector2i(7,3))
-		#elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(8,5):
-			#tile_map.set_cell(1,Vector2i(i.x,i.y-1),2,Vector2i(8,4))
-			#tile_map.set_cell(1,Vector2i(i.x,i.y-2),2,Vector2i(8,3))
+	for i in tile_map.get_used_cells(0):
+		if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
+			var tl = torch_light.instantiate()
+			add_child(tl)
+			tl.position = Vector2(i.x*16+8,i.y*16+6)
 	
 	for i in dungeon.keys():
 		

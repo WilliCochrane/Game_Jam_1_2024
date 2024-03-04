@@ -4,7 +4,7 @@ extends Node
 
 var min_number_rooms = 10
 var max_number_rooms = 15
-var generation_chance = 15
+var generation_chance = 100
 
 func generate(room_seed):
 	seed(room_seed)
