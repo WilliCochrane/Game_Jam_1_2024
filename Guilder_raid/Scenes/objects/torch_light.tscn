@@ -10,7 +10,7 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.76779, 0.94702)
 colors = PackedColorArray(0.827451, 0, 0, 1, 1, 0.509804, 0, 1, 0.984314, 0.705882, 0, 0.0627451)
 
-[node name="torch_light" type="PointLight2D"]
+[node name="torch_light" type="PointLight2D" groups=["light"]]
 z_index = 10
 color = Color(0.960784, 0.733333, 0.647059, 1)
 energy = 0.2

@@ -36,8 +36,9 @@ func load_map():
 	var cdor_y_en = tile_map.tile_set.get_pattern(5)
 	
 	for child in get_children():
-		if child.is_in_group("Gate"):
+		if child.is_in_group("Gate") or child.is_in_group("light"):
 			child.queue_free()
+			
 	
 	for i in dungeon:
 		if dungeon.get(i).start:
@@ -51,7 +52,6 @@ func load_map():
 			ladder.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 		else:
 			var rooms = tile_map.tile_set.get_pattern(randi_range(7,12))
-			var gp = gate_perimeter.instantiate()
 			room_size = Vector2(-5,-6)
 			tile_map.set_pattern(0, Vector2(34, 26)*i, rooms)
 			for l in range(0,35):
@@ -60,11 +60,8 @@ func load_map():
 			for l in range(0,27):
 				if tile_map.get_cell_atlas_coords(0,Vector2i(34*i.x+16,26*i.y+l)) != Vector2i(4,3):
 					room_size.y += 1
-			add_child(gp)
-			gp.position = Vector2((34*i.x+16)*16,(26*i.y+12.5)*16)
-			gp.scale = room_size
-			gp.connect('close_gates',_on_player_enter_perimeter)
-			gp.connect('open_gates',_on_enemies_cleared)
+			_add_gate_perimeter(i.x,i.y,room_size)
+			
 			
 	for i in tile_map.get_used_cells(0):
 		if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
@@ -110,6 +107,13 @@ func load_map():
 					break
 				count += 1
 
+func _add_gate_perimeter(x,y,s):
+	var gp = gate_perimeter.instantiate()
+	add_child(gp)
+	gp.position = Vector2((34*x+16)*16,(26*y+12.5)*16)
+	gp.scale = Vector2(s.x,s.y)
+	gp.connect('close_gates',_on_player_enter_perimeter)
+	gp.connect('open_gates',_on_enemies_cleared)
 
 func _spawn_gate(x,y,side_facing:bool):
 	var g = gate.instantiate()

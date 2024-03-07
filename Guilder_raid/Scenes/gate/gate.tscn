@@ -413,6 +413,3 @@ hframes = 5
 libraries = {
 "": SubResource("AnimationLibrary_jgu5k")
 }
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 9.0

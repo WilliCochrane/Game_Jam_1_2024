@@ -17,15 +17,15 @@ var invalid_spawn : bool
 var xpos : float
 var ypos : float
 
-func _ready():
+func _ready(): 
 	get_parent().connect("clear_floor",on_clear_floor)
 	player = get_tree().get_first_node_in_group("Player")
 
 
 func _physics_process(_delta):
-	
 	if summon_wave == true:
 		summon_enemies()
+		nav_region.bake_navigation_polygon()
 	if enemies_spawned == true && alive_enemies == 0:
 		emit_signal("open_gates")
 		alive_enemies = 1

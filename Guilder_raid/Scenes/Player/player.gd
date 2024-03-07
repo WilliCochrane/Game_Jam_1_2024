@@ -62,9 +62,9 @@ func _physics_process(delta):
 	velocity = move_direction * move_speed  * delta
 	position += velocity
 	if move_direction != Vector2.ZERO:
-		anim_player.play("Run")
+		anim_player.play("gob_run")
 	else:
-		anim_player.play("Idle")
+		anim_player.play("gob_idle")
 	
 	mana_bar.value = current_mana
 	mana_usage_bar.value = current_mana_usage
@@ -139,10 +139,10 @@ func weapon_rotate_to_mouse(target, delta):
 	var angleTo = weapon.transform.x.angle_to(direction)
 	weapon.rotate(sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
 	if direction.x > 0:
-		sprite.flip_h = true
+		sprite.flip_h = false
 		weapon.get_child(0).scale.y = 1
 	elif direction.x < 0:
-		sprite.flip_h = false
+		sprite.flip_h = true
 		weapon.get_child(0).scale.y = -1
 
 

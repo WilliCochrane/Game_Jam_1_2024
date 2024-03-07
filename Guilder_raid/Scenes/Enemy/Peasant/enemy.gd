@@ -61,9 +61,9 @@ func _physics_process(delta: float) -> void:
 		die()
 	
 	if velocity == Vector2.ZERO:
-		animation.play("idle")
+		animation.play("p_idle")
 	else:
-		animation.play("walk")
+		animation.play("p_run")
 	
 	if hit == true:
 		alt_animation.play("hit")
