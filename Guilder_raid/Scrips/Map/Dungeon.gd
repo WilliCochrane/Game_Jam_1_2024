@@ -142,14 +142,16 @@ func _on_enemies_cleared():
 
 func _on_ladder_next_floor():
 	emit_signal("clear_floor")
-	shop.open()
+	tile_map.clear()
+	dungeon = dungeon_generation.generate(randf_range(-10,10))
 	load_map()
+	shop.open()
 
 
 func _on_player_restart_game():
 	emit_signal("clear_floor")
 	tile_map.clear()
-	dungeon = dungeon_generation.generate(randf_range(-1000,1000))
+	dungeon = dungeon_generation.generate(randf_range(-10,10))
 	load_map()
 
 

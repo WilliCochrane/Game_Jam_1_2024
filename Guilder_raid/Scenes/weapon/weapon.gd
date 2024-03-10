@@ -5,7 +5,6 @@ signal mana_used
 @export var bullet : PackedScene
 @export var cooldown_timer : Timer
 @export var weapon_machine : Node
-@export var first_bullet : CharacterBody2D
 @export var raycast : RayCast2D
 
 var bullet_spread : float 
@@ -35,7 +34,6 @@ var damage_modifier : float = 1
 
 
 func _ready():
-	first_bullet.queue_free()
 	raycast.add_exception(get_parent())
 
 func _physics_process(_delta):

@@ -24,11 +24,11 @@ signal restart_game
 @export var dash : Node2D
 
 var move_direction : Vector2 = Vector2.ZERO
-var current_damage : float = 100
+var current_damage : float = 5
 var rotation_speed : float = 10
 var current_health : float = 5
 var current_mana : float = 150
-var dash_duration : float = .2
+var dash_duration : float = .15
 var move_speed : float = 100
 var dash_speed : float = 300
 var max_health : float = 5
@@ -61,14 +61,74 @@ func _ready():
 	
 
 func _physics_process(delta):
+	var speed = dash_speed if dash.is_dashing() else move_speed
 	move_direction = Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
-	velocity = move_direction * move_speed  * delta
+	velocity = move_direction * speed  * delta
 	position += velocity
 	if move_direction != Vector2.ZERO:
 		anim_player.play("gob_run")
 	else:
 		anim_player.play("gob_idle")
 	
+	if current_health <= 0:
+		print("you lose")
+		position = Vector2(128,128)
+		emit_signal("restart_game")
+		current_health = max_health
+		current_mana = max_mana
+	
+	low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
+	
+	gold_lable.text = str(gold)
+	
+	if hit == true:
+		ui_sprite.show()
+		ui_anim_player.play("Player_hit")
+		hit = false
+	
+	if shake_strength > 0:
+		shake_strength = lerpf(shake_strength,0,shake_fade*delta)
+		
+		camera.offset = random_offset()
+	
+	bar_management()
+	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
+	move_and_slide()
+
+
+func random_offset():
+	return Vector2(randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength))
+
+
+func weapon_rotate_to_mouse(target, delta):
+	var direction = (target - weapon.global_position) #target global position if is an entity
+	var angleTo = weapon.transform.x.angle_to(direction)
+	weapon.rotation += (sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
+	if direction.x > 0:
+		sprite.flip_h = false
+		weapon.get_child(0).scale.y = 1
+	elif direction.x < 0:
+		sprite.flip_h = true
+		weapon.get_child(0).scale.y = -1
+	weapon.rotation_degrees = round_to_dec(weapon.rotation_degrees,-1)
+
+
+func _input(event):
+	if event.is_action_pressed("ui_shoot"):
+		emit_signal("shoot")
+	if event.is_action_released("ui_shoot"):
+		emit_signal("shoot_stop")
+	if event.is_action("ui_dash") && dash.can_dash && !dash.is_dashing():
+		dash.start_dash(sprite, dash_duration)
+
+func round_to_dec(num, digit):
+	return round(num * pow(10.0, digit)) / pow(10.0, digit)
+
+func _on_damage_recieved(damage : float) -> void:
+	current_health -= damage
+
+
+func bar_management():
 	mana_bar.value = current_mana
 	mana_usage_bar.value = current_mana_usage
 	health_bar.value = current_health
@@ -106,63 +166,7 @@ func _physics_process(delta):
 		if damaged_timer.is_stopped():
 			damaged_timer.start()
 	elif current_damage > current_health && damadged_bar_catchup == true:
-		current_damage -= .5
-	
-	if current_health <= 0:
-		print("you lose")
-		position = Vector2(128,128)
-		emit_signal("restart_game")
-		current_health = max_health
-		current_mana = max_mana
-	
-	low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
-	
-	gold_lable.text = str(gold)
-	
-	if hit == true:
-		ui_sprite.show()
-		ui_anim_player.play("Player_hit")
-		hit = false
-	
-	if shake_strength > 0:
-		shake_strength = lerpf(shake_strength,0,shake_fade*delta)
-		
-		camera.offset = random_offset()
-	
-	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
-	move_and_slide()
-
-
-func random_offset():
-	return Vector2(randf_range(-shake_strength,shake_strength),randf_range(-shake_strength,shake_strength))
-
-
-func weapon_rotate_to_mouse(target, delta):
-	var direction = (target - weapon.global_position) #target global position if is an entity
-	var angleTo = weapon.transform.x.angle_to(direction)
-	weapon.rotation += (sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
-	if direction.x > 0:
-		sprite.flip_h = false
-		weapon.get_child(0).scale.y = 1
-	elif direction.x < 0:
-		sprite.flip_h = true
-		weapon.get_child(0).scale.y = -1
-	weapon.rotation_degrees = round_to_dec(weapon.rotation_degrees,-1)
-
-
-func _input(event):
-	if event.is_action_pressed("ui_shoot"):
-		emit_signal("shoot")
-	if event.is_action_released("ui_shoot"):
-		emit_signal("shoot_stop")
-	if event.is_action("ui_dash"):
-		dash.start_dash(dash_duration)
-
-func round_to_dec(num, digit):
-	return round(num * pow(10.0, digit)) / pow(10.0, digit)
-
-func _on_damage_recieved(damage : float) -> void:
-	current_health -= damage
+		current_damage -= .01
 
 
 func _on_mana_regen_timeout():

@@ -33,7 +33,6 @@ func _physics_process(_delta):
 
 
 func summon_enemies():
-	print("yes")
 	summon_wave = false
 	enemies_spawned = true
 	nav_region.bake_navigation_polygon()
@@ -57,14 +56,14 @@ func summon_enemies():
 		e.scale.x *= 1/scale.x
 		e.scale.y *= 1/scale.y
 		add_child(e)
-		e.global_position.x = xpos
-		e.global_position.y = ypos
+		e.global_position.x = xpos + 8
+		e.global_position.y = ypos + 8
 		
 		alive_enemies += 1
 
 
 func _on_body_entered(body):
-	if body.is_in_group("Player") && first_activation == true && can_spawn == true:
+	if body.is_in_group("Player") && first_activation && can_spawn:
 		emit_signal("close_gates")
 		summon_wave = true
 		first_activation = false

@@ -1,9 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=23 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
-[ext_resource type="Texture2D" uid="uid://7ngffy2hjll0" path="res://Assets/Player/Goblin_running.png" id="2_isre5"]
 [ext_resource type="Resource" uid="uid://bq4oofxg3pous" path="res://Scenes/Abilities/Ability_inventory.tres" id="2_o8fdp"]
-[ext_resource type="Texture2D" uid="uid://38xnxblv6ccg" path="res://Assets/Player/Goblin_idle.png" id="3_4c0k0"]
 [ext_resource type="Texture2D" uid="uid://bpyd55lt7yjte" path="res://Assets/Player/Gob_run.png" id="3_8bgvj"]
 [ext_resource type="PackedScene" uid="uid://c6rheyijs8n4l" path="res://Scenes/weapon/weapon.tscn" id="4_q6ram"]
 [ext_resource type="Texture2D" uid="uid://dy1f3lvtumltt" path="res://Assets/UI/progress_bar_filler.png" id="5_2y74i"]
@@ -15,128 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://bjq8hinio3an7" path="res://Assets/UI/Damaged/blurry Blood Overlay.png" id="8_a5rkc"]
 [ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 
-[sub_resource type="Animation" id="Animation_803p1"]
-resource_name = "Idle"
-length = 1.00002
-loop_mode = 1
-step = 0.166667
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("3_4c0k0")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [6]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5]
-}
-
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_4ufjs"]
-resource_name = "Run"
-length = 0.500006
-loop_mode = 1
-step = 0.0714286
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("2_isre5")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [7]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0714286, 0.142857, 0.214286, 0.285714, 0.357143, 0.428571),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.214286, 0.285714, 0.428571),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, -1), Vector2(0, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Weapon:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.214286, 0.285714),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, -1)]
-}
 
 [sub_resource type="Animation" id="Animation_qhspd"]
 resource_name = "gob_idle"
@@ -228,7 +106,7 @@ tracks/3/path = NodePath("Weapon:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.0714286, 0.214286, 0.285714, 0.357143, 0.5),
+"times": PackedFloat32Array(0, 0.0714, 0.214286, 0.285714, 0.357143, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, -1), Vector2(0, 0), Vector2(0, -1), Vector2(0, -1)]
@@ -236,9 +114,7 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t5jns"]
 _data = {
-"Idle": SubResource("Animation_803p1"),
 "RESET": SubResource("Animation_626wt"),
-"Run": SubResource("Animation_4ufjs"),
 "gob_idle": SubResource("Animation_qhspd"),
 "gob_run": SubResource("Animation_pf5mt")
 }
@@ -282,7 +158,7 @@ tracks/2/path = NodePath("UI_Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667),
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.0999, 0.133333, 0.166667),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 0, 1, 2, 3, 4]
@@ -348,8 +224,8 @@ ability_inventory = ExtResource("2_o8fdp")
 dash = NodePath("Dash")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_4c0k0")
-hframes = 6
+texture = ExtResource("3_8bgvj")
+hframes = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -366,20 +242,16 @@ shape = SubResource("CapsuleShape2D_v65hl")
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
 
 [node name="ui" type="CanvasLayer" parent="."]
-scale = Vector2(0.333, 0.333)
-transform = Transform2D(0.333, 0, 0, 0.333, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ui"]
-position = Vector2(60, 150)
-scale = Vector2(2, 2)
+position = Vector2(20, 55)
 texture = ExtResource("5_cx2o8")
 
 [node name="Gold" type="Label" parent="ui/Sprite2D"]
-offset_left = 12.5
-offset_top = -12.0
-offset_right = 48.5
-offset_bottom = 14.0
-scale = Vector2(0.8, 0.8)
+offset_left = 12.0
+offset_top = -15.0
+offset_right = 48.0
+offset_bottom = 11.0
 theme_override_colors/font_color = Color(0.878431, 0.878431, 0.878431, 1)
 theme_override_fonts/font = ExtResource("6_jyu7f")
 theme_override_font_sizes/font_size = 32
@@ -388,10 +260,10 @@ text = "100"
 [node name="Health_bar" type="TextureProgressBar" parent="ui"]
 clip_contents = true
 layout_direction = 1
-offset_left = 45.0
-offset_top = 45.0
-offset_right = 195.0
-offset_bottom = 60.0
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 60.0
+offset_bottom = 21.0
 scale = Vector2(2, 2)
 value = 100.0
 nine_patch_stretch = true
@@ -414,7 +286,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-value = 60.0
+step = 0.01
+value = 5.0
 nine_patch_stretch = true
 stretch_margin_left = 3
 stretch_margin_top = 3
@@ -428,10 +301,10 @@ tint_progress = Color(0.952941, 0.533333, 0.513726, 1)
 [node name="Mana_bar" type="TextureProgressBar" parent="ui"]
 clip_contents = true
 layout_direction = 1
-offset_left = 45.0
-offset_top = 90.0
-offset_right = 195.0
-offset_bottom = 105.0
+offset_left = 10.0
+offset_top = 30.0
+offset_right = 60.0
+offset_bottom = 36.0
 scale = Vector2(2, 2)
 max_value = 150.0
 value = 50.0
@@ -450,8 +323,8 @@ z_index = -1
 clip_contents = true
 layout_direction = 1
 layout_mode = 0
-offset_right = 150.0
-offset_bottom = 15.0
+offset_right = 50.0
+offset_bottom = 6.0
 max_value = 150.0
 nine_patch_stretch = true
 stretch_margin_left = 3
@@ -469,6 +342,7 @@ libraries = {
 }
 
 [node name="UI_Sprite2D" type="Sprite2D" parent="ui"]
+scale = Vector2(0.333, 0.333)
 texture = ExtResource("7_em7js")
 offset = Vector2(960, 540)
 hframes = 5

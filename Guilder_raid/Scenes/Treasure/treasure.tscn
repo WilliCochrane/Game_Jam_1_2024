@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bej0bu2a4drvl"]
+[gd_scene load_steps=12 format=3 uid="uid://bej0bu2a4drvl"]
 
 [ext_resource type="Script" path="res://Scenes/Treasure/treasure.gd" id="1_hw1sd"]
 [ext_resource type="Texture2D" uid="uid://rkw3uh5arawi" path="res://Assets/TileSet/dungeon_sheet.png" id="1_x028d"]
 [ext_resource type="Texture2D" uid="uid://7mttkot377eb" path="res://Assets/TileSet/Chest_open.png" id="2_4nsi2"]
+[ext_resource type="FontFile" uid="uid://ejil0kwiqa3l" path="res://Assets/UI/m5x7.ttf" id="4_tkjl4"]
 
 [sub_resource type="Animation" id="Animation_8y2lr"]
 resource_name = "Instructions"
@@ -139,7 +140,7 @@ _data = {
 size = Vector2(18, 10)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_veged"]
-radius = 25.0
+radius = 28.0179
 
 [node name="Treasure" type="CharacterBody2D" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("1_hw1sd")
@@ -151,6 +152,8 @@ texture = ExtResource("2_4nsi2")
 hframes = 4
 frame = 2
 
+[node name="Weapon_pickup" type="Sprite2D" parent="."]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_v7kv5")
@@ -161,10 +164,20 @@ position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_d22hq")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_veged")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -44.0
+offset_top = -30.0
+offset_right = 44.0
+offset_bottom = -17.0
+theme_override_fonts/font = ExtResource("4_tkjl4")
+theme_override_font_sizes/font_size = 16
+text = "[F] to interact"
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

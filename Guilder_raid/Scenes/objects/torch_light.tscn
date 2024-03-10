@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bx3muipehkgd6"]
+[gd_scene load_steps=5 format=3 uid="uid://bx3muipehkgd6"]
 
 [ext_resource type="Texture2D" uid="uid://dlvkeh3lel4p3" path="res://Assets/Effects/spot.png" id="1_stipw"]
+[ext_resource type="Script" path="res://Scenes/objects/torch_light.gd" id="2_xyvr1"]
 
 [sub_resource type="Curve" id="Curve_hd3hj"]
 _data = [Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -19,6 +20,7 @@ shadow_filter = 1
 shadow_filter_smooth = 6.0
 texture = ExtResource("1_stipw")
 texture_scale = 3.0
+script = ExtResource("2_xyvr1")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 z_index = 10

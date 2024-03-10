@@ -340,35 +340,28 @@ _data = {
 "pistol": SubResource("Animation_rvcax")
 }
 
-[node name="Weapon" type="CharacterBody2D" node_paths=PackedStringArray("cooldown_timer", "weapon_machine", "first_bullet", "raycast") groups=["Weapon"]]
+[node name="Weapon" type="CharacterBody2D" node_paths=PackedStringArray("cooldown_timer", "weapon_machine", "raycast") groups=["Weapon"]]
 z_index = 1
 y_sort_enabled = true
 script = ExtResource("1_6mjeb")
 bullet = ExtResource("2_nq1jh")
 cooldown_timer = NodePath("Cooldown")
 weapon_machine = NodePath("WeaponMachine")
-first_bullet = NodePath("Bullet")
 raycast = NodePath("RayCast2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(11.25, 0)
-texture = ExtResource("3_6jha3")
-offset = Vector2(0, 3)
+position = Vector2(16, 0)
+texture = ExtResource("3_n7f66")
+offset = Vector2(0, -1.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_t0lp1")
 }
 
-[node name="Bullet" parent="." instance=ExtResource("2_nq1jh")]
-z_index = -2
-z_as_relative = false
-position = Vector2(2, -2)
-scale = Vector2(0.2, 0.2)
-
 [node name="WeaponMachine" type="Node" parent="." node_paths=PackedStringArray("initial_weapon")]
 script = ExtResource("4_w1n20")
-initial_weapon = NodePath("MiniGun")
+initial_weapon = NodePath("Shotgun")
 
 [node name="pistol" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_7xyep")
@@ -387,11 +380,11 @@ script = ExtResource("11_vme88")
 anim_player = NodePath("../../AnimationPlayer")
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(14, 0)
+position = Vector2(20, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-3, 0)
-target_position = Vector2(28, 0)
+target_position = Vector2(34, 0)
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.1

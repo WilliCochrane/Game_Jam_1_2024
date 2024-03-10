@@ -11,7 +11,7 @@ func _ready():
 	crit_chance = 20
 	bullet_size = .75
 	bullet_speed = 10
-	bullet_spread = 7
+	bullet_spread = 5
 
 
 func Update(_delta):
