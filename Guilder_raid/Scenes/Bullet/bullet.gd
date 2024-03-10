@@ -63,4 +63,16 @@ func _on_timer_timeout():
 	queue_free()
 
 
-
+func _on_area_2d_area_entered(area):
+	if area.is_in_group("Enemy"):
+		area.get_parent().health -= damage
+		area.get_parent().hit = true
+		can_move = false
+	
+		$CPUParticles2D.emitting = true
+		$Sprite2D.visible = false
+		$Timer.start()
+		if flamethrow == false:
+			pass
+		else:
+			queue_free()

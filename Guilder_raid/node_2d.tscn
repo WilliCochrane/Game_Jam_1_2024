@@ -1,10 +1,11 @@
-[gd_scene load_steps=45 format=3 uid="uid://uk6yrsv45ei4"]
+[gd_scene load_steps=46 format=3 uid="uid://uk6yrsv45ei4"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Scenes/Player/player.tscn" id="1_l5ov3"]
 [ext_resource type="Texture2D" uid="uid://rkw3uh5arawi" path="res://Assets/TileSet/dungeon_sheet.png" id="2_7vrrn"]
 [ext_resource type="PackedScene" uid="uid://48fpkt0wst45" path="res://Scenes/Enemy/Peasant/enemy.tscn" id="4_tckvb"]
 [ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Scenes/Treasure/treasure.tscn" id="5_ee60j"]
+[ext_resource type="PackedScene" uid="uid://bwe0c6624j1v0" path="res://Scenes/Effects/room_light.tscn" id="6_yk4yx"]
 [ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Scenes/gate/gate.tscn" id="7_to4u6"]
 [ext_resource type="PackedScene" uid="uid://bnrmiqvhay643" path="res://Scenes/gate/gates_up.tscn" id="8_w042w"]
 [ext_resource type="PackedScene" uid="uid://du2y0hi2j4c41" path="res://Scenes/Ladder/ladder.tscn" id="9_ve3sl"]
@@ -706,8 +707,9 @@ gate_perimeter = ExtResource("8_w042w")
 enemy = ExtResource("4_tckvb")
 shop = NodePath("Menus/Shop")
 torch_light = ExtResource("13_tkhvk")
+room_light = ExtResource("6_yk4yx")
 
-[node name="Level" type="TileMap" parent="." groups=["dungeon"]]
+[node name="Level" type="TileMap" parent="." groups=["dungeon", "navigation"]]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_gmpy3")
 format = 2
@@ -730,13 +732,13 @@ z_index = 1
 y_sort_enabled = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.05
+wait_time = 0.1
 one_shot = true
 
 [node name="Menus" type="CanvasLayer" parent="."]
 process_mode = 3
-scale = Vector2(0.667, 0.667)
-transform = Transform2D(0.667, 0, 0, 0.667, 0, 0)
+scale = Vector2(0.333, 0.333)
+transform = Transform2D(0.333, 0, 0, 0.333, 0, 0)
 script = ExtResource("10_fnox1")
 
 [node name="Pause_menu" parent="Menus" instance=ExtResource("10_scxse")]

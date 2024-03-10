@@ -21,13 +21,16 @@ signal restart_game
 @export var low_health_indicator : Sprite2D
 @export var gold_lable : Label
 @export var ability_inventory : Ability_Inventory
+@export var dash : Node2D
 
 var move_direction : Vector2 = Vector2.ZERO
-var current_health : float = 5
 var current_damage : float = 100
 var rotation_speed : float = 10
+var current_health : float = 5
 var current_mana : float = 150
+var dash_duration : float = .2
 var move_speed : float = 100
+var dash_speed : float = 300
 var max_health : float = 5
 var max_mana : float = 150
 var gold : int = 0
@@ -137,13 +140,14 @@ func random_offset():
 func weapon_rotate_to_mouse(target, delta):
 	var direction = (target - weapon.global_position) #target global position if is an entity
 	var angleTo = weapon.transform.x.angle_to(direction)
-	weapon.rotate(sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
+	weapon.rotation += (sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
 	if direction.x > 0:
 		sprite.flip_h = false
 		weapon.get_child(0).scale.y = 1
 	elif direction.x < 0:
 		sprite.flip_h = true
 		weapon.get_child(0).scale.y = -1
+	weapon.rotation_degrees = round_to_dec(weapon.rotation_degrees,-1)
 
 
 func _input(event):
@@ -151,7 +155,11 @@ func _input(event):
 		emit_signal("shoot")
 	if event.is_action_released("ui_shoot"):
 		emit_signal("shoot_stop")
+	if event.is_action("ui_dash"):
+		dash.start_dash(dash_duration)
 
+func round_to_dec(num, digit):
+	return round(num * pow(10.0, digit)) / pow(10.0, digit)
 
 func _on_damage_recieved(damage : float) -> void:
 	current_health -= damage
@@ -172,4 +180,3 @@ func _on_damaged_timeout():
 func _on_weapon_mana_used():
 	current_mana -= weapon.mana_cost
 	mana_regen = false
-

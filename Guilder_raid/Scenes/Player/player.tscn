@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=27 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Texture2D" uid="uid://7ngffy2hjll0" path="res://Assets/Player/Goblin_running.png" id="2_isre5"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c34gyedxdx682" path="res://Assets/Player/Gob_idle.png" id="6_sit5e"]
 [ext_resource type="Texture2D" uid="uid://cowsbnx5ja6jf" path="res://Assets/UI/Damaged/player_hit_feedback.png" id="7_em7js"]
 [ext_resource type="Texture2D" uid="uid://bjq8hinio3an7" path="res://Assets/UI/Damaged/blurry Blood Overlay.png" id="8_a5rkc"]
+[ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 
 [sub_resource type="Animation" id="Animation_803p1"]
 resource_name = "Idle"
@@ -178,18 +179,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Weapon:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.0714286, 0.142857, 0.642857, 0.714286, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 1), Vector2(0, 1), Vector2(0, 0), Vector2(0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_pf5mt"]
 resource_name = "gob_run"
@@ -338,7 +327,7 @@ size = Vector2(12, 26)
 [sub_resource type="CircleShape2D" id="CircleShape2D_epq4t"]
 radius = 52.0096
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player", "low_health_indicator", "gold_lable") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player", "low_health_indicator", "gold_lable", "dash") groups=["Player"]]
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -356,10 +345,11 @@ ui_anim_player = NodePath("ui/UI_AnimationPlayer")
 low_health_indicator = NodePath("ui/Low_health")
 gold_lable = NodePath("ui/Sprite2D/Gold")
 ability_inventory = ExtResource("2_o8fdp")
+dash = NodePath("Dash")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_8bgvj")
-hframes = 8
+texture = ExtResource("3_4c0k0")
+hframes = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -372,15 +362,12 @@ scale = Vector2(0.469999, 0.23)
 shape = SubResource("CapsuleShape2D_v65hl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
 
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
-position = Vector2(0, -1)
-scale = Vector2(0.6, 0.6)
 
 [node name="ui" type="CanvasLayer" parent="."]
-scale = Vector2(0.667, 0.667)
-transform = Transform2D(0.667, 0, 0, 0.667, 0, 0)
+scale = Vector2(0.333, 0.333)
+transform = Transform2D(0.333, 0, 0, 0.333, 0, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ui"]
 position = Vector2(60, 150)
@@ -518,6 +505,8 @@ collision_mask = 2
 visible = false
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_epq4t")
+
+[node name="Dash" parent="." instance=ExtResource("14_gqmwi")]
 
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]

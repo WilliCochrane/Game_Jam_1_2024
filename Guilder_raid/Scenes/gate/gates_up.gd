@@ -3,16 +3,17 @@ extends Area2D
 signal close_gates
 signal open_gates
 
-@onready var area : CollisionShape2D = $CollisionShape2D
 @onready var nav_region : NavigationRegion2D = $NavigationRegion2D
+@onready var area : CollisionShape2D = $CollisionShape2D
+@onready var reset_timer : Timer = $reset_timer
 
-var player : CharacterBody2D
-var spawn_palces : Array = []
 var first_activation : bool = true
 var enemies_spawned : bool = false
 var summon_wave : bool = false
+var spawn_palces : Array = []
+var can_spawn : bool = false
+var player : CharacterBody2D
 var alive_enemies : int = 0
-var first_frame : bool = true
 var invalid_spawn : bool
 var xpos : float
 var ypos : float
@@ -23,18 +24,19 @@ func _ready():
 
 
 func _physics_process(_delta):
-	if summon_wave == true:
-		summon_enemies()
-		nav_region.bake_navigation_polygon()
-	if enemies_spawned == true && alive_enemies == 0:
-		emit_signal("open_gates")
-		alive_enemies = 1
+	if can_spawn:
+		if summon_wave == true:
+			summon_enemies()
+		if enemies_spawned == true && alive_enemies == 0:
+			emit_signal("open_gates")
+			alive_enemies = 1
 
 
 func summon_enemies():
+	print("yes")
 	summon_wave = false
 	enemies_spawned = true
-#	nav_region.bake_navigation_polygon()
+	nav_region.bake_navigation_polygon()
 	for i in range(0,randi_range(5,7)):
 		invalid_spawn = true
 		while invalid_spawn == true:
@@ -62,7 +64,7 @@ func summon_enemies():
 
 
 func _on_body_entered(body):
-	if body.is_in_group("Player") && first_activation == true:
+	if body.is_in_group("Player") && first_activation == true && can_spawn == true:
 		emit_signal("close_gates")
 		summon_wave = true
 		first_activation = false
@@ -73,3 +75,7 @@ func on_clear_floor():
 	for child in get_children():
 		child.queue_free()
 	queue_free()
+
+
+func _on_reset_timer_timeout():
+	can_spawn = true

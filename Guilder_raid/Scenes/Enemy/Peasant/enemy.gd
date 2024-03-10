@@ -92,13 +92,19 @@ func _physics_process(delta: float) -> void:
 func weapon_rotate_to_player(delta):
 	var direction = (player.position - gun.global_position) #target global position if is an entity
 	var angleTo = gun.transform.x.angle_to(direction)
-	gun.rotate(sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
+	gun.rotation += (sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
+	gun.rotation_degrees = round_to_dec(gun.rotation_degrees, -1)
 	if direction.x > 0:
 		sprite.flip_h = true
-		gun.scale.y = .5
+		gun.scale.y = 1
 	elif direction.x < 0:
 		sprite.flip_h = false
-		gun.scale.y = -.5
+		gun.scale.y = -1
+
+
+func round_to_dec(num, digit):
+	return round(num * pow(20.0, digit)) / pow(20.0, digit)
+
 
 func die():
 	get_parent().alive_enemies -= 1

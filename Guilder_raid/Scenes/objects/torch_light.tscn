@@ -8,24 +8,17 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_bfyus"]
 offsets = PackedFloat32Array(0, 0.76779, 0.94702)
-colors = PackedColorArray(0.827451, 0, 0, 1, 1, 0.509804, 0, 1, 0.984314, 0.705882, 0, 0.0627451)
+colors = PackedColorArray(10.001, 0.046, 0.026, 1, 1.1, 0.51, 0.1, 1, 0.984314, 0.705882, 0, 0.0627451)
 
 [node name="torch_light" type="PointLight2D" groups=["light"]]
 z_index = 10
 color = Color(0.960784, 0.733333, 0.647059, 1)
 energy = 0.2
 shadow_enabled = true
-shadow_filter = 2
-shadow_filter_smooth = 3.0
+shadow_filter = 1
+shadow_filter_smooth = 6.0
 texture = ExtResource("1_stipw")
 texture_scale = 3.0
-
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(0, -4)
-color = Color(0.992157, 0.776471, 0.643137, 1)
-energy = 0.3
-texture = ExtResource("1_stipw")
-texture_scale = 0.3
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 z_index = 10

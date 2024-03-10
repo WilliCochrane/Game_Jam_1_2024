@@ -27,8 +27,8 @@ gdscript/warnings/narrowing_conversion=0
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=640
+window/size/viewport_height=360
 window/stretch/mode="viewport"
 
 [input]
@@ -75,9 +75,19 @@ ui_interact={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"echo":false,"script":null)
 ]
 }
+ui_dash={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(104, 21),"global_position":Vector2(110, 83),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method.web="mobile"
-limits/opengl/max_lights_per_object=32
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=1
+lightmapping/probe_capture/update_speed=1.0
+global_illumination/sdfgi/frames_to_update_lights=4
+limits/opengl/max_renderable_lights=256
+limits/opengl/max_lights_per_object=256
+2d/snap/snap_2d_vertices_to_pixel=true
