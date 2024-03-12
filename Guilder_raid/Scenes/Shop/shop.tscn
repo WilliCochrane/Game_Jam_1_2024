@@ -1,9 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://xybnlqsiurs"]
+[gd_scene load_steps=8 format=3 uid="uid://xybnlqsiurs"]
 
 [ext_resource type="Script" path="res://Scenes/Shop/shop.gd" id="1_g7f4h"]
 [ext_resource type="FontFile" uid="uid://ejil0kwiqa3l" path="res://Assets/UI/m5x7.ttf" id="1_tx80i"]
 [ext_resource type="PackedScene" uid="uid://b1dmldm7koy0f" path="res://Scenes/Shop/Shop_item.tscn" id="2_2jn5x"]
-[ext_resource type="Gradient" path="res://Assets/UI/background gradient.tres" id="2_kdscm"]
+[ext_resource type="Gradient" uid="uid://b8n6tjn4cqyto" path="res://Assets/UI/background gradient.tres" id="2_kdscm"]
 [ext_resource type="Texture2D" uid="uid://d1t8jh7ag0x6q" path="res://Assets/Gold/Coin.png" id="3_ir36f"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_yp7al"]
@@ -11,18 +11,14 @@ gradient = ExtResource("2_kdscm")
 fill_from = Vector2(0.623932, 1)
 fill_to = Vector2(0.5, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3mqe3"]
-bg_color = Color(0.466667, 0.129412, 0.12549, 0.639216)
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vvkn5"]
 
 [node name="Shop" type="Control" node_paths=PackedStringArray("reroll_button", "shop_item1", "shop_item2", "shop_item3", "money")]
 self_modulate = Color(1, 0.270588, 0.290196, 1)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 480.0
-offset_bottom = 270.0
-scale = Vector2(4, 4)
+offset_right = 640.0
+offset_bottom = 360.0
 script = ExtResource("1_g7f4h")
 reroll_button = NodePath("Reroll_button")
 shop_item1 = NodePath("GridContainer/Shop_item1")
@@ -32,14 +28,16 @@ money = NodePath("Money")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 480.0
-offset_bottom = 270.0
+offset_right = 640.0
+offset_bottom = 360.0
 texture = SubResource("GradientTexture2D_yp7al")
 
 [node name="Shop" type="Label" parent="."]
 layout_mode = 1
-offset_right = 48.0
-offset_bottom = 26.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 62.0
+offset_bottom = 30.0
 theme_override_fonts/font = ExtResource("1_tx80i")
 theme_override_font_sizes/font_size = 32
 text = " Shop"
@@ -51,10 +49,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -95.0
-offset_right = 200.0
-offset_bottom = 95.0
+offset_left = -246.0
+offset_top = -115.0
+offset_right = 244.0
+offset_bottom = 135.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 20
@@ -64,6 +62,7 @@ columns = 3
 layout_mode = 2
 
 [node name="Shop_item2" parent="GridContainer" instance=ExtResource("2_2jn5x")]
+custom_minimum_size = Vector2(150, 190)
 layout_mode = 2
 
 [node name="Shop_item3" parent="GridContainer" instance=ExtResource("2_2jn5x")]
@@ -74,17 +73,16 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -115.0
-offset_top = 4.0
-offset_right = 15.0
-offset_bottom = 38.0
+offset_left = -133.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = 37.0
 grow_horizontal = 0
-scale = Vector2(0.75, 0.75)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(0.764706, 0.764706, 0.764706, 1)
+theme_override_colors/font_disabled_color = Color(0.639216, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_tx80i")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/disabled = SubResource("StyleBoxFlat_3mqe3")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vvkn5")
 text = "Reroll 50   "
 alignment = 0
@@ -92,8 +90,7 @@ icon_alignment = 2
 expand_icon = true
 
 [node name="icon" type="Sprite2D" parent="Reroll_button"]
-position = Vector2(113, 17)
-scale = Vector2(1.5, 1.5)
+position = Vector2(120, 19)
 texture = ExtResource("3_ir36f")
 
 [node name="Money" type="Label" parent="."]
@@ -101,9 +98,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -18.5
-offset_right = 18.5
-offset_bottom = 26.0
+offset_left = -18.0
+offset_top = 5.0
+offset_right = 19.0
+offset_bottom = 31.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_tx80i")
 theme_override_font_sizes/font_size = 32
@@ -123,13 +121,12 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -93.0
-offset_top = -32.0
-offset_right = 23.0
-offset_bottom = 2.0
+offset_left = -126.0
+offset_top = -40.0
+offset_right = -6.0
+offset_bottom = -6.0
 grow_horizontal = 0
 grow_vertical = 0
-scale = Vector2(0.75, 0.75)
 theme_override_fonts/font = ExtResource("1_tx80i")
 theme_override_font_sizes/font_size = 32
 text = "Next Floor"

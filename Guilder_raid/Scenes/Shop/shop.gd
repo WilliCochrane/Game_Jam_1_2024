@@ -17,7 +17,7 @@ var reroll_cost : int
 func open():
 	visible = true
 	is_open = true
-	reroll_cost = 5
+	reroll_cost = 0
 	update_money()
 	reset_shop()
 
@@ -51,7 +51,7 @@ func reroll_shop():
 		shop_item1.load_item(avalable_abilities.pick_random())
 		shop_item2.load_item(avalable_abilities.pick_random())
 		shop_item3.load_item(avalable_abilities.pick_random())
-		reroll_button.text = str(reroll_cost) + " Reroll"
+		reroll_button.text = "Reroll: " + str(reroll_cost)
 		update_money()
 
 func reset_shop():
@@ -59,13 +59,13 @@ func reset_shop():
 	shop_item1.load_item(avalable_abilities.pick_random())
 	shop_item2.load_item(avalable_abilities.pick_random())
 	shop_item3.load_item(avalable_abilities.pick_random())
-	reroll_button.text = str(reroll_cost) + " Reroll"
+	reroll_button.text = "Reroll: " + str(reroll_cost)
 	update_money()
 
 func update_money():
 	money.text = str(player.gold)
 	if reroll_cost > player.gold:
-			reroll_button.disabled = true
+		reroll_button.disabled = true
 
 
 func _on_reroll_button_pressed():

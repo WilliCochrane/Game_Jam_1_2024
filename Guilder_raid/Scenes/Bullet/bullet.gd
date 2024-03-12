@@ -46,26 +46,19 @@ func _physics_process(delta):
 
 
 func _on_area_2d_body_entered(body):
-	if body.is_in_group("Player") == false:
-		if body.is_in_group("Enemy"):
-			body.health -= damage
-			body.hit = true
-			can_move = false
-			
-			$CPUParticles2D.emitting = true
-			$Sprite2D.visible = false
-			$Timer.start()
-			if flamethrow == false:
-				pass
-		else:
+	if !body.is_in_group("Player"):
+		if !body.is_in_group("Enemy"):
 			queue_free()
 
 
 func die():
-	$Timer.start(.3)
+	$Timer.start()
 	$Sprite2D.visible = false
-	can_move = false
+	$Area2D.monitoring = false
+	$CPUParticles2D.emitting = true
+	$Sprite2D.visible = false
 	$Fire_trail.emitting = false
+	can_move = false
 
 
 func _on_timer_timeout():
@@ -77,11 +70,4 @@ func _on_area_2d_area_entered(area):
 		area.get_parent().health -= damage
 		area.get_parent().hit = true
 		can_move = false
-	
-		$CPUParticles2D.emitting = true
-		$Sprite2D.visible = false
-		$Timer.start()
-		if flamethrow == false:
-			pass
-		else:
-			queue_free()
+		call_deferred("die")

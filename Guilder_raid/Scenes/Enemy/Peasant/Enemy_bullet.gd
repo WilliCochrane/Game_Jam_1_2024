@@ -16,12 +16,14 @@ func _physics_process(delta):
 	z_index = 1
 
 
-func _on_area_2d_body_entered(body):
-	if body.is_in_group("Enemy") == false:
-		if body.is_in_group("Player"):
-			if player.dash.is_dashing() == false:
-				player.current_health -= damage
-				player.hit = true
-				queue_free()
-		else:
+func _on_area_2d_area_entered(area):
+	if area.is_in_group("Player_hitbox"):
+		if player.dash.is_dashing() == false:
+			player.current_health -= damage
+			player.hit = true
 			queue_free()
+
+
+func _on_area_2d_body_entered(body):
+	if !body.is_in_group("Enemy") && !body.is_in_group("Player"):
+		queue_free()

@@ -10,7 +10,7 @@ signal open_gates
 var first_activation : bool = true
 var enemies_spawned : bool = false
 var summon_wave : bool = false
-var spawn_palces : Array = []
+var spawn_places : Array = []
 var can_spawn : bool = false
 var player : CharacterBody2D
 var alive_enemies : int = 0
@@ -40,15 +40,14 @@ func summon_enemies():
 		invalid_spawn = true
 		while invalid_spawn == true:
 			invalid_spawn = false
-			xpos = randf_range(position.x-scale.x*8,position.x+scale.x*8)
-			ypos = randf_range(position.y-scale.y*8,position.y+scale.y*8)
-			if get_parent().tile_map.get_cell_atlas_coords(0,Vector2i(xpos/16,ypos/16)) == Vector2i(3,3):
-				for l in spawn_palces:
+			xpos = randi_range(position.x-scale.x*8,position.x+scale.x*8)
+			ypos = randi_range(position.y-scale.y*8,position.y+scale.y*8)
+			if get_parent().tile_map.get_cell_tile_data(0,Vector2i(xpos/16,ypos/16)).get_custom_data("Spawnable"):
+				for l in spawn_places:
 					if Vector2i(xpos/16,ypos/16) == l:
 						invalid_spawn = true
 				if invalid_spawn == false:
-					spawn_palces.push_back(Vector2i(xpos/16,ypos/16))
-
+					spawn_places.push_back(Vector2i(xpos/16,ypos/16))
 			else:
 				invalid_spawn = true
 		
@@ -56,8 +55,8 @@ func summon_enemies():
 		e.scale.x *= 1/scale.x
 		e.scale.y *= 1/scale.y
 		add_child(e)
-		e.global_position.x = xpos + 8
-		e.global_position.y = ypos + 8
+		e.global_position.x = spawn_places[-1].x*16 + 8
+		e.global_position.y = spawn_places[-1].y*16 + 8
 		
 		alive_enemies += 1
 

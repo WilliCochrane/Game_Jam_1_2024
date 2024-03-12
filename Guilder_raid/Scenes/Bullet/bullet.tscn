@@ -167,7 +167,7 @@ _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.986063, 100), 0.0, 0.0, 0, 0, 
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_jwgmx"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.907666, 0.835308), -0.590831, -0.590831, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.787456, 0.740309), -0.590831, -0.590831, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_o37gg"]
@@ -175,7 +175,8 @@ offsets = PackedFloat32Array(0, 0.863296, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.976471, 1, 1, 1, 0)
 
 [sub_resource type="Gradient" id="Gradient_pe57x"]
-colors = PackedColorArray(0.858824, 0, 0, 1, 0.848849, 0.0416955, 0.0322398, 1)
+offsets = PackedFloat32Array(0, 0.750936, 0.855805)
+colors = PackedColorArray(0.858824, 0, 0, 1, 0.858824, 0, 0, 1, 1, 0.980814, 0.909456, 1)
 
 [node name="Bullet" type="CharacterBody2D"]
 z_index = 1
@@ -184,6 +185,7 @@ collision_mask = 5
 script = ExtResource("1_r4se3")
 
 [node name="Fire_trail" type="CPUParticles2D" parent="."]
+visible = false
 amount = 30
 lifetime = 0.3
 explosiveness = 0.2
@@ -243,6 +245,7 @@ color_ramp = SubResource("Gradient_o37gg")
 color_initial_ramp = SubResource("Gradient_pe57x")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 1.1
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
