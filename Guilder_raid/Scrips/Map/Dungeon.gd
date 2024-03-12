@@ -115,6 +115,18 @@ func load_map():
 			var tl = torch_light.instantiate()
 			add_child(tl)
 			tl.position = Vector2(i.x*16+8,i.y*16+6)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(3, 3):
+			tile_map.set_cells_terrain_path(0,[i],0,0)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 0):
+			tile_map.set_cells_terrain_path(0,[i],0,1)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 7):
+			tile_map.set_cells_terrain_path(0,[i],0,2)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 1):
+			tile_map.set_cells_terrain_path(0,[i],0,3)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 1):
+			tile_map.set_cells_terrain_path(0,[i],0,4)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 1):
+			tile_map.set_cells_terrain_path(0,[i],0,5)
 
 func _add_gate_perimeter(x,y,s):
 	var gp = gate_perimeter.instantiate()

@@ -11,6 +11,7 @@ var spread : float
 var flamethrow : bool
 var rotated : bool = false
 var can_move : bool = true
+var fire : bool = false
 
 func _ready():
 	weapon = get_tree().get_first_node_in_group("Player").get_child(4)
@@ -38,7 +39,10 @@ func _physics_process(delta):
 		scale = Vector2(size,size)/3
 		z_index = 1
 		$CPUParticles2D.restart()
-
+	if fire:
+		$Fire_trail.emitting = true
+	else:
+		$Fire_trail.emitting = false
 
 
 func _on_area_2d_body_entered(body):
@@ -57,6 +61,11 @@ func _on_area_2d_body_entered(body):
 			queue_free()
 
 
+func die():
+	$Timer.start(.3)
+	$Sprite2D.visible = false
+	can_move = false
+	$Fire_trail.emitting = false
 
 
 func _on_timer_timeout():

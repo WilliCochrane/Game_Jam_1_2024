@@ -26,6 +26,8 @@ func load_item(ability : Ability):
 	price_label.text = str(price)
 	if player.gold < price:
 		price_label.self_modulate = Color(0.749, 0, 0.059)
+	else:
+		price_label.self_modulate = Color(1,1,1)
 	
 
 

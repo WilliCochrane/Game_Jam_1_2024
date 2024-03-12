@@ -7,7 +7,7 @@
 size = Vector2(16, 16)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_byabb"]
-outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-18, -18, 18, -18, 18, 18, -18, 18)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="gates_up" type="Area2D" groups=["clear"]]

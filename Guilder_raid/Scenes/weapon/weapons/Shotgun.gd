@@ -10,8 +10,8 @@ func _ready():
 	mana_cost = 5
 	projectiles = 6
 	crit_chance = 10
-	bullet_size = .75
-	bullet_speed = 10
+	bullet_size = 2
+	bullet_speed = 5
 	bullet_spread = 15
 
 

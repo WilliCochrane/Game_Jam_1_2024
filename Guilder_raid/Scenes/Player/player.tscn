@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c34gyedxdx682" path="res://Assets/Player/Gob_idle.png" id="6_sit5e"]
 [ext_resource type="Texture2D" uid="uid://cowsbnx5ja6jf" path="res://Assets/UI/Damaged/player_hit_feedback.png" id="7_em7js"]
 [ext_resource type="Texture2D" uid="uid://bjq8hinio3an7" path="res://Assets/UI/Damaged/blurry Blood Overlay.png" id="8_a5rkc"]
-[ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
+[ext_resource type="PackedScene" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001

@@ -1,17 +1,17 @@
-[gd_scene load_steps=46 format=3 uid="uid://uk6yrsv45ei4"]
+[gd_scene load_steps=48 format=3 uid="uid://uk6yrsv45ei4"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Scenes/Player/player.tscn" id="1_l5ov3"]
 [ext_resource type="Texture2D" uid="uid://rkw3uh5arawi" path="res://Assets/TileSet/dungeon_sheet.png" id="2_7vrrn"]
 [ext_resource type="PackedScene" uid="uid://48fpkt0wst45" path="res://Scenes/Enemy/Peasant/enemy.tscn" id="4_tckvb"]
 [ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Scenes/Treasure/treasure.tscn" id="5_ee60j"]
-[ext_resource type="PackedScene" uid="uid://bwe0c6624j1v0" path="res://Scenes/Effects/room_light.tscn" id="6_yk4yx"]
+[ext_resource type="PackedScene" path="res://Scenes/Effects/room_light.tscn" id="6_yk4yx"]
 [ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Scenes/gate/gate.tscn" id="7_to4u6"]
 [ext_resource type="PackedScene" uid="uid://bnrmiqvhay643" path="res://Scenes/gate/gates_up.tscn" id="8_w042w"]
 [ext_resource type="PackedScene" uid="uid://du2y0hi2j4c41" path="res://Scenes/Ladder/ladder.tscn" id="9_ve3sl"]
 [ext_resource type="Script" path="res://Gui.gd" id="10_fnox1"]
 [ext_resource type="PackedScene" uid="uid://cr3e354qlfmrd" path="res://Scenes/ui/pause_menu.tscn" id="10_scxse"]
-[ext_resource type="PackedScene" uid="uid://c21u3b11dd227" path="res://Scenes/ui/start_menu.tscn" id="12_g12ls"]
+[ext_resource type="PackedScene" path="res://Scenes/ui/start_menu.tscn" id="12_g12ls"]
 [ext_resource type="PackedScene" uid="uid://xybnlqsiurs" path="res://Scenes/Shop/shop.tscn" id="12_sndxk"]
 [ext_resource type="PackedScene" uid="uid://bx3muipehkgd6" path="res://Scenes/objects/torch_light.tscn" id="13_tkhvk"]
 
@@ -739,6 +739,11 @@ glow_intensity = 2.99
 glow_strength = 1.42
 glow_blend_mode = 1
 
+[sub_resource type="Gradient" id="Gradient_wacu8"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lvok4"]
+gradient = SubResource("Gradient_wacu8")
+
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("player", "ladder", "new_floor_timer", "shop")]
 y_sort_enabled = true
 script = ExtResource("1_l1dci")
@@ -809,6 +814,14 @@ environment = SubResource("Environment_47gjq")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.929412, 0.929412, 0.929412, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+offset_left = -13577.0
+offset_top = -11178.0
+offset_right = 16732.0
+offset_bottom = 11205.0
+texture = SubResource("GradientTexture1D_lvok4")
 
 [connection signal="restart_game" from="Player" to="." method="_on_player_restart_game"]
 [connection signal="next_floor" from="Ladder" to="." method="_on_ladder_next_floor"]
