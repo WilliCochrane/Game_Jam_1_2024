@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://rkw3uh5arawi" path="res://Assets/TileSet/dungeon_sheet.png" id="2_7vrrn"]
 [ext_resource type="PackedScene" uid="uid://48fpkt0wst45" path="res://Scenes/Enemy/Peasant/enemy.tscn" id="4_tckvb"]
 [ext_resource type="PackedScene" uid="uid://bej0bu2a4drvl" path="res://Scenes/Treasure/treasure.tscn" id="5_ee60j"]
-[ext_resource type="PackedScene" uid="uid://bwe0c6624j1v0" path="res://Scenes/Effects/room_light.tscn" id="6_yk4yx"]
+[ext_resource type="PackedScene" uid="uid://wl8fixk3i852" path="res://Scenes/Effects/room_light.tscn" id="6_yk4yx"]
 [ext_resource type="PackedScene" uid="uid://dwgxqjmpwy4xu" path="res://Scenes/gate/gate.tscn" id="7_to4u6"]
 [ext_resource type="PackedScene" uid="uid://bnrmiqvhay643" path="res://Scenes/gate/gates_up.tscn" id="8_w042w"]
 [ext_resource type="PackedScene" uid="uid://du2y0hi2j4c41" path="res://Scenes/Ladder/ladder.tscn" id="9_ve3sl"]
@@ -833,7 +833,7 @@ one_shot = true
 process_mode = 3
 script = ExtResource("10_fnox1")
 
-[node name="Pause_menu" parent="Menus" instance=ExtResource("10_scxse")]
+[node name="Pause_menu" parent="Menus" node_paths=PackedStringArray("canvas_modulate") instance=ExtResource("10_scxse")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -842,6 +842,7 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
+canvas_modulate = NodePath("../../CanvasModulate")
 
 [node name="Shop" parent="Menus" instance=ExtResource("12_sndxk")]
 process_mode = 3

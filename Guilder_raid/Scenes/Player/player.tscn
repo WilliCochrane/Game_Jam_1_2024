@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://vf5lk5uc6imm" path="res://Assets/UI/barfiller.png" id="9_5lgrf"]
 [ext_resource type="Texture2D" uid="uid://068l4w1maiff" path="res://Assets/UI/heart.png" id="10_ucnwq"]
 [ext_resource type="Texture2D" uid="uid://df7f5mhtiaj6b" path="res://Assets/UI/mana.png" id="11_6lfvd"]
-[ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
+[ext_resource type="PackedScene" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001
@@ -275,8 +275,8 @@ stretch_margin_right = 6
 stretch_margin_bottom = 3
 texture_over = ExtResource("8_nqdjf")
 texture_progress = ExtResource("9_5lgrf")
-tint_over = Color(0.533333, 0.32549, 0.231373, 1)
-tint_progress = Color(0.698039, 0.215686, 0.227451, 1)
+tint_over = Color(0.247059, 0.247059, 0.247059, 1)
+tint_progress = Color(0.87451, 0.0941176, 0.0784314, 1)
 
 [node name="Damaged_bar" type="TextureProgressBar" parent="ui/Health_bar"]
 z_index = -1
@@ -322,8 +322,8 @@ stretch_margin_right = 6
 stretch_margin_bottom = 3
 texture_over = ExtResource("8_nqdjf")
 texture_progress = ExtResource("9_5lgrf")
-tint_over = Color(0.494118, 0.352941, 0.54902, 1)
-tint_progress = Color(0.282353, 0.4, 0.568627, 1)
+tint_over = Color(0.247059, 0.247059, 0.247059, 1)
+tint_progress = Color(0.133333, 0.282353, 0.729412, 1)
 
 [node name="Mana_usage_bar" type="TextureProgressBar" parent="ui/Mana_bar"]
 z_index = -1
