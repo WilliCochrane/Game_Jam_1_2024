@@ -119,12 +119,12 @@ func load_map():
 	
 	for i in tile_map.get_used_cells(0):
 		if tile_map.get_cell_atlas_coords(0,i) != Vector2i(4,3):
-			minimap.set_cell(0,i,0,Vector2i(0,0))
+			minimap.set_cell(0,i,0,Vector2i(0,0))  # change all of these to use the spawnable custom data instead
 		
 		if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
 			var tl = torch_light.instantiate()
 			add_child(tl)
-			tl.position = Vector2(i.x*16+8,i.y*16+6)
+			tl.position = Vector2(i.x*16+8,i.y*16+6)  
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(3, 3):
 			tile_map.set_cells_terrain_path(0,[i],0,0)
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 0):
