@@ -5,11 +5,13 @@ signal closed
 
 @onready var ability_display : Control = $Ability_display
 @export var canvas_modulate : CanvasModulate
+@export var minimap : TileMap
 
 var is_open : bool = false
 
 func _ready():
-	$Gama_Slider.value = canvas_modulate.color.r/100
+	$VBoxContainer/Gama_Slider.value = 20
+	$VBoxContainer/Minimap_slider.value = 50
 
 
 func open():
@@ -32,3 +34,17 @@ func _on_shop_shop_closed():
 
 func _on_h_slider_value_changed(value):
 	canvas_modulate.color = Color(value/100,value/100,value/100)
+
+
+func _on_return_pressed():
+	close()
+	get_parent().start_menu.open()
+
+
+func _on_resume_pressed():
+	close()
+
+
+func _on_minimap_slider_value_changed(value):
+	minimap.modulate.a = value/100
+	minimap.get_child(0).modulate.a = value/100

@@ -153,7 +153,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qf8se"]
-size = Vector2(21, 16)
+size = Vector2(24, 18)
 
 [sub_resource type="Curve" id="Curve_tk7w0"]
 min_value = 150.0
@@ -163,19 +163,19 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_r0bya"]
 max_value = 100.0
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.986063, 100), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 100), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_jwgmx"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.787456, 0.740309), -0.590831, -0.590831, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.89547, 0.791733), -0.590831, -0.590831, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_o37gg"]
-offsets = PackedFloat32Array(0, 0.863296, 1)
+offsets = PackedFloat32Array(0, 0.666667, 1)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.976471, 1, 1, 1, 0)
 
 [sub_resource type="Gradient" id="Gradient_pe57x"]
-offsets = PackedFloat32Array(0, 0.750936, 0.855805)
+offsets = PackedFloat32Array(0, 0.818352, 0.913858)
 colors = PackedColorArray(0.858824, 0, 0, 1, 0.858824, 0, 0, 1, 1, 0.980814, 0.909456, 1)
 
 [node name="Bullet" type="CharacterBody2D"]
@@ -201,7 +201,7 @@ scale_amount_max = 3.0
 color_ramp = SubResource("Gradient_fi76s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(2, 2, 2, 1)
+self_modulate = Color(8, 6, 2, 1)
 scale = Vector2(3, 3)
 texture = ExtResource("2_g3bhf")
 
@@ -215,15 +215,17 @@ collision_layer = 4
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(1.5, 1)
+visible = false
 shape = SubResource("RectangleShape2D_qf8se")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 position = Vector2(23, 0)
 emitting = false
-amount = 100
+amount = 30
+lifetime = 2.0
 one_shot = true
-preprocess = 124.75
+preprocess = 100.0
+explosiveness = 0.88
 randomness = 0.03
 local_coords = true
 direction = Vector2(-1, 0)
@@ -245,7 +247,7 @@ color_ramp = SubResource("Gradient_o37gg")
 color_initial_ramp = SubResource("Gradient_pe57x")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 1.1
+wait_time = 2.1
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

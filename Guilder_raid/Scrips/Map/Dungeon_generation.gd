@@ -4,7 +4,7 @@ extends Node
 
 var min_number_rooms = 10
 var max_number_rooms = 15
-var generation_chance = 1000
+var generation_chance = 15
 
 func generate(room_seed):
 	seed(room_seed)
@@ -14,9 +14,9 @@ func generate(room_seed):
 	dungeon[Vector2(0,0)] = room.instantiate()
 	size -= 1
 	
-	while(size > 0):
+	while size > 0:
 		for i in dungeon.keys():
-			if(randf_range(0,100) < generation_chance):
+			if randf_range(0,100) < generation_chance && size > 0:
 				var direction = randi_range(0,4)
 				if(direction < 1):
 					var new_room_position = i + Vector2(1, 0)
@@ -63,8 +63,6 @@ func is_interesting(dungeon):
 	var rooms_with_four = 0
 	var rooms_with_three = 0
 	var rooms_with_one = 0
-	
-
 	var start_set = false
 	var end_set = false
 	var treasure_set = false
@@ -86,7 +84,7 @@ func is_interesting(dungeon):
 			elif end_set == false:
 				dungeon.get(i).end = true
 				end_set = true
-	if rooms_with_one >= 3 && rooms_with_three >= 4 && rooms_with_four >= 2:
+	if rooms_with_one >= 3 && rooms_with_three >= 3 && rooms_with_four >= 1:
 		return true
 	else:
 		return false

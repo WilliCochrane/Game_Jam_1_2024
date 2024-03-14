@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://vf5lk5uc6imm" path="res://Assets/UI/barfiller.png" id="9_5lgrf"]
 [ext_resource type="Texture2D" uid="uid://068l4w1maiff" path="res://Assets/UI/heart.png" id="10_ucnwq"]
 [ext_resource type="Texture2D" uid="uid://df7f5mhtiaj6b" path="res://Assets/UI/mana.png" id="11_6lfvd"]
-[ext_resource type="PackedScene" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
+[ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001
@@ -354,14 +354,15 @@ libraries = {
 }
 
 [node name="UI_Sprite2D" type="Sprite2D" parent="ui"]
-scale = Vector2(0.333, 0.333)
+scale = Vector2(0.333333, 0.333333)
 texture = ExtResource("7_em7js")
 offset = Vector2(960, 540)
 hframes = 5
 
 [node name="Low_health" type="Sprite2D" parent="ui"]
 modulate = Color(1, 1, 1, 0)
-position = Vector2(960, 540)
+position = Vector2(320, 180)
+scale = Vector2(0.333, 0.333)
 texture = ExtResource("8_a5rkc")
 
 [node name="Damaged" type="Timer" parent="."]

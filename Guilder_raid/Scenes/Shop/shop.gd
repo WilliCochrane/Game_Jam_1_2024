@@ -66,6 +66,12 @@ func update_money():
 	money.text = str(player.gold)
 	if reroll_cost > player.gold:
 		reroll_button.disabled = true
+	if shop_item1.price > player.gold:
+		shop_item1.price_label.self_modulate = Color(0.749, 0, 0.059)
+	if shop_item2.price > player.gold:
+		shop_item2.price_label.self_modulate = Color(0.749, 0, 0.059)
+	if shop_item3.price > player.gold:
+		shop_item3.price_label.self_modulate = Color(0.749, 0, 0.059)
 
 
 func _on_reroll_button_pressed():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cr3e354qlfmrd"]
+[gd_scene load_steps=20 format=3 uid="uid://cr3e354qlfmrd"]
 
 [ext_resource type="Script" path="res://Scenes/ui/pause_menu.gd" id="1_mvial"]
 [ext_resource type="Script" path="res://Scenes/ui/Ability_display.gd" id="3_ikvsu"]
@@ -13,6 +13,52 @@ gradient = SubResource("Gradient_g2wis")
 width = 640
 height = 360
 fill_from = Vector2(0.25641, 0.387464)
+
+[sub_resource type="Gradient" id="Gradient_6gnmn"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2k0n6"]
+gradient = SubResource("Gradient_6gnmn")
+width = 12
+height = 12
+fill_from = Vector2(1, 0)
+
+[sub_resource type="Gradient" id="Gradient_6xp20"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sqn1b"]
+gradient = SubResource("Gradient_6xp20")
+width = 12
+height = 12
+
+[sub_resource type="Gradient" id="Gradient_uy2r3"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y7sai"]
+gradient = SubResource("Gradient_uy2r3")
+width = 12
+height = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ol4si"]
+border_width_top = 8
+border_color = Color(0.352941, 0.352941, 0.352941, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_34snh"]
+bg_color = Color(0.780392, 0.780392, 0.780392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v156d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3wet0"]
+bg_color = Color(0.352941, 0.352941, 0.352941, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdqq7"]
+bg_color = Color(0.247059, 0.247059, 0.247059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uw380"]
+bg_color = Color(0.454902, 0.454902, 0.454902, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bvg26"]
 
 [node name="Pause_menu" type="Control"]
 layout_mode = 3
@@ -42,58 +88,131 @@ ability_slot = ExtResource("4_xh56o")
 
 [node name="GridContainer" type="GridContainer" parent="Ability_display"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-columns = 4
+theme_override_constants/h_separation = 4
+columns = 23
 
-[node name="Gama_Slider" type="HSlider" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -92.5
-offset_top = -8.0
-offset_right = 92.5
-offset_bottom = 8.0
+offset_left = -85.0
+offset_top = -120.0
+offset_right = 85.0
+offset_bottom = 69.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 22
+alignment = 1
 
-[node name="Label" type="Label" parent="Gama_Slider"]
+[node name="Minimap_slider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_icons/grabber = SubResource("GradientTexture2D_2k0n6")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_sqn1b")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_y7sai")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ol4si")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_34snh")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_v156d")
+value = 50.0
+
+[node name="m_slide" type="Label" parent="VBoxContainer/Minimap_slider"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -46.5
-offset_top = -22.0
-offset_right = 46.5
+offset_left = -60.0
+offset_top = -25.0
+offset_right = 60.0
 offset_bottom = 1.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("4_7itmm")
 theme_override_font_sizes/font_size = 32
-text = "Gama slider
+text = "Minimap Opacity
 "
 horizontal_alignment = 1
 
-[node name="Return" type="Button" parent="."]
+[node name="Gama_Slider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_icons/grabber = SubResource("GradientTexture2D_2k0n6")
+theme_override_icons/grabber_highlight = SubResource("GradientTexture2D_sqn1b")
+theme_override_icons/grabber_disabled = SubResource("GradientTexture2D_y7sai")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ol4si")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_34snh")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_v156d")
+min_value = -10.0
+max_value = 50.0
+value = 20.0
+
+[node name="g_slide" type="Label" parent="VBoxContainer/Gama_Slider"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -38.0
-offset_top = 28.0
-offset_right = 38.0
-offset_bottom = 62.0
+offset_left = -60.0
+offset_top = -25.0
+offset_right = 60.0
+offset_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_fonts/font = ExtResource("4_7itmm")
 theme_override_font_sizes/font_size = 32
-text = "Return"
+text = "Brightness
+"
+horizontal_alignment = 1
 
-[connection signal="value_changed" from="Gama_Slider" to="." method="_on_h_slider_value_changed"]
+[node name="ButtonContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Resume" type="Button" parent="VBoxContainer/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_7itmm")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_3wet0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fdqq7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uw380")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bvg26")
+text = "Resume"
+
+[node name="Control_open" type="Button" parent="VBoxContainer/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_7itmm")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_3wet0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fdqq7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uw380")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bvg26")
+text = "Controls
+"
+
+[node name="Return" type="Button" parent="VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("4_7itmm")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_3wet0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fdqq7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uw380")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bvg26")
+text = "Exit to menu"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/ButtonContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.141176, 0.65098, 1, 1)
+theme_override_fonts/font = ExtResource("4_7itmm")
+theme_override_font_sizes/font_size = 16
+text = "give us feedback"
+uri = "https://docs.google.com/forms/d/e/1FAIpQLSfaTGpTvDrbN7EOpYd6zjztLY-yuK4ou_6BTewuaMcXk0IFPw/viewform?usp=pp_url"
+
+[connection signal="value_changed" from="VBoxContainer/Minimap_slider" to="." method="_on_minimap_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Gama_Slider" to="." method="_on_h_slider_value_changed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonContainer/Return" to="." method="_on_return_pressed"]
