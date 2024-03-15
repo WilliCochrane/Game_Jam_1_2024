@@ -118,7 +118,7 @@ func _input(event):
 		emit_signal("shoot")
 	if event.is_action_released("ui_shoot"):
 		emit_signal("shoot_stop")
-	if event.is_action("ui_dash") && dash.can_dash && !dash.is_dashing():
+	if event.is_action("ui_accept") && dash.can_dash && !dash.is_dashing():
 		dash.start_dash(sprite, dash_duration)
 
 func round_to_dec(num, digit):

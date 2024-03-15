@@ -10,6 +10,7 @@ signal player_damage
 @onready var animation : AnimationPlayer = $AnimationPlayer
 @onready var attack_timer : Timer = $Attack_timer
 @onready var idle_timer : Timer = $Idle_timer
+@onready var raycast : RayCast2D = $RayCast2D
 @onready var nav_timer : Timer = $Nav_timer
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var gun : Sprite2D = $Gun
@@ -21,6 +22,7 @@ var health : float
 var rotation_speed = 15
 var hit : bool = false
 var random_num : float
+var can_attack : bool = false
 var can_move : bool
 var wander : bool
 
@@ -31,6 +33,7 @@ enum {
 }
 
 var state = IDLE
+
 
 func _ready():
 	health = 5
@@ -47,18 +50,19 @@ func _physics_process(delta: float) -> void:
 	match state:
 		APROACH:
 			target_position = Vector2(player.global_position.x + randf_range(-10,10),player.global_position.y + randf_range(-10,10))
-
 		IDLE:
 			if wander == false:
 				target_position = global_position
 				velocity = Vector2.ZERO
-
 		RUN:
-			target_position = global_position * 2 - player.global_position 
-
-
+			target_position = global_position * 2 - player.global_position
+			
 	if health <= 0:
 		die()
+		
+	if can_attack == true:
+		if !raycast.is_colliding():
+			shoot()
 	
 	if velocity == Vector2.ZERO:
 		animation.play("p_idle")
@@ -84,16 +88,19 @@ func _physics_process(delta: float) -> void:
 	else: 
 		state = IDLE
 	
+	raycast.target_position = player.global_position - raycast.global_position
+	
 	z_index = 1
-	weapon_rotate_to_player(delta)
+	rotate_to_player(delta)
 	move_and_slide()
 
 
-func weapon_rotate_to_player(delta):
+func rotate_to_player(delta):
 	var direction = (player.position - gun.global_position) #target global position if is an entity
-	var angleTo = gun.transform.x.angle_to(direction)
-	gun.rotation += (sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
+	var gunAngleTo = gun.transform.x.angle_to(direction)
+	gun.rotation += (sign(gunAngleTo) * min(delta * rotation_speed, abs(gunAngleTo)))
 	gun.rotation_degrees = round_to_dec(gun.rotation_degrees, -1)
+	
 	if direction.x > 0:
 		sprite.flip_h = true
 		gun.scale.y = 1
@@ -106,6 +113,15 @@ func round_to_dec(num, digit):
 	return round(num * pow(20.0, digit)) / pow(20.0, digit)
 
 
+func shoot():
+	var eb = enemy_bullet.instantiate()
+	get_parent().get_parent().add_child(eb)
+	eb.rotation = gun.rotation
+	eb.global_position = gun.global_position
+	can_attack = false
+	attack_timer.start(randf_range(2,3))
+
+
 func die():
 	get_parent().alive_enemies -= 1
 	for i in range(0,randi_range(3,5)):
@@ -114,14 +130,9 @@ func die():
 		gd.global_position = Vector2(global_position.x,global_position.y+2)
 	queue_free()
 
+
 func _on_attack_timer_timeout():
-	if state != RUN:
-		var eb = enemy_bullet.instantiate()
-		get_parent().get_parent().add_child(eb)
-		eb.rotation = gun.rotation
-		eb.global_position = gun.global_position
-	
-	attack_timer.start(randf_range(2,3))
+	can_attack = true
 
 
 func _on_nav_timer_timeout():
@@ -132,7 +143,7 @@ func _on_idle_timer_timeout():
 	if wander == false:
 		wander = true
 		if state == IDLE:
-			target_position = Vector2(global_position.x + randf_range(-100,100),global_position.y + randf_range(-100,100))
+			target_position = Vector2(global_position.x + randi_range(-100,100),global_position.y + randi_range(-100,100))
 		idle_timer.start(randf_range(2,3))
 	else:
 		wander = false
