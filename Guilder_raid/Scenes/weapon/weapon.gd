@@ -87,7 +87,7 @@ func spawn_bullet():
 
 
 
-func update_weapon_parameters():	
+func update_weapon_parameters():
 	bullet_type = weapon_machine.current_weapon.bullet_type
 	full_auto = weapon_machine.current_weapon.full_auto
 	damage = weapon_machine.current_weapon.damage

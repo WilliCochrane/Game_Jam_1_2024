@@ -4,7 +4,7 @@ class_name MiniGun
 
 func _ready():
 	full_auto = true
-	bullet_type = "small"
+	bullet_type = "Large"
 	damage = 4
 	fire_rate = 15
 	mana_cost = 1
@@ -13,6 +13,7 @@ func _ready():
 	bullet_size = 1.5
 	bullet_speed = 7.5
 	bullet_spread = 10
+	txture = "res://Assets/Weapons/MiniGun.png"
 
 
 func Update(_delta):

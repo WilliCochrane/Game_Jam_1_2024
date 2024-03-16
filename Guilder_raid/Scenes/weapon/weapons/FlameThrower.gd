@@ -13,6 +13,7 @@ func _ready():
 	bullet_size = .2
 	bullet_speed = 4
 	bullet_spread = 1.5
+	txture = "res://Assets/Weapons/FlameThrower.png"
 
 
 func Update(_delta):

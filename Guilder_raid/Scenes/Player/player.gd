@@ -4,6 +4,8 @@ signal shoot
 signal shoot_stop
 signal restart_game
 
+@onready var you_died = $ui/You_died
+
 @export var anim_player : AnimationPlayer
 @export var sprite : Sprite2D
 @export var tile_map : TileMap
@@ -71,11 +73,8 @@ func _physics_process(delta):
 		anim_player.play("gob_idle")
 	
 	if current_health <= 0:
-		print("you lose")
-		position = Vector2(128,128)
-		emit_signal("restart_game")
-		current_health = max_health
-		current_mana = max_mana
+		you_died.visible = true
+		get_tree().paused = true
 	
 	low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
 	
@@ -121,8 +120,10 @@ func _input(event):
 	if event.is_action("ui_accept") && dash.can_dash && !dash.is_dashing():
 		dash.start_dash(sprite, dash_duration)
 
+
 func round_to_dec(num, digit):
 	return round(num * pow(10.0, digit)) / pow(10.0, digit)
+
 
 func _on_damage_recieved(damage : float) -> void:
 	current_health -= damage
@@ -184,3 +185,11 @@ func _on_damaged_timeout():
 func _on_weapon_mana_used():
 	current_mana -= weapon.mana_cost
 	mana_regen = false
+
+
+func _on_restart_pressed():
+	emit_signal("restart_game")
+	current_health = max_health
+	current_mana = max_mana
+	you_died.visible = false
+	get_tree().paused = false

@@ -2,8 +2,8 @@ extends Node
 
 @onready var room = preload("res://Scenes/Room/room.tscn")
 
-var min_number_rooms = 10
-var max_number_rooms = 15
+var min_number_rooms = 7
+var max_number_rooms = 12
 var generation_chance = 15
 
 func generate(room_seed):
@@ -84,7 +84,7 @@ func is_interesting(dungeon):
 			elif end_set == false:
 				dungeon.get(i).end = true
 				end_set = true
-	if rooms_with_one >= 3 && rooms_with_three >= 3 && rooms_with_four >= 1:
+	if rooms_with_one >= 3 && rooms_with_three >= 2 && rooms_with_four >= 1:
 		return true
 	else:
 		return false

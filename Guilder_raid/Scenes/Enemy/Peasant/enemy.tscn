@@ -1,10 +1,18 @@
-[gd_scene load_steps=15 format=3 uid="uid://48fpkt0wst45"]
+[gd_scene load_steps=18 format=3 uid="uid://48fpkt0wst45"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy/Peasant/enemy.gd" id="1_fotac"]
 [ext_resource type="Texture2D" uid="uid://con7ukapqwiy6" path="res://Assets/Enemy/Peasant_idle.png" id="2_4cvul"]
 [ext_resource type="Texture2D" uid="uid://b3c41673vinpl" path="res://Assets/Enemy/P_run.png" id="2_decvh"]
+[ext_resource type="Shader" path="res://Shaders/spawn.gdshader" id="2_jrhrx"]
 [ext_resource type="Texture2D" uid="uid://brpc42nbchq75" path="res://Assets/Enemy/P_idle.png" id="4_rrs52"]
 [ext_resource type="Texture2D" uid="uid://bwosodgufye7l" path="res://Assets/Weapons/Revolver.png" id="8_drqxi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8fwc"]
+shader = ExtResource("2_jrhrx")
+shader_parameter/progress = 0.0
+shader_parameter/noise_desnity = 100.0
+shader_parameter/beam_size = 0.15
+shader_parameter/color = Vector4(0, 1.02, 1.2, 1)
 
 [sub_resource type="Animation" id="Animation_l4nu1"]
 length = 0.001
@@ -216,6 +224,13 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dyvi7"]
 size = Vector2(9, 10.25)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_moybg"]
+shader = ExtResource("2_jrhrx")
+shader_parameter/progress = 0.0
+shader_parameter/noise_desnity = 60.0
+shader_parameter/beam_size = null
+shader_parameter/color = Vector4(0, 1.02, 1.2, 1)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_isxod"]
 radius = 5.0
 height = 20.0
@@ -228,6 +243,7 @@ collision_mask = 5
 script = ExtResource("1_fotac")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_r8fwc")
 position = Vector2(0, -9.37283e-06)
 texture = ExtResource("2_decvh")
 hframes = 8
@@ -266,6 +282,7 @@ autostart = true
 [node name="Gun" type="Sprite2D" parent="."]
 z_index = 1
 y_sort_enabled = true
+material = SubResource("ShaderMaterial_moybg")
 position = Vector2(0, 2)
 texture = ExtResource("8_drqxi")
 offset = Vector2(4, 0)

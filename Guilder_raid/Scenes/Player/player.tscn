@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=29 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Resource" uid="uid://bq4oofxg3pous" path="res://Scenes/Abilities/Ability_inventory.tres" id="2_o8fdp"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://vf5lk5uc6imm" path="res://Assets/UI/barfiller.png" id="9_5lgrf"]
 [ext_resource type="Texture2D" uid="uid://068l4w1maiff" path="res://Assets/UI/heart.png" id="10_ucnwq"]
 [ext_resource type="Texture2D" uid="uid://df7f5mhtiaj6b" path="res://Assets/UI/mana.png" id="11_6lfvd"]
-[ext_resource type="PackedScene" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
+[ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001
@@ -199,6 +199,14 @@ _data = {
 "RESET": SubResource("Animation_l1s83")
 }
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3oqcv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h7owo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cc34d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebal1"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7im"]
 size = Vector2(12, 26)
 
@@ -244,6 +252,7 @@ shape = SubResource("CapsuleShape2D_v65hl")
 [node name="Weapon" parent="." instance=ExtResource("4_q6ram")]
 
 [node name="ui" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="ui"]
 position = Vector2(20, 55)
@@ -365,6 +374,44 @@ position = Vector2(320, 180)
 scale = Vector2(0.333, 0.333)
 texture = ExtResource("8_a5rkc")
 
+[node name="You_died" type="Label" parent="ui"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -11.5
+offset_right = 34.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 64
+text = "You Died"
+
+[node name="restart" type="Button" parent="ui/You_died"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -5.5
+offset_right = 39.0
+offset_bottom = 20.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3oqcv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_h7owo")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_cc34d")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ebal1")
+text = "Restart"
+
 [node name="Damaged" type="Timer" parent="."]
 wait_time = 0.4
 one_shot = true
@@ -398,6 +445,7 @@ shape = SubResource("CircleShape2D_epq4t")
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]
 [connection signal="mana_used" from="Weapon" to="." method="_on_weapon_mana_used"]
+[connection signal="pressed" from="ui/You_died/restart" to="." method="_on_restart_pressed"]
 [connection signal="timeout" from="Damaged" to="." method="_on_damaged_timeout"]
 [connection signal="timeout" from="Mana_usage" to="." method="_on_mana_usage_timeout"]
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]

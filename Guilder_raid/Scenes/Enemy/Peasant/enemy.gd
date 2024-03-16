@@ -15,16 +15,18 @@ signal player_damage
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var gun : Sprite2D = $Gun
 
+var can_attack : bool = false
 var target_position : Vector2
 var player : CharacterBody2D
 var move_speed : float = 75
-var health : float 
 var rotation_speed = 15
-var hit : bool = false
+var spawn_value : float
 var random_num : float
-var can_attack : bool = false
+var hit : bool = false
 var can_move : bool
+var health : float 
 var wander : bool
+var spawn : bool
 
 enum {
 	APROACH,
@@ -39,14 +41,29 @@ func _ready():
 	health = 5
 	player = get_tree().get_first_node_in_group("Player")
 	attack_timer.start(randf_range(2,3))
-	can_move = true
+	can_move = false
+	spawn = true
+	spawn_value = 1
+	sprite.material.set_shader_parameter("progress", spawn_value)
+	gun.material.set_shader_parameter("progress", spawn_value)
 	if randi_range(0,1) == 1:
 		wander = true
 	else:
 		wander = false
+	
 
 
 func _physics_process(delta: float) -> void:
+	if spawn == true:
+		spawn_value -= .015
+		sprite.material.set_shader_parameter("progress", spawn_value)
+		gun.material.set_shader_parameter("progress", spawn_value)
+		can_move = false
+		if spawn_value <= 0:
+			spawn = false
+			can_move = true
+	
+	
 	match state:
 		APROACH:
 			target_position = Vector2(player.global_position.x + randf_range(-10,10),player.global_position.y + randf_range(-10,10))

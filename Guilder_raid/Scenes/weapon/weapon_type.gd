@@ -18,6 +18,7 @@ var bullet_size : float
 var bullet_speed : float
 var bullet_spread : float
 var projectiles : int = 1
+var txture : String
 
 func Enter():
 	pass

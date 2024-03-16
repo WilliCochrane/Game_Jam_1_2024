@@ -14,7 +14,7 @@ signal clear_floor
 @export var minimap_item : PackedScene
 
 @onready var tile_map : TileMap = $Level
-@onready var treasue : CharacterBody2D = $Treasure
+@onready var treasue : StaticBody2D = $Treasure
 @onready var minimap : TileMap = $Menus/MiniMap
 
 
@@ -25,7 +25,7 @@ var room_size : Vector2
 
 func _ready():
 	tile_map.clear()
-	dungeon = dungeon_generation.generate(randf_range(-10,10))
+	dungeon = dungeon_generation.generate(randf_range(-1000,1000))
 	load_map()
 
 func _physics_process(_delta):
@@ -188,6 +188,7 @@ func _on_enemies_cleared():
 func _on_ladder_next_floor():
 	emit_signal("clear_floor")
 	tile_map.clear()
+	minimap.clear()
 	dungeon = dungeon_generation.generate(randf_range(-10,10))
 	load_map()
 	shop.open()
@@ -196,6 +197,7 @@ func _on_ladder_next_floor():
 func _on_player_restart_game():
 	emit_signal("clear_floor")
 	tile_map.clear()
+	minimap.clear()
 	dungeon = dungeon_generation.generate(randf_range(-10,10))
 	load_map()
 
