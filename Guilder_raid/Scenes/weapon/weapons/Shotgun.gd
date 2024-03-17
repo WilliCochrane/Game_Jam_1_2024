@@ -7,7 +7,7 @@ func _ready():
 	bullet_type = "Large"
 	damage = 3
 	fire_rate = 1.5
-	mana_cost = 5
+	mana_cost = 10
 	projectiles = 6
 	crit_chance = 10
 	bullet_size = 1

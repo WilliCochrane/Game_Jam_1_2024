@@ -10,7 +10,7 @@ func _ready():
 	mana_cost = 1
 	projectiles = 1
 	crit_chance = 10
-	bullet_size = 1.5
+	bullet_size = 1.3
 	bullet_speed = 7.5
 	bullet_spread = 10
 	txture = "res://Assets/Weapons/MiniGun.png"

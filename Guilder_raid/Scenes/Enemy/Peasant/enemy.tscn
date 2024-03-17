@@ -243,6 +243,7 @@ collision_mask = 5
 script = ExtResource("1_fotac")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 material = SubResource("ShaderMaterial_r8fwc")
 position = Vector2(0, -9.37283e-06)
 texture = ExtResource("2_decvh")
@@ -296,6 +297,13 @@ priority = 1
 position = Vector2(-1, 1)
 shape = SubResource("CapsuleShape2D_isxod")
 
+[node name="collision_damage" type="Area2D" parent="."]
+priority = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collision_damage" groups=["Enemy"]]
+position = Vector2(-1, 1)
+shape = SubResource("CapsuleShape2D_isxod")
+
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(50, 0)
 collision_mask = 2
@@ -303,3 +311,4 @@ collision_mask = 2
 [connection signal="timeout" from="Nav_timer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="Attack_timer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="Idle_timer" to="." method="_on_idle_timer_timeout"]
+[connection signal="area_entered" from="collision_damage" to="." method="_on_collision_damage_area_entered"]

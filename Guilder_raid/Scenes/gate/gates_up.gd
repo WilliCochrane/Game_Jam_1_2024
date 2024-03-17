@@ -44,16 +44,20 @@ func summon_enemies():
 	nav_region.bake_navigation_polygon()
 	for i in range(0,randi_range(5,7)):
 		invalid_spawn = true
-		while invalid_spawn == true:
+		while invalid_spawn:
 			invalid_spawn = false
 			xpos = randi_range(position.x-scale.x*8,position.x+scale.x*8)
 			ypos = randi_range(position.y-scale.y*8,position.y+scale.y*8)
 			if get_parent().tile_map.get_cell_tile_data(0,Vector2i(xpos/16,ypos/16)).get_custom_data("Spawnable"):
-				for l in spawn_places:
-					if Vector2i(xpos/16,ypos/16) == l:
-						invalid_spawn = true
-				if invalid_spawn == false:
-					spawn_places.push_back(Vector2i(xpos/16,ypos/16))
+				var player_dist = (player.global_position - Vector2(xpos,ypos)).length()
+				if player_dist > 70:
+					for l in spawn_places:
+						if Vector2i(xpos/16,ypos/16) == l:
+							invalid_spawn = true
+					if invalid_spawn == false:
+						spawn_places.push_back(Vector2i(xpos/16,ypos/16))
+				else:
+					invalid_spawn = true
 			else:
 				invalid_spawn = true
 		
@@ -63,7 +67,6 @@ func summon_enemies():
 		add_child(e)
 		e.global_position.x = spawn_places[-1].x*16 + 8
 		e.global_position.y = spawn_places[-1].y*16 + 8
-		
 		alive_enemies += 1
 
 

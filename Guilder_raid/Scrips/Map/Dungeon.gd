@@ -14,7 +14,7 @@ signal clear_floor
 @export var minimap_item : PackedScene
 
 @onready var tile_map : TileMap = $Level
-@onready var treasue : StaticBody2D = $Treasure
+@onready var treasure : StaticBody2D = $Treasure
 @onready var minimap : TileMap = $Menus/MiniMap
 
 
@@ -27,10 +27,11 @@ func _ready():
 	tile_map.clear()
 	dungeon = dungeon_generation.generate(randf_range(-1000,1000))
 	load_map()
+	load_minimap()
 
 func _physics_process(_delta):
 	minimap.position = Vector2(-player.global_position.x/16 + 592,-player.global_position.y/16 + 48)
-	
+
 
 func load_map():
 	var cdor_x_st = tile_map.tile_set.get_pattern(0)
@@ -56,7 +57,7 @@ func load_map():
 			rl.scale = Vector2(16,16)
 		elif dungeon.get(i).treasure:
 			tile_map.set_pattern(0, Vector2(34, 26)*i, tile_map.tile_set.get_pattern(6))
-			treasue.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
+			treasure.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 			add_child(rl)
 			rl.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 			rl.scale = Vector2(16,16)
@@ -119,7 +120,7 @@ func load_map():
 	
 	for i in tile_map.get_used_cells(0):
 		if tile_map.get_cell_atlas_coords(0,i) != Vector2i(4,3):
-			minimap.set_cell(0,i,0,Vector2i(0,0))  # change all of these to use the spawnable custom data instead
+			minimap.set_cell(0,i,0,Vector2i(0,0))  # change all of these to use the custom data instead
 		
 		if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
 			var tl = torch_light.instantiate()
@@ -159,6 +160,11 @@ func load_map():
 			minimap.set_cell(0,i,0,Vector2i(1,0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 4):
 			minimap.set_cell(0,i,0,Vector2i(1,0))
+
+
+func load_minimap():
+	$Menus/MiniMap/minimap_chest.position = Vector2(treasure.position.x/16+.5,treasure.position.y/16+.5)
+	$Menus/MiniMap/minimap_ladder.position = Vector2(ladder.position.x/16+.5,ladder.position.y/16+.5)
 
 
 func _add_gate_perimeter(x,y,s):

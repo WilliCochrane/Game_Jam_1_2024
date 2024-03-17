@@ -105,7 +105,6 @@ func _physics_process(delta: float) -> void:
 	else: 
 		state = IDLE
 	
-	raycast.target_position = player.global_position - raycast.global_position
 	
 	z_index = 1
 	rotate_to_player(delta)
@@ -154,6 +153,7 @@ func _on_attack_timer_timeout():
 
 func _on_nav_timer_timeout():
 	nav_agent.target_position = target_position
+	raycast.target_position = player.global_position - raycast.global_position
 
 
 func _on_idle_timer_timeout():
@@ -165,3 +165,10 @@ func _on_idle_timer_timeout():
 	else:
 		wander = false
 		idle_timer.start(2)
+
+
+func _on_collision_damage_area_entered(area):
+	if area.is_in_group("Player_hitbox"):
+		if player.dash.is_dashing() == false:
+			player.current_health -= 1
+			player.hit = true
