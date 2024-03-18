@@ -84,7 +84,7 @@ func is_interesting(dungeon):
 			elif end_set == false:
 				dungeon.get(i).end = true
 				end_set = true
-	if rooms_with_one >= 3 && rooms_with_three >= 2 && rooms_with_four >= 1:
+	if rooms_with_one >= 3 && rooms_with_three >= 2 && rooms_with_four >= 0:
 		return true
 	else:
 		return false

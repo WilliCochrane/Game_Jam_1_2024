@@ -13,7 +13,6 @@ config_version=5
 config/name="Guilder_raid"
 run/main_scene="res://node_2d.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-boot_splash/bg_color=Color(0.411765, 0.45098, 0.509804, 1)
 boot_splash/image="res://Assets/UI/Game Logo.png"
 boot_splash/use_filter=false
 config/icon="res://icon.svg"

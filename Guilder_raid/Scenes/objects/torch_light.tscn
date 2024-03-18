@@ -12,10 +12,9 @@ offsets = PackedFloat32Array(0, 0.76779, 0.94702)
 colors = PackedColorArray(10.001, 0.046, 0.026, 1, 1.1, 0.51, 0.1, 1, 0.984314, 0.705882, 0, 0.0627451)
 
 [node name="torch_light" type="PointLight2D" groups=["light"]]
-process_mode = 4
 z_index = 10
 color = Color(0.960784, 0.733333, 0.647059, 1)
-energy = 0.4
+energy = 0.3
 shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 6.0

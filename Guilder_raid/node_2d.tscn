@@ -828,7 +828,6 @@ tile_map = NodePath("../Level")
 
 [node name="Treasure" parent="." instance=ExtResource("5_ee60j")]
 z_index = 1
-y_sort_enabled = true
 
 [node name="Ladder" parent="." instance=ExtResource("9_ve3sl")]
 z_index = 1
