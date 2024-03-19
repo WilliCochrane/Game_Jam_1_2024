@@ -5,6 +5,10 @@ signal shoot_stop
 signal restart_game
 
 @onready var you_died = $ui/You_died
+@onready var dash_bar = $ui/Dash_bar
+@onready var dash_usage_bar = $ui/Dash_bar/Dash_usage_bar
+@onready var dash_usage_timer = $Dash_usage
+@onready var dash_regen_timer = $Dash_regen
 
 @export var anim_player : AnimationPlayer
 @export var sprite : Sprite2D
@@ -30,17 +34,22 @@ var current_damage : float = 5
 var rotation_speed : float = 10
 var current_health : float = 5
 var current_mana : float = 150
+var current_dashes : float
 var dash_duration : float = .15
 var move_speed : float = 100
 var dash_speed : float = 300
 var max_health : float = 5
+var max_dashes : float = 3
 var max_mana : float = 150
 var gold : int = 0
 
 var mana_usage_bar_catchup : bool = false
+var dashes_used_catchup : bool = false
 var damadged_bar_catchup : bool = false
 var current_mana_usage : float
+var current_dash_usage : float
 var mana_regen : bool = false
+var dash_regen : bool = false
 var hit : bool = false
 
 var shake_strength : float = 0.0
@@ -61,6 +70,11 @@ func _ready():
 	damaged_bar.max_value = max_health
 	current_health = max_health
 	
+	dash_bar.value = max_dashes
+	dash_bar.max_value = max_dashes
+	dash_usage_bar.value = max_dashes
+	dash_usage_bar.max_value = max_dashes
+	current_dashes = max_dashes
 
 func _physics_process(delta):
 	var speed = dash_speed if dash.is_dashing() else move_speed
@@ -118,7 +132,9 @@ func _input(event):
 	if event.is_action_released("ui_shoot"):
 		emit_signal("shoot_stop")
 	if event.is_action("ui_accept") && dash.can_dash && !dash.is_dashing():
-		dash.start_dash(sprite, dash_duration)
+		if current_dashes >= 1:
+			dash.start_dash(sprite, dash_duration)
+			current_dashes -= 1
 
 
 func round_to_dec(num, digit):
@@ -134,38 +150,69 @@ func bar_management():
 	mana_usage_bar.value = current_mana_usage
 	health_bar.value = current_health
 	damaged_bar.value = current_damage
+	dash_bar.value = current_dashes
+	dash_usage_bar.value = current_dash_usage
 	
 	if current_mana > max_mana:
 		mana_regen = false
 		current_mana = max_mana
-	
-	if mana_regen == true:
+	if mana_regen:
 		current_mana += .25
+	
+	if current_dashes > max_dashes:
+		dash_regen = false
+		current_dashes = max_dashes
+	if dash_regen:
+		current_dashes += .02
 	
 	if current_mana_usage < current_mana:
 		current_mana_usage = current_mana
 		mana_usage_bar_catchup = false
-	elif current_mana_usage > current_mana && mana_usage_bar_catchup == false && weapon.shooting == true:
+	if current_mana_usage > current_mana && mana_usage_bar_catchup == false && weapon.shooting == true:
 		mana_usage_timer.start()
+		mana_regen_timer.stop()
+		mana_regen = false
 	elif current_mana_usage > current_mana && mana_usage_bar_catchup == true:
 		if weapon.shooting == false && weapon.full_auto == true:
-			current_mana_usage -= .75
+			current_mana_usage -= 1
 		elif weapon.shooting == true && weapon.full_auto == false:
 			mana_usage_timer.start()
+			mana_regen_timer.stop()
 			mana_usage_bar_catchup = false
+			mana_regen = false
 		elif weapon.shooting == false && weapon.full_auto == false:
-			current_mana_usage -= .75
+			current_mana_usage -= 1
 	elif current_mana_usage <= current_mana:
 		mana_usage_bar_catchup = false
 		if mana_regen_timer.is_stopped():
-			mana_regen_timer.start()
+			mana_regen_timer.start(2)
+	
+	if current_dash_usage < current_dashes:
+		current_dash_usage = current_dashes
+		dashes_used_catchup = false
+	if current_dash_usage > current_dashes && dashes_used_catchup == false && dash.is_dashing():
+		dash_usage_timer.start()
+		dash_regen_timer.stop()
+		dash_regen = false
+	elif current_dash_usage > current_dashes && dashes_used_catchup == true:
+		if !dash.is_dashing():
+			current_dash_usage -= .1
+		elif dash.is_dashing():
+			dash_usage_timer.start()
+			dash_regen_timer.stop()
+			dashes_used_catchup = false
+			dash_regen = false
+	elif current_dash_usage <= current_dashes:
+		dashes_used_catchup = false
+		if dash_regen_timer.is_stopped():
+			dash_regen_timer.start()
 	
 	if current_damage <= current_health:
 		current_damage = current_health
 		damadged_bar_catchup = false
 	elif current_damage > current_health && damadged_bar_catchup == false:
 		if damaged_timer.is_stopped():
-			damaged_timer.start()
+			damaged_timer.start(2)
 	elif current_damage > current_health && damadged_bar_catchup == true:
 		current_damage -= .01
 
@@ -193,3 +240,11 @@ func _on_restart_pressed():
 	current_mana = max_mana
 	you_died.visible = false
 	get_tree().paused = false
+
+
+func _on_dash_usage_timeout():
+	dashes_used_catchup = true
+
+
+func _on_dash_regen_timeout():
+	dash_regen = true

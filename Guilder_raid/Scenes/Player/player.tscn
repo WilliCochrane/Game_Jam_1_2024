@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=32 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Resource" uid="uid://bq4oofxg3pous" path="res://Scenes/Abilities/Ability_inventory.tres" id="2_o8fdp"]
@@ -13,7 +13,10 @@
 [ext_resource type="Texture2D" uid="uid://vf5lk5uc6imm" path="res://Assets/UI/barfiller.png" id="9_5lgrf"]
 [ext_resource type="Texture2D" uid="uid://068l4w1maiff" path="res://Assets/UI/heart.png" id="10_ucnwq"]
 [ext_resource type="Texture2D" uid="uid://df7f5mhtiaj6b" path="res://Assets/UI/mana.png" id="11_6lfvd"]
+[ext_resource type="Texture2D" uid="uid://dekv4rrpxepfg" path="res://Assets/UI/sprint_bar_wrap.png" id="12_l8jfh"]
+[ext_resource type="Texture2D" uid="uid://oohfcgut53a" path="res://Assets/UI/sprint_bar_filler.png" id="13_dtjdo"]
 [ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
+[ext_resource type="Texture2D" uid="uid://dh3qy7jaxjh5e" path="res://Assets/UI/dash_icon.png" id="14_yvwd1"]
 
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001
@@ -229,7 +232,7 @@ camera = NodePath("Camera2D")
 ui_sprite = NodePath("ui/UI_Sprite2D")
 ui_anim_player = NodePath("ui/UI_AnimationPlayer")
 low_health_indicator = NodePath("ui/Low_health")
-gold_lable = NodePath("ui/Sprite2D/Gold")
+gold_lable = NodePath("ui/gold/Gold")
 ability_inventory = ExtResource("2_o8fdp")
 dash = NodePath("Dash")
 
@@ -254,11 +257,11 @@ shape = SubResource("CapsuleShape2D_v65hl")
 [node name="ui" type="CanvasLayer" parent="."]
 process_mode = 3
 
-[node name="Sprite2D" type="Sprite2D" parent="ui"]
-position = Vector2(20, 55)
+[node name="gold" type="Sprite2D" parent="ui"]
+position = Vector2(17, 71)
 texture = ExtResource("5_cx2o8")
 
-[node name="Gold" type="Label" parent="ui/Sprite2D"]
+[node name="Gold" type="Label" parent="ui/gold"]
 offset_left = 12.0
 offset_top = -15.0
 offset_right = 48.0
@@ -269,14 +272,13 @@ theme_override_font_sizes/font_size = 32
 text = "100"
 
 [node name="Health_bar" type="TextureProgressBar" parent="ui"]
-clip_contents = true
 layout_direction = 1
 offset_left = 10.0
 offset_top = 12.0
 offset_right = 60.0
 offset_bottom = 18.0
 scale = Vector2(2, 2)
-value = 100.0
+value = 50.0
 nine_patch_stretch = true
 stretch_margin_left = 6
 stretch_margin_top = 3
@@ -309,13 +311,11 @@ texture_progress = ExtResource("9_5lgrf")
 tint_under = Color(0.101961, 0.117647, 0.164706, 1)
 tint_progress = Color(0.952941, 0.533333, 0.513726, 1)
 
-[node name="heart" type="Sprite2D" parent="ui"]
-position = Vector2(17, 18)
-scale = Vector2(2, 2)
+[node name="heart" type="Sprite2D" parent="ui/Health_bar"]
+position = Vector2(3.5, 3)
 texture = ExtResource("10_ucnwq")
 
 [node name="Mana_bar" type="TextureProgressBar" parent="ui"]
-clip_contents = true
 layout_direction = 1
 offset_left = 10.0
 offset_top = 30.0
@@ -349,13 +349,56 @@ stretch_margin_right = 6
 stretch_margin_bottom = 3
 texture_under = ExtResource("9_5lgrf")
 texture_progress = ExtResource("9_5lgrf")
-tint_under = Color(0.192157, 0.0784314, 0.109804, 1)
+tint_under = Color(0.101961, 0.117647, 0.164706, 1)
 tint_progress = Color(0.643137, 0.737255, 0.87451, 1)
 
-[node name="mana" type="Sprite2D" parent="ui"]
-position = Vector2(16, 36)
-scale = Vector2(2, 2)
+[node name="mana" type="Sprite2D" parent="ui/Mana_bar"]
+position = Vector2(3, 3)
 texture = ExtResource("11_6lfvd")
+
+[node name="Dash_bar" type="TextureProgressBar" parent="ui"]
+layout_direction = 1
+offset_left = 17.0
+offset_top = 48.0
+offset_right = 39.0
+offset_bottom = 54.0
+scale = Vector2(2, 2)
+size_flags_vertical = 3
+max_value = 3.0
+step = 0.01
+value = 1.0
+nine_patch_stretch = true
+stretch_margin_left = 8
+stretch_margin_top = 3
+stretch_margin_right = 8
+stretch_margin_bottom = 3
+texture_over = ExtResource("12_l8jfh")
+texture_progress = ExtResource("13_dtjdo")
+tint_over = Color(0.247059, 0.247059, 0.247059, 1)
+tint_progress = Color(0.223529, 0.643137, 0.262745, 1)
+
+[node name="Dash_usage_bar" type="TextureProgressBar" parent="ui/Dash_bar"]
+z_index = -1
+clip_contents = true
+layout_direction = 1
+layout_mode = 0
+offset_right = 22.0
+offset_bottom = 6.0
+max_value = 3.0
+step = 0.01
+nine_patch_stretch = true
+stretch_margin_left = 8
+stretch_margin_top = 3
+stretch_margin_right = 8
+stretch_margin_bottom = 3
+texture_under = ExtResource("13_dtjdo")
+texture_progress = ExtResource("13_dtjdo")
+tint_under = Color(0.101961, 0.117647, 0.164706, 1)
+tint_progress = Color(0.580392, 1, 0.588235, 1)
+
+[node name="Dash_icon" type="Sprite2D" parent="ui/Dash_bar"]
+position = Vector2(1, 2)
+texture = ExtResource("14_yvwd1")
 
 [node name="UI_AnimationPlayer" type="AnimationPlayer" parent="ui"]
 libraries = {
@@ -420,7 +463,15 @@ one_shot = true
 wait_time = 0.4
 one_shot = true
 
+[node name="Dash_usage" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
 [node name="Mana_regen" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Dash_regen" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
 
@@ -448,4 +499,6 @@ shape = SubResource("CircleShape2D_epq4t")
 [connection signal="pressed" from="ui/You_died/restart" to="." method="_on_restart_pressed"]
 [connection signal="timeout" from="Damaged" to="." method="_on_damaged_timeout"]
 [connection signal="timeout" from="Mana_usage" to="." method="_on_mana_usage_timeout"]
+[connection signal="timeout" from="Dash_usage" to="." method="_on_dash_usage_timeout"]
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
+[connection signal="timeout" from="Dash_regen" to="." method="_on_dash_regen_timeout"]
