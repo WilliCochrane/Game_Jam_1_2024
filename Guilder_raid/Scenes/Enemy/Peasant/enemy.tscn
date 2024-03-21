@@ -266,6 +266,8 @@ shape = SubResource("RectangleShape2D_dyvi7")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 5.0
 path_max_distance = 1000.0
+debug_use_custom = true
+debug_path_custom_color = Color(10, 1, 1, 1)
 
 [node name="Nav_timer" type="Timer" parent="."]
 wait_time = 0.3
