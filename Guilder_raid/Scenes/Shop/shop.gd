@@ -8,8 +8,8 @@ signal shop_closed
 @export var shop_item2 : Panel
 @export var shop_item3 : Panel
 @export var money : Label
+@export var avalable_abilities : Array[Ability]
 
-var avalable_abilities : Array[Ability]
 var player : CharacterBody2D
 var is_open : bool = false
 var reroll_cost : int
@@ -29,7 +29,6 @@ func close():
 
 
 func _ready():
-	dir_contents("res://Scenes/Abilities/Ability/")
 	player = get_tree().get_first_node_in_group("Player")
 	reroll_shop()
 	update_money()

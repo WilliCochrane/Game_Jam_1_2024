@@ -34,7 +34,6 @@ func _on_shop_shop_closed():
 
 func _on_h_slider_value_changed(value):
 	canvas.environment.adjustment_brightness = value/100
-	print(value/100)
 
 
 func _on_return_pressed():

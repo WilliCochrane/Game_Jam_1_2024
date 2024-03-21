@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnrmiqvhay643"]
+[gd_scene load_steps=4 format=3 uid="uid://bnrmiqvhay643"]
 
 [ext_resource type="Script" path="res://Scenes/gate/gates_up.gd" id="1_8ghds"]
 [ext_resource type="Texture2D" uid="uid://dlvkeh3lel4p3" path="res://Assets/Effects/spot.png" id="2_w8qus"]
@@ -6,21 +6,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4qfw1"]
 size = Vector2(16, 16)
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_byabb"]
-outlines = Array[PackedVector2Array]([PackedVector2Array(-18, -18, 18, -18, 18, 18, -18, 18)])
-source_geometry_group_name = &"navigation_polygon_source_group"
-
 [node name="gates_up" type="Area2D" groups=["clear"]]
 script = ExtResource("1_8ghds")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 10
 shape = SubResource("RectangleShape2D_4qfw1")
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-z_index = 10
-y_sort_enabled = true
-navigation_polygon = SubResource("NavigationPolygon_byabb")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 light_mask = 2
@@ -34,6 +25,8 @@ texture_scale = 2.5
 [node name="reset_timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="reset_timer" to="." method="_on_reset_timer_timeout"]

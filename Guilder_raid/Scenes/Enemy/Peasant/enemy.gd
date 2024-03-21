@@ -66,13 +66,11 @@ func _physics_process(delta: float) -> void:
 	
 	match state:
 		APROACH:
-			target_position = Vector2(player.global_position.x + randf_range(-10,10),player.global_position.y + randf_range(-10,10))
+			pass
 		IDLE:
-			if wander == false:
-				target_position = global_position
-				velocity = Vector2.ZERO
+			pass
 		RUN:
-			target_position = global_position * 2 - player.global_position
+			pass
 			
 	if health <= 0:
 		die()
@@ -80,8 +78,10 @@ func _physics_process(delta: float) -> void:
 	if can_attack == true:
 		if !raycast.is_colliding():
 			shoot()
+		else:
+			state = APROACH
 	
-	if velocity == Vector2.ZERO:
+	if velocity.length() < 2:
 		animation.play("p_idle")
 	else:
 		animation.play("p_run")
@@ -90,23 +90,15 @@ func _physics_process(delta: float) -> void:
 		alt_animation.play("hit")
 		hit = false
 	
-	if can_move == true:
+	if can_move && !raycast.is_colliding():
 		var direction = (nav_agent.get_next_path_position() - global_position).normalized()
 		var steering = ((direction * move_speed) - velocity) * delta * 1.2
 		velocity += steering
+	elif raycast.is_colliding():
+		velocity = (nav_agent.get_next_path_position() - global_position).normalized() * move_speed/2
 	else:
 		velocity = Vector2.ZERO
 	
-	var dir = player.global_position - global_position
-	if dir.length() < 60:
-		state = RUN
-	elif dir.length() > 300:
-		state = APROACH
-	else: 
-		state = IDLE
-	
-	
-	z_index = 1
 	rotate_to_player(delta)
 	move_and_slide()
 
@@ -152,19 +144,40 @@ func _on_attack_timer_timeout():
 
 
 func _on_nav_timer_timeout():
-	nav_agent.target_position = target_position
+	var dir = player.global_position - global_position
 	raycast.target_position = player.global_position - raycast.global_position
+	if !raycast.is_colliding():
+		if dir.length() < 60:
+			state = RUN
+		elif dir.length() > 300:
+			state = APROACH
+		else: 
+			state = IDLE
+	else:
+		state = APROACH
+	
+	match state:
+		APROACH:
+			target_position = Vector2(player.global_position.x + randf_range(-10,10),player.global_position.y + randf_range(-10,10))
+		IDLE:
+			if !wander:
+				target_position = global_position
+				velocity = Vector2.ZERO
+		RUN:
+			target_position = global_position * 2 - player.global_position
+	
+	nav_agent.target_position = target_position
 
 
 func _on_idle_timer_timeout():
-	if wander == false:
+	if !wander:
 		wander = true
 		if state == IDLE:
 			target_position = Vector2(global_position.x + randi_range(-100,100),global_position.y + randi_range(-100,100))
 		idle_timer.start(randf_range(2,3))
 	else:
 		wander = false
-		idle_timer.start(2)
+		idle_timer.start(randf_range(1,3))
 
 
 func _on_collision_damage_area_entered(area):

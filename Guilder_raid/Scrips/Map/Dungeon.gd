@@ -27,7 +27,6 @@ func _ready():
 	tile_map.clear()
 	dungeon = dungeon_generation.generate(randf_range(-1000,1000))
 	load_map()
-	load_minimap()
 
 func _physics_process(_delta):
 	minimap.position = Vector2(-player.global_position.x/16 + 592,-player.global_position.y/16 + 48)
@@ -160,6 +159,9 @@ func load_map():
 			minimap.set_cell(0,i,0,Vector2i(1,0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 4):
 			minimap.set_cell(0,i,0,Vector2i(1,0))
+	
+	$NavigationRegion2D.bake_navigation_polygon()
+	load_minimap()
 
 
 func load_minimap():
@@ -198,6 +200,7 @@ func _on_ladder_next_floor():
 	dungeon = dungeon_generation.generate(randf_range(-10,10))
 	load_map()
 	shop.open()
+	treasure.reset()
 
 
 func _on_player_restart_game():
@@ -206,10 +209,12 @@ func _on_player_restart_game():
 	minimap.clear()
 	dungeon = dungeon_generation.generate(randf_range(-10,10))
 	load_map()
+	treasure.reset()
 
 
 func _on_timer_timeout():
 	pass
+
 
 func _on_pause_menu_closed():
 	get_tree().paused = false

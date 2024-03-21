@@ -3,7 +3,6 @@ extends Area2D
 signal close_gates
 signal open_gates
 
-@onready var nav_region : NavigationRegion2D = $NavigationRegion2D
 @onready var area : CollisionShape2D = $CollisionShape2D
 @onready var reset_timer : Timer = $reset_timer
 
@@ -41,7 +40,6 @@ func _physics_process(_delta):
 func summon_enemies():
 	summon_wave = false
 	enemies_spawned = true
-	nav_region.bake_navigation_polygon()
 	for i in range(0,randi_range(5,7)):
 		invalid_spawn = true
 		while invalid_spawn:
@@ -50,7 +48,7 @@ func summon_enemies():
 			ypos = randi_range(position.y-scale.y*8,position.y+scale.y*8)
 			if get_parent().tile_map.get_cell_tile_data(0,Vector2i(xpos/16,ypos/16)).get_custom_data("Spawnable"):
 				var player_dist = (player.global_position - Vector2(xpos,ypos)).length()
-				if player_dist > 70:
+				if player_dist > 100:
 					for l in spawn_places:
 						if Vector2i(xpos/16,ypos/16) == l:
 							invalid_spawn = true

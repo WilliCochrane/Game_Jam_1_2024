@@ -21,6 +21,13 @@ func _ready():
 	choose_weapon()
 
 
+func reset():
+	opened = false
+	weapon_pickup.visible = false
+	anim_player.play("idle")
+	choose_weapon()
+
+
 func _physics_process(_delta):
 	weapon_pickup.material.set_shader_parameter("progress", shader_value)
 

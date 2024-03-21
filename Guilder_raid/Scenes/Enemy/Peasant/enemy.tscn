@@ -260,12 +260,11 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.833333, 5)
+position = Vector2(-1, 5)
 shape = SubResource("RectangleShape2D_dyvi7")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_desired_distance = 78.41
-target_desired_distance = 60.0
+path_desired_distance = 5.0
 path_max_distance = 1000.0
 
 [node name="Nav_timer" type="Timer" parent="."]

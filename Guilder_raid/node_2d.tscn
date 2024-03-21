@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://uk6yrsv45ei4"]
+[gd_scene load_steps=56 format=3 uid="uid://uk6yrsv45ei4"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Scenes/Player/player.tscn" id="1_l5ov3"]
@@ -19,6 +19,12 @@
 [ext_resource type="Texture2D" uid="uid://dh2si5n7lo05w" path="res://Assets/UI/Minimap/minimap_chest.png" id="15_0dn7w"]
 [ext_resource type="PackedScene" uid="uid://0l6gj1c2uyq8" path="res://Scenes/ui/minimap_item.tscn" id="15_sjw4r"]
 [ext_resource type="Texture2D" uid="uid://doxquwst4dayw" path="res://Assets/UI/Minimap/minimap_ladder.png" id="16_0t7gc"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_l0vuk"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(-10291, -9177, 14797, -9720, 15452, 9944, -11195, 8904)])
+source_geometry_mode = 1
+source_geometry_group_name = &"navigation"
+agent_radius = 15.0
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_vne1m"]
 tile_data = PackedInt32Array(0, 327682, 4, 65536, 65538, 1, 131072, 196610, 3, 196608, 196610, 3, 262144, 327682, 5)
@@ -811,6 +817,11 @@ shop = NodePath("Menus/Shop")
 torch_light = ExtResource("13_tkhvk")
 room_light = ExtResource("6_yk4yx")
 minimap_item = ExtResource("15_sjw4r")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+z_index = 3
+y_sort_enabled = true
+navigation_polygon = SubResource("NavigationPolygon_l0vuk")
 
 [node name="Level" type="TileMap" parent="." groups=["dungeon", "navigation"]]
 y_sort_enabled = true
