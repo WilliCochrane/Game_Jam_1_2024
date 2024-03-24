@@ -1,17 +1,23 @@
 extends CharacterBody2D
 
 @onready var anim_player : AnimationPlayer = $AnimationPlayer
+@onready var sprite = $Sprite2D
 @onready var weapon : CharacterBody2D = get_tree().get_first_node_in_group("Player").get_child(4)
+@onready var blood_splat = preload("res://Scenes/Effects/Blood_splat.tscn")
 
 var damage : float 
 var speed : float 
 var crit_chance : float  
 var size : float
 var spread : float
+var piercing : int
+var bounces : int
 var flamethrow : bool
 var rotated : bool = false
 var can_move : bool = true
 var fire : bool = false
+
+var crit : bool
 
 func _ready():
 	weapon = get_tree().get_first_node_in_group("Player").get_child(4)
@@ -20,10 +26,9 @@ func _ready():
 	crit_chance = weapon.crit_chance + weapon.crit_chance_modifier
 	size = weapon.bullet_size * weapon.bullet_size_modifier
 	spread = weapon.bullet_spread
+	piercing = weapon.piercing
+	bounces = weapon.bounces
 	flamethrow = weapon.flamethrow
-	$CPUParticles2D.scale *= 1/scale.x
-	z_index = -5
-	
 
 
 func _physics_process(delta):
@@ -38,11 +43,16 @@ func _physics_process(delta):
 		position += transform.x * speed * delta
 		scale = Vector2(size,size)/3
 		z_index = 1
-		$CPUParticles2D.restart()
 	if fire:
 		$Fire_trail.emitting = true
 	else:
 		$Fire_trail.emitting = false
+	if crit:
+		modulate.r = 5
+		modulate.b = .2
+		modulate.g = .2
+		damage *= 2
+		crit = false
 
 
 func _on_area_2d_body_entered(body):
@@ -51,23 +61,22 @@ func _on_area_2d_body_entered(body):
 			queue_free()
 
 
-func die():
-	$Timer.start()
-	$Sprite2D.visible = false
-	$Area2D.monitoring = false
-	$CPUParticles2D.emitting = true
-	$Sprite2D.visible = false
-	$Fire_trail.emitting = false
-	can_move = false
-
-
-func _on_timer_timeout():
-	queue_free()
+func splat():
+	var bd = blood_splat.instantiate()
+	get_parent().add_child(bd)
+	bd.transform = transform
+	bd.scale = Vector2(.4,.4)
 
 
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("Enemy"):
-		area.get_parent().health -= damage
-		area.get_parent().hit = true
-		can_move = false
-		call_deferred("die")
+		if piercing > 0:
+			piercing -= 1
+			area.get_parent().health -= damage
+			area.get_parent().hit = true
+			splat()
+		else:
+			area.get_parent().health -= damage
+			area.get_parent().hit = true
+			splat()
+			queue_free()

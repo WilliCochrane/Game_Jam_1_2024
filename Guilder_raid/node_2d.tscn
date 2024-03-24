@@ -912,7 +912,7 @@ light_mask = 2
 texture = ExtResource("16_0t7gc")
 
 [node name="player_minimap" type="Sprite2D" parent="Minimap/Container/MiniMap"]
-modulate = Color(30, 30, 10, 0.5)
+modulate = Color(30, 30, 1, 0.5)
 top_level = true
 light_mask = 2
 position = Vector2(576, 64)

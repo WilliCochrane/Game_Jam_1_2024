@@ -122,6 +122,7 @@ func weapon_rotate_to_mouse(target, delta):
 	var direction = (target - weapon.global_position) #target global position if is an entity
 	var angleTo = weapon.transform.x.angle_to(direction)
 	weapon.rotation += (sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
+	weapon.b_rotation = weapon.rotation
 	if direction.x > 0:
 		sprite.flip_h = false
 		weapon.get_child(0).scale.y = 1

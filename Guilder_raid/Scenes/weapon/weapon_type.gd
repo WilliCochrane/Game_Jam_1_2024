@@ -8,6 +8,8 @@ var first_update : bool = true
 
 var full_auto : bool = false
 var flamethrow : bool = false
+var water : bool = false
+var money_shot : bool = false
 var bullet_type : String
 
 var damage : float
@@ -18,6 +20,8 @@ var bullet_size : float
 var bullet_speed : float
 var bullet_spread : float
 var projectiles : int = 1
+var piercing : int = 0
+var bounces : int = 0
 var txture : String
 
 func Enter():

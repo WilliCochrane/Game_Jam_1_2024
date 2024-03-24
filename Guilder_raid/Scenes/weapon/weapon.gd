@@ -6,6 +6,10 @@ signal mana_used
 @export var cooldown_timer : Timer
 @export var weapon_machine : Node
 @export var raycast : RayCast2D
+@export var shot_interval : Timer
+
+var b_rotation : float
+var crit : bool
 
 var bullet_spread : float 
 var bullet_type : String
@@ -13,6 +17,8 @@ var bullet_speed : float
 var bullet_size : float 
 var crit_chance : float
 var damage : float
+var piercing : int
+var bounces : int 
 
 var fire_rate : float 
 var mana_cost : float
@@ -60,7 +66,12 @@ func _on_player_shoot():
 			cooldown_timer.start()
 			can_shoot = false
 			emit_signal("mana_used")
-			get_parent().shake_strength = damage/5 * projectiles
+			if randi_range(0,100) <= crit_chance:
+				crit = true
+			else: 
+				crit = false
+			if !flamethrow:
+				get_parent().shake_strength = (damage/5) * projectiles + (fire_rate/10)
 			if projectiles == 1:
 				spawn_bullet()
 			else:
@@ -73,16 +84,19 @@ func _on_player_shoot_stop():
 
 func shoot_projectiles():
 	projectiles_left = projectiles
-	while projectiles_left > 0:
-		spawn_bullet()
-		projectiles_left -= 1
+	spawn_bullet()
+	projectiles_left -= 1
+	shot_interval.start(randf_range(.005,.01))
 
 
 func spawn_bullet():
 	var b = bullet.instantiate()
 	owner.owner.add_child(b)
 	b.anim_player.play(bullet_type)
-	b.transform = $Muzzle.global_transform
+	b.position = $Muzzle.global_position
+	b.sprite.scale.y *= $Sprite2D.scale.y
+	b.rotation = b_rotation
+	b.crit = crit
 
 
 
@@ -100,6 +114,8 @@ func update_weapon_parameters():
 	mana_cost = weapon_machine.current_weapon.mana_cost
 	full_auto = weapon_machine.current_weapon.full_auto
 	projectiles = weapon_machine.current_weapon.projectiles
+	piercing = weapon_machine.current_weapon.piercing
+	bounces = weapon_machine.current_weapon.bounces
 	
 	cooldown_timer.wait_time = 1/fire_rate * fire_rate_modifier
 	
@@ -115,3 +131,10 @@ func _on_cooldown_timeout():
 	if full_auto == true && shooting == true:
 		_on_player_shoot()
 
+
+
+func _on_shot_interval_timeout():
+	if projectiles_left > 0:
+		spawn_bullet()
+		projectiles_left -= 1
+		shot_interval.start(randf_range(.005,.01))

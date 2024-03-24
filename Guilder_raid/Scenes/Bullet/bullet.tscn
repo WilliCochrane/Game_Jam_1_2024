@@ -1,8 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://bjwsafueqhnss"]
+[gd_scene load_steps=18 format=3 uid="uid://bjwsafueqhnss"]
 
 [ext_resource type="Script" path="res://Scenes/Bullet/bullet.gd" id="1_r4se3"]
+[ext_resource type="Texture2D" uid="uid://bp0lgnapnv8b8" path="res://Assets/Bullet/mouse.png" id="2_418tf"]
 [ext_resource type="Texture2D" uid="uid://dh3krl8mplja2" path="res://Assets/Bullet/Red_grad.png" id="2_dbcmn"]
 [ext_resource type="Texture2D" uid="uid://dr1uwrvpfyi4m" path="res://Assets/Bullet/Boolet.png" id="2_g3bhf"]
+[ext_resource type="Texture2D" uid="uid://dch3fe0ug3qv2" path="res://Assets/Bullet/Laser.png" id="2_neq5t"]
+[ext_resource type="Texture2D" uid="uid://ctw4ibpo4yr67" path="res://Assets/Bullet/bb.png" id="2_vaxdt"]
 [ext_resource type="Texture2D" uid="uid://c4dnd5828rcox" path="res://Assets/Bullet/Red_small.png" id="4_woddr"]
 
 [sub_resource type="Gradient" id="Gradient_fi76s"]
@@ -46,7 +49,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(1, 1)]
+"values": [Vector2(2, 2)]
 }
 
 [sub_resource type="Animation" id="Animation_y0udl"]
@@ -87,6 +90,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(8, 6, 2, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_spka2"]
@@ -144,39 +159,175 @@ tracks/2/keys = {
 "values": [Vector2(0.5, 0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_umth3"]
+resource_name = "BB"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_vaxdt")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.75, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(8, 6, 2, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_v5riv"]
+resource_name = "Mouse"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_418tf")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 1.25)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_m1x8k"]
+resource_name = "Laser"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_neq5t")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i28gg"]
 _data = {
+"BB": SubResource("Animation_umth3"),
 "Gradient": SubResource("Animation_r7vhi"),
 "Large": SubResource("Animation_y0udl"),
+"Laser": SubResource("Animation_m1x8k"),
+"Mouse": SubResource("Animation_v5riv"),
 "RESET": SubResource("Animation_spka2"),
 "small": SubResource("Animation_ay4f7")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qf8se"]
 size = Vector2(24, 18)
-
-[sub_resource type="Curve" id="Curve_tk7w0"]
-min_value = 150.0
-max_value = 360.0
-_data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(1, 150), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_r0bya"]
-max_value = 100.0
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 100), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Curve" id="Curve_jwgmx"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.89547, 0.791733), -0.590831, -0.590831, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Gradient" id="Gradient_o37gg"]
-offsets = PackedFloat32Array(0, 0.666667, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.976471, 1, 1, 1, 0)
-
-[sub_resource type="Gradient" id="Gradient_pe57x"]
-offsets = PackedFloat32Array(0, 0.818352, 0.913858)
-colors = PackedColorArray(0.858824, 0, 0, 1, 0.858824, 0, 0, 1, 1, 0.980814, 0.909456, 1)
 
 [node name="Bullet" type="CharacterBody2D" groups=["clear"]]
 z_index = 1
@@ -215,40 +366,7 @@ collision_layer = 4
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 shape = SubResource("RectangleShape2D_qf8se")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-position = Vector2(23, 0)
-emitting = false
-amount = 30
-lifetime = 2.0
-one_shot = true
-preprocess = 100.0
-explosiveness = 0.9
-randomness = 0.03
-local_coords = true
-direction = Vector2(-1, 0)
-gravity = Vector2(0, 0)
-initial_velocity_min = 50.0
-initial_velocity_max = 250.0
-angular_velocity_min = 1.0
-angular_velocity_max = 1.0
-angular_velocity_curve = SubResource("Curve_tk7w0")
-damping_min = 10.0
-damping_max = 10.0
-damping_curve = SubResource("Curve_r0bya")
-angle_min = -360.0
-angle_max = 360.0
-scale_amount_min = 4.0
-scale_amount_max = 7.0
-scale_amount_curve = SubResource("Curve_jwgmx")
-color_ramp = SubResource("Gradient_o37gg")
-color_initial_ramp = SubResource("Gradient_pe57x")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.1
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

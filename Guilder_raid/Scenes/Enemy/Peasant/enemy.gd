@@ -38,7 +38,7 @@ var state = IDLE
 
 
 func _ready():
-	health = 5
+	health = 8
 	player = get_tree().get_first_node_in_group("Player")
 	attack_timer.start(randf_range(2,3))
 	can_move = false

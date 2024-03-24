@@ -4,7 +4,7 @@ class_name Shotgun
 
 func _ready():
 	full_auto = false
-	bullet_type = "Large"
+	bullet_type = "BB"
 	damage = 3
 	fire_rate = 1.5
 	mana_cost = 10
