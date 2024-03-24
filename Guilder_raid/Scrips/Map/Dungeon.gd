@@ -15,7 +15,7 @@ signal clear_floor
 
 @onready var tile_map : TileMap = $Level
 @onready var treasure : StaticBody2D = $Treasure
-@onready var minimap : TileMap = $Menus/MiniMap
+@onready var minimap : TileMap = $Minimap/Container/MiniMap
 
 
 var gates_up : bool = false
@@ -29,7 +29,7 @@ func _ready():
 	load_map()
 
 func _physics_process(_delta):
-	minimap.position = Vector2(-player.global_position.x/16 + 592,-player.global_position.y/16 + 48)
+	minimap.position = Vector2(-player.global_position.x/16+64,-player.global_position.y/16+64)
 
 
 func load_map():
@@ -42,8 +42,8 @@ func load_map():
 	var cdor_y_en = tile_map.tile_set.get_pattern(5)
 	
 	for child in get_children():
-		if child.is_in_group("gate") or child.is_in_group("Gate") or child.is_in_group("light") or child.is_in_group("enemy") or child.is_in_group("clear"):
-			child.free()
+		if child.is_in_group("clear"):
+			child.queue_free()
 	
 	for i in dungeon:
 		var rl = room_light.instantiate()
@@ -165,8 +165,8 @@ func load_map():
 
 
 func load_minimap():
-	$Menus/MiniMap/minimap_chest.position = Vector2(treasure.position.x/16+.5,treasure.position.y/16+.5)
-	$Menus/MiniMap/minimap_ladder.position = Vector2(ladder.position.x/16+.5,ladder.position.y/16+.5)
+	$Minimap/Container/MiniMap/minimap_chest.position = Vector2(treasure.position.x/16+.5,treasure.position.y/16+.5)
+	$Minimap/Container/MiniMap/minimap_ladder.position = Vector2(ladder.position.x/16+.5,ladder.position.y/16+.5)
 
 
 func _add_gate_perimeter(x,y,s):

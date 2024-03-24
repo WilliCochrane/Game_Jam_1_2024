@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource("1_hg3f5")
-ability_name = ""
-description = "Faster bullets"
+ability_name = "Faster bullets"
+description = "+ 20% bullet speed "
 texture = ExtResource("2_t8re2")
 unnique = false
 rarity = 0

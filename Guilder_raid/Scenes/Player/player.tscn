@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=33 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Resource" uid="uid://bq4oofxg3pous" path="res://Scenes/Abilities/Ability_inventory.tres" id="2_o8fdp"]
 [ext_resource type="Texture2D" uid="uid://bpyd55lt7yjte" path="res://Assets/Player/Gob_run.png" id="3_8bgvj"]
 [ext_resource type="PackedScene" uid="uid://c6rheyijs8n4l" path="res://Scenes/weapon/weapon.tscn" id="4_q6ram"]
 [ext_resource type="Texture2D" uid="uid://d1t8jh7ag0x6q" path="res://Assets/Gold/Coin.png" id="5_cx2o8"]
+[ext_resource type="AudioStream" uid="uid://bf22dfpfp0ds7" path="res://audio/player/footstep.wav" id="5_wglch"]
 [ext_resource type="FontFile" uid="uid://ejil0kwiqa3l" path="res://Assets/UI/m5x7.ttf" id="6_jyu7f"]
 [ext_resource type="Texture2D" uid="uid://c34gyedxdx682" path="res://Assets/Player/Gob_idle.png" id="6_sit5e"]
 [ext_resource type="Texture2D" uid="uid://cowsbnx5ja6jf" path="res://Assets/UI/Damaged/player_hit_feedback.png" id="7_em7js"]
@@ -115,6 +116,37 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -1), Vector2(0, -1), Vector2(0, 0), Vector2(0, -1), Vector2(0, -1)]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sounds/footsteps")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_wglch")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_wglch")
+}],
+"times": PackedFloat32Array(0.214286, 0.5)
+}
+tracks/4/use_blend = true
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:change_pitch")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.142857, 0.428571),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t5jns"]
@@ -493,6 +525,11 @@ shape = SubResource("CircleShape2D_epq4t")
 
 [node name="Dash" parent="." instance=ExtResource("14_gqmwi")]
 
+[node name="Sounds" type="Node" parent="."]
+
+[node name="footsteps" type="AudioStreamPlayer" parent="Sounds"]
+volume_db = -80.0
+
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]
 [connection signal="mana_used" from="Weapon" to="." method="_on_weapon_mana_used"]
@@ -502,3 +539,4 @@ shape = SubResource("CircleShape2D_epq4t")
 [connection signal="timeout" from="Dash_usage" to="." method="_on_dash_usage_timeout"]
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
 [connection signal="timeout" from="Dash_regen" to="." method="_on_dash_regen_timeout"]
+[connection signal="finished" from="Sounds/footsteps" to="." method="_on_footsteps_finished"]

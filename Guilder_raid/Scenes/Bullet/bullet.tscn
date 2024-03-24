@@ -178,7 +178,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.976471, 1, 1, 1, 0)
 offsets = PackedFloat32Array(0, 0.818352, 0.913858)
 colors = PackedColorArray(0.858824, 0, 0, 1, 0.858824, 0, 0, 1, 1, 0.980814, 0.909456, 1)
 
-[node name="Bullet" type="CharacterBody2D"]
+[node name="Bullet" type="CharacterBody2D" groups=["clear"]]
 z_index = 1
 collision_layer = 4
 collision_mask = 5

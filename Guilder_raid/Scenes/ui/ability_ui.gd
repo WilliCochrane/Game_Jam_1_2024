@@ -8,12 +8,15 @@ extends Panel
 
 
 func update(ability : Ability):
-	if !ability:
-		background_sprite.visible = false
-		ability_sprite.visible = false
+	if ability:
+		background_sprite.visible = true
+		ability_sprite.visible = true
 		ability_name.visible = false
 		ability_description.visible = false
 		quantity.visible = false
+		if ability.quantity > 1:
+			quantity.visible = true
+			quantity.text = str(ability.quantity)
 		
 	else:
 		background_sprite.visible = true
@@ -24,5 +27,5 @@ func update(ability : Ability):
 		ability_name.text = ability.ability_name
 		ability_description.text = ability.description
 		if ability.quantity > 1:
-			quantity.visivle = true
+			quantity.visible = true
 			quantity.text = str(ability.quantity)

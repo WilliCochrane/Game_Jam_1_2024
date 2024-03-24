@@ -14,6 +14,7 @@ var can_spawn : bool = false
 var player : CharacterBody2D
 var alive_enemies : int = 0
 var invalid_spawn : bool
+var skip_spawn : bool = false
 var xpos : float
 var ypos : float
 
@@ -42,6 +43,7 @@ func summon_enemies():
 	enemies_spawned = true
 	for i in range(0,randi_range(5,7)):
 		invalid_spawn = true
+		skip_spawn = false
 		while invalid_spawn:
 			invalid_spawn = false
 			xpos = randi_range(position.x-scale.x*8,position.x+scale.x*8)
@@ -58,14 +60,19 @@ func summon_enemies():
 					invalid_spawn = true
 			else:
 				invalid_spawn = true
-		
-		var e = get_parent().enemy.instantiate()
-		e.scale.x *= 1/scale.x
-		e.scale.y *= 1/scale.y
-		add_child(e)
-		e.global_position.x = spawn_places[-1].x*16 + 8
-		e.global_position.y = spawn_places[-1].y*16 + 8
-		alive_enemies += 1
+			if invalid_spawn:
+				if randi_range(1,3) == 1:
+					invalid_spawn = false
+					skip_spawn = true
+				
+		if !skip_spawn:
+			var e = get_parent().enemy.instantiate()
+			e.scale.x *= 1/scale.x
+			e.scale.y *= 1/scale.y
+			add_child(e)
+			e.global_position.x = spawn_places[-1].x*16 + 8
+			e.global_position.y = spawn_places[-1].y*16 + 8
+			alive_enemies += 1
 
 
 func _on_body_entered(body):

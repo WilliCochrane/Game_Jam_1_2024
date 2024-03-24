@@ -2,7 +2,6 @@ extends Control
 
 signal shop_closed
 
-@export var grid_container : GridContainer
 @export var reroll_button : Button
 @export var shop_item1 : Panel
 @export var shop_item2 : Panel

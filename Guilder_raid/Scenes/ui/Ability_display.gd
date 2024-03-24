@@ -8,6 +8,8 @@ func _ready():
 	update()
 
 func update():
+	for child in grid_container.get_children():
+		child.queue_free()
 	for i in range(ability_inventory.abilities.size()):
 		var ab = ability_slot.instantiate()
 		grid_container.add_child(ab)

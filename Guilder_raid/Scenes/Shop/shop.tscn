@@ -27,9 +27,9 @@ offset_right = 640.0
 offset_bottom = 360.0
 script = ExtResource("1_g7f4h")
 reroll_button = NodePath("Reroll_button")
-shop_item1 = NodePath("GridContainer/Shop_item1")
-shop_item2 = NodePath("GridContainer/Shop_item2")
-shop_item3 = NodePath("GridContainer/Shop_item3")
+shop_item1 = NodePath("Shop_item1")
+shop_item2 = NodePath("Shop_item2")
+shop_item3 = NodePath("Shop_item3")
 money = NodePath("Money")
 avalable_abilities = Array[Resource("res://Scenes/Abilities/Ability.gd")]([ExtResource("2_cljn5"), ExtResource("3_0k2qg"), ExtResource("4_sm6su"), ExtResource("5_mbgjc"), ExtResource("6_wmkof"), ExtResource("7_oe24p")])
 
@@ -49,31 +49,26 @@ theme_override_fonts/font = ExtResource("1_tx80i")
 theme_override_font_sizes/font_size = 32
 text = " Shop"
 
-[node name="GridContainer" type="GridContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -246.0
-offset_top = -115.0
-offset_right = 244.0
-offset_bottom = 135.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 20
-columns = 3
-
-[node name="Shop_item1" parent="GridContainer" instance=ExtResource("2_2jn5x")]
+[node name="Shop_item1" parent="." instance=ExtResource("2_2jn5x")]
 layout_mode = 2
+offset_left = 74.0
+offset_top = 65.0
+offset_right = 224.0
+offset_bottom = 315.0
 
-[node name="Shop_item2" parent="GridContainer" instance=ExtResource("2_2jn5x")]
-custom_minimum_size = Vector2(150, 190)
+[node name="Shop_item2" parent="." instance=ExtResource("2_2jn5x")]
 layout_mode = 2
+offset_left = 244.0
+offset_top = 65.0
+offset_right = 394.0
+offset_bottom = 315.0
 
-[node name="Shop_item3" parent="GridContainer" instance=ExtResource("2_2jn5x")]
+[node name="Shop_item3" parent="." instance=ExtResource("2_2jn5x")]
 layout_mode = 2
+offset_left = 414.0
+offset_top = 65.0
+offset_right = 564.0
+offset_bottom = 315.0
 
 [node name="Reroll_button" type="Button" parent="."]
 layout_mode = 1

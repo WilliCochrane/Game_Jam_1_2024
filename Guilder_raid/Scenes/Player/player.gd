@@ -28,6 +28,7 @@ signal restart_game
 @export var gold_lable : Label
 @export var ability_inventory : Ability_Inventory
 @export var dash : Node2D
+@export var change_pitch : bool
 
 var move_direction : Vector2 = Vector2.ZERO
 var current_damage : float = 5
@@ -103,6 +104,10 @@ func _physics_process(delta):
 		shake_strength = lerpf(shake_strength,0,shake_fade*delta)
 		
 		camera.offset = random_offset()
+	
+	if change_pitch:
+		$Sounds/footsteps.pitch_scale = 1 + randf_range(-1,1)
+		change_pitch = false
 	
 	bar_management()
 	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
@@ -248,3 +253,7 @@ func _on_dash_usage_timeout():
 
 func _on_dash_regen_timeout():
 	dash_regen = true
+
+
+func _on_footsteps_finished():
+	$Sounds/footsteps.pitch_scale = 1 + randf_range(-.5,.5)
