@@ -352,6 +352,7 @@ scale_amount_max = 3.0
 color_ramp = SubResource("Gradient_fi76s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 self_modulate = Color(8, 6, 2, 1)
 scale = Vector2(3, 3)
 texture = ExtResource("2_g3bhf")

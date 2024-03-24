@@ -32,6 +32,7 @@ func _ready():
 
 
 func _physics_process(delta):
+	$Sprite2D.visible = true
 	if can_move:
 		if flamethrow == true && size < 5:
 			size += .03
