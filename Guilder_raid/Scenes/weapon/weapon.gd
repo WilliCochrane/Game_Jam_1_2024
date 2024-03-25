@@ -19,6 +19,8 @@ var crit_chance : float
 var damage : float
 var piercing : int
 var bounces : int 
+var explotion_size : float
+var explotion_type : String
 
 var fire_rate : float 
 var mana_cost : float
@@ -116,6 +118,8 @@ func update_weapon_parameters():
 	projectiles = weapon_machine.current_weapon.projectiles
 	piercing = weapon_machine.current_weapon.piercing
 	bounces = weapon_machine.current_weapon.bounces
+	explotion_size = weapon_machine.current_weapon.explotion_size
+	explotion_type = weapon_machine.current_weapon.explotion_type
 	
 	cooldown_timer.wait_time = 1/fire_rate * fire_rate_modifier
 	

@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var sprite = $Sprite2D
 @onready var weapon : CharacterBody2D = get_tree().get_first_node_in_group("Player").get_child(4)
 @onready var blood_splat = preload("res://Scenes/Effects/Blood_splat.tscn")
+@onready var explosion = preload("res://Scenes/Bullet/explosion.tscn")
 
 var damage : float 
 var speed : float 
@@ -16,6 +17,10 @@ var flamethrow : bool
 var rotated : bool = false
 var can_move : bool = true
 var fire : bool = false
+var explotion_size : float 
+var explotion_type : String
+var expd : bool = false
+var stop : bool = false
 
 var crit : bool
 
@@ -29,6 +34,8 @@ func _ready():
 	piercing = weapon.piercing
 	bounces = weapon.bounces
 	flamethrow = weapon.flamethrow
+	explotion_size = weapon.explotion_size
+	explotion_type = weapon.explotion_type
 
 
 func _physics_process(delta):
@@ -54,12 +61,29 @@ func _physics_process(delta):
 		modulate.g = .2
 		damage *= 2
 		crit = false
+	if expd:
+		explode()
+	if stop:
+		queue_free()
 
 
 func _on_area_2d_body_entered(body):
 	if !body.is_in_group("Player"):
-		if !body.is_in_group("Enemy"):
-			queue_free()
+		if explotion_size > 0:
+			expd = true
+			stop = true
+		else:
+			if !body.is_in_group("Enemy"):
+				queue_free()
+
+
+func explode():
+	var ex = explosion.instantiate()
+	get_parent().add_child(ex)
+	ex.size = explotion_size
+	ex.damage = damage 
+	ex.type = explotion_type
+	ex.global_position = global_position
 
 
 func splat():
@@ -73,11 +97,18 @@ func _on_area_2d_area_entered(area):
 	if area.is_in_group("Enemy"):
 		if piercing > 0:
 			piercing -= 1
-			area.get_parent().health -= damage
-			area.get_parent().hit = true
-			splat()
+			if explotion_size > 0:
+				expd = true
+			else:
+				area.get_parent().health -= damage
+				area.get_parent().hit = true
+				splat()
 		else:
-			area.get_parent().health -= damage
-			area.get_parent().hit = true
-			splat()
-			queue_free()
+			if explotion_size > 0:
+				expd = true
+				stop = true
+			else:
+				area.get_parent().health -= damage
+				area.get_parent().hit = true
+				splat()
+				queue_free()

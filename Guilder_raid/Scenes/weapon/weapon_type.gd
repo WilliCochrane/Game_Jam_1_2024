@@ -22,6 +22,8 @@ var bullet_spread : float
 var projectiles : int = 1
 var piercing : int = 0
 var bounces : int = 0
+var explotion_size : float = 0
+var explotion_type : String = "Explosion"
 var txture : String
 
 func Enter():
