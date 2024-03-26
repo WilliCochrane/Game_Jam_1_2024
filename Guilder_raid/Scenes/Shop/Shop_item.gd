@@ -37,5 +37,6 @@ func _on_buy_button_pressed():
 		visible = false
 		can_buy = false
 		ability_inventory.abilities.push_front(current_ability)
+		current_ability.quantity += 1
 		get_parent().update_money()
 	

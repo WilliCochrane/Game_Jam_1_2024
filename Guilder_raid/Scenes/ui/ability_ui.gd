@@ -6,13 +6,17 @@ extends Panel
 @onready var ability_description : RichTextLabel = $Description
 @onready var quantity : Label = $Quantity
 
+var current_ability : Ability
 
 func update(ability : Ability):
+	current_ability = ability
+	
 	if ability:
 		background_sprite.visible = true
 		ability_sprite.visible = true
 		ability_name.visible = false
 		ability_description.visible = false
+		ability_sprite.texture = ability.texture
 		quantity.visible = false
 		if ability.quantity > 1:
 			quantity.visible = true

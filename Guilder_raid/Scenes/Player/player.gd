@@ -78,6 +78,8 @@ func _ready():
 	current_dashes = max_dashes
 
 func _physics_process(delta):
+	
+	
 	var speed = dash_speed if dash.is_dashing() else move_speed
 	move_direction = Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
 	velocity = move_direction * speed  * delta
@@ -236,7 +238,13 @@ func _on_damaged_timeout():
 
 
 func _on_weapon_mana_used():
-	current_mana -= weapon.mana_cost
+	if !weapon.money_shot:
+		current_mana -= weapon.mana_cost
+	else:
+		if gold > 0:
+			gold -= 1
+		else:
+			current_mana = 0
 	mana_regen = false
 
 
@@ -246,6 +254,9 @@ func _on_restart_pressed():
 	current_mana = max_mana
 	you_died.visible = false
 	get_tree().paused = false
+	gold = 0
+	ability_inventory.abilities = []
+	weapon.reset()
 
 
 func _on_dash_usage_timeout():

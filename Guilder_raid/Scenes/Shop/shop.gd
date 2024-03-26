@@ -33,6 +33,7 @@ func _ready():
 	reroll_shop()
 	update_money()
 
+
 func dir_contents(path):
 	var dir = DirAccess.open(path)
 	if dir:

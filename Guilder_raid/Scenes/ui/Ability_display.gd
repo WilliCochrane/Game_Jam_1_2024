@@ -4,13 +4,25 @@ extends Control
 @onready var grid_container : GridContainer = $GridContainer
 @export var ability_slot : PackedScene
 
+var is_new : bool 
+
 func _ready():
 	update()
 
 func update():
 	for child in grid_container.get_children():
 		child.queue_free()
-	for i in range(ability_inventory.abilities.size()):
-		var ab = ability_slot.instantiate()
-		grid_container.add_child(ab)
-		ab.update(ability_inventory.abilities[i])
+	for ability in ability_inventory.abilities:
+		is_new = true
+		for i in grid_container.get_children():
+			if i.current_ability == ability:
+				is_new = false
+		if is_new:
+			var ab = ability_slot.instantiate()
+			grid_container.add_child(ab)
+			ab.update(ability)
+
+
+func _on_pause_menu_opened():
+	for i in grid_container.get_children():
+		i.update(i.current_ability)

@@ -27,6 +27,7 @@ var mana_cost : float
 var flamethrow : bool
 var projectiles : int
 var full_auto : bool
+var money_shot : bool
 
 var projectiles_left : int = 0
 var shooting : bool = false
@@ -62,7 +63,25 @@ func _physics_process(_delta):
 
 
 func _on_player_shoot():
-	if get_parent().current_mana > 0:
+	if money_shot:
+		if get_parent().gold > 0 or get_parent().current_mana == get_parent().max_mana:
+			shooting = true
+			if can_shoot == true && colliding == false:
+				cooldown_timer.start()
+				can_shoot = false
+				emit_signal("mana_used")
+				if randi_range(0,100) <= crit_chance:
+					crit = true
+				else: 
+					crit = false
+				if !flamethrow:
+					get_parent().shake_strength = (weapon_machine.current_weapon.damage/5) * weapon_machine.current_weapon.projectiles + (weapon_machine.current_weapon.fire_rate/10)
+				if projectiles == 1:
+					spawn_bullet()
+				else:
+					shoot_projectiles()
+
+	elif get_parent().current_mana > 0:
 		shooting = true
 		if can_shoot == true && colliding == false:
 			cooldown_timer.start()
@@ -73,7 +92,7 @@ func _on_player_shoot():
 			else: 
 				crit = false
 			if !flamethrow:
-				get_parent().shake_strength = (damage/5) * projectiles + (fire_rate/10)
+				get_parent().shake_strength = (weapon_machine.current_weapon.damage/5) * weapon_machine.current_weapon.projectiles + (weapon_machine.current_weapon.fire_rate/10)
 			if projectiles == 1:
 				spawn_bullet()
 			else:
@@ -101,6 +120,8 @@ func spawn_bullet():
 	b.crit = crit
 
 
+func reset():
+	weapon_machine.current_weapon = weapon_machine.initial_weapon
 
 
 func update_weapon_parameters():
@@ -120,6 +141,7 @@ func update_weapon_parameters():
 	bounces = weapon_machine.current_weapon.bounces
 	explotion_size = weapon_machine.current_weapon.explotion_size
 	explotion_type = weapon_machine.current_weapon.explotion_type
+	money_shot = weapon_machine.current_weapon.money_shot
 	
 	cooldown_timer.wait_time = 1/fire_rate * fire_rate_modifier
 	

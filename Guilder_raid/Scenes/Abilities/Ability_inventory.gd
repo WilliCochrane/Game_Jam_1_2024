@@ -7,7 +7,7 @@ signal updated
 
 var new_ability : bool
 
-func insert(ability : ):
+func insert(ability : Ability):
 	new_ability = true
 	for i in range(abilities.size()):
 		if abilities[i] == ability:

@@ -212,6 +212,7 @@ theme_override_font_sizes/font_size = 16
 text = "give us feedback"
 uri = "https://docs.google.com/forms/d/e/1FAIpQLSe-YpJKodUQyHjHOEqzBeCoi0ulcXgPvGiWaCC160M7ZaYSEw/viewform?usp=sf_link"
 
+[connection signal="opened" from="." to="Ability_display" method="_on_pause_menu_opened"]
 [connection signal="value_changed" from="VBoxContainer/Minimap_slider" to="." method="_on_minimap_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/Gama_Slider" to="." method="_on_h_slider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/ButtonContainer/Resume" to="." method="_on_resume_pressed"]

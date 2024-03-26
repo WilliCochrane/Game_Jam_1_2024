@@ -23,11 +23,12 @@ centered = false
 
 [node name="Quantity" type="Label" parent="."]
 visible = false
+z_index = 1
 layout_mode = 0
-offset_left = 24.0
-offset_top = 14.0
-offset_right = 25.0
-offset_bottom = 27.0
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 21.0
+offset_bottom = 23.0
 theme_override_fonts/font = ExtResource("4_83owu")
 theme_override_font_sizes/font_size = 16
 text = "1"
