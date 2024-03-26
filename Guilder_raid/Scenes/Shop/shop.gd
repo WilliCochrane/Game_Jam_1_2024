@@ -17,6 +17,7 @@ func open():
 	visible = true
 	is_open = true
 	reroll_cost = 0
+	get_tree().paused = true
 	update_money()
 	reset_shop()
 

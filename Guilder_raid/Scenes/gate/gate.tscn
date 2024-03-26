@@ -394,6 +394,7 @@ _data = {
 }
 
 [node name="Gate" type="StaticBody2D" node_paths=PackedStringArray("anim_player", "collision_shape") groups=["Gate", "clear"]]
+z_index = 1
 script = ExtResource("1_1d0d3")
 anim_player = NodePath("AnimationPlayer")
 collision_shape = NodePath("CollisionShape2D")

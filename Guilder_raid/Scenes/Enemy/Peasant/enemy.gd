@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name enemy
 
 signal player_damage
 
@@ -15,16 +16,29 @@ signal player_damage
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var gun : Sprite2D = $Gun
 
+@export var approach_dist : float
+@export var run_dist : float 
+@export var gold_drop : Vector2
+@export var move_speed : float 
+@export var health : float 
+@export var damage : float
+@export var rarity : int
+@export var reload : Vector2
+@export var attack_type : String
+@export var shots : Vector2
+@export var flip_h : bool
+@export var delay : float
+@export var spread : float
+
 var can_attack : bool = false
 var target_position : Vector2
 var player : CharacterBody2D
-var move_speed : float = 75
 var rotation_speed = 15
+var shots_left : int
 var spawn_value : float
 var random_num : float
 var hit : bool = false
 var can_move : bool
-var health : float 
 var wander : bool
 var spawn : bool
 
@@ -38,9 +52,8 @@ var state = IDLE
 
 
 func _ready():
-	health = 8
 	player = get_tree().get_first_node_in_group("Player")
-	attack_timer.start(randf_range(2,3))
+	attack_timer.start(randf_range(reload.x,reload.y))
 	can_move = false
 	spawn = true
 	spawn_value = 1
@@ -50,6 +63,8 @@ func _ready():
 		wander = true
 	else:
 		wander = false
+	y_sort_enabled = true
+	z_index = 1
 	
 
 
@@ -110,29 +125,44 @@ func rotate_to_player(delta):
 	gun.rotation_degrees = round_to_dec(gun.rotation_degrees, -1)
 	
 	if direction.x > 0:
-		sprite.flip_h = true
+		if flip_h:
+			sprite.flip_h = false
+		else:
+			sprite.flip_h = true
 		gun.scale.y = 1
 	elif direction.x < 0:
-		sprite.flip_h = false
+		if flip_h:
+			sprite.flip_h = true
+		else:
+			sprite.flip_h = false
 		gun.scale.y = -1
 
 
 func round_to_dec(num, digit):
-	return round(num * pow(20.0, digit)) / pow(20.0, digit)
+	return round(num * pow(15.0, digit)) / pow(15.0, digit)
+
+
+func spawn_bullet():
+	var eb = enemy_bullet.instantiate()
+	get_parent().get_parent().add_child(eb)
+	var direction = global_position - player.global_position
+	eb.rotation_degrees = rad_to_deg(atan2(direction.x,direction.y))*-1 - 90 + randf_range(-spread,spread)
+	eb.global_position = $Gun/Muzzel.global_position
 
 
 func shoot():
-	var eb = enemy_bullet.instantiate()
-	get_parent().get_parent().add_child(eb)
-	eb.rotation = gun.rotation
-	eb.global_position = gun.global_position
 	can_attack = false
-	attack_timer.start(randf_range(2,3))
+	if attack_type == "Single":
+		spawn_bullet()
+		attack_timer.start(randf_range(reload.x,reload.y))
+	elif attack_type == "Auto":
+		shots_left = randi_range(shots.x,shots.y)
+		$Shot_delay.start(delay)
 
 
 func die():
 	get_parent().alive_enemies -= 1
-	for i in range(0,randi_range(3,5)):
+	for i in range(0,randi_range(gold_drop.x,gold_drop.y)):
 		var gd = gold.instantiate()
 		get_parent().get_parent().add_child(gd)
 		gd.global_position = Vector2(global_position.x,global_position.y+2)
@@ -147,9 +177,9 @@ func _on_nav_timer_timeout():
 	var dir = player.global_position - global_position
 	raycast.target_position = player.global_position - raycast.global_position
 	if !raycast.is_colliding():
-		if dir.length() < 60:
+		if dir.length() < run_dist:
 			state = RUN
-		elif dir.length() > 300:
+		elif dir.length() > approach_dist:
 			state = APROACH
 		else: 
 			state = IDLE
@@ -183,5 +213,14 @@ func _on_idle_timer_timeout():
 func _on_collision_damage_area_entered(area):
 	if area.is_in_group("Player_hitbox"):
 		if player.dash.is_dashing() == false:
-			player.current_health -= 1
+			player.current_health -= damage
 			player.hit = true
+
+
+func _on_shot_delay_timeout():
+	if shots_left > 0:
+		spawn_bullet()
+		shots_left -= 1
+		$Shot_delay.start(delay)
+	else:
+		attack_timer.start(randf_range(reload.x,reload.y))

@@ -7,11 +7,17 @@ signal clear_floor
 @export var gate : PackedScene
 @export var new_floor_timer : Timer
 @export var gate_perimeter : PackedScene
-@export var enemy : PackedScene
+@export var enemies : Array[PackedScene]
 @export var shop : Control
 @export var torch_light : PackedScene
 @export var room_light : PackedScene
 @export var minimap_item : PackedScene
+
+@export var barrel : PackedScene
+@export var pot : PackedScene
+@export var pillar : PackedScene
+@export var bookshelf : PackedScene
+@export var tall_pillar : PackedScene
 
 @onready var tile_map : TileMap = $Level
 @onready var treasure : StaticBody2D = $Treasure
@@ -67,7 +73,7 @@ func load_map():
 			rl.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 			rl.scale = Vector2(16,16)
 		else:
-			var rooms = tile_map.tile_set.get_pattern(randi_range(7,12))
+			var rooms = tile_map.tile_set.get_pattern(randi_range(7,13))
 			room_size = Vector2(-5,-6)
 			tile_map.set_pattern(0, Vector2(34, 26)*i, rooms)
 			for l in range(0,35):
@@ -118,8 +124,11 @@ func load_map():
 				count += 1
 	
 	for i in tile_map.get_used_cells(0):
-		if tile_map.get_cell_atlas_coords(0,i) != Vector2i(4,3):
-			minimap.set_cell(0,i,0,Vector2i(0,0))  # change all of these to use the custom data instead
+		
+		if tile_map.get_cell_tile_data(0,i).get_custom_data("minimap") == 1:
+			minimap.set_cell(0,i,0,Vector2i(0,0))
+		elif tile_map.get_cell_tile_data(0,i).get_custom_data("minimap") == 2:
+			minimap.set_cell(0,i,0,Vector2i(1,0))
 		
 		if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
 			var tl = torch_light.instantiate()
@@ -129,37 +138,53 @@ func load_map():
 			tile_map.set_cells_terrain_path(0,[i],0,0)
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 0):
 			tile_map.set_cells_terrain_path(0,[i],0,1)
-			minimap.set_cell(0,i,0,Vector2i(1,0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 7):
 			tile_map.set_cells_terrain_path(0,[i],0,2)
-			minimap.set_cell(0,i,0,Vector2i(1,0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 1):
 			tile_map.set_cells_terrain_path(0,[i],0,3)
-			minimap.set_cell(0,i,0,Vector2i(1,0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 1):
 			tile_map.set_cells_terrain_path(0,[i],0,4)
-			minimap.set_cell(0,i,0,Vector2i(1,0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 1):
 			tile_map.set_cells_terrain_path(0,[i],0,5)
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(4, 7):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 7):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 7):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 0):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 0):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 4):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 5):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 5):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
+			pass
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 4):
-			minimap.set_cell(0,i,0,Vector2i(1,0))
-	
+			pass
+		
+		#if tile_map.get_cell_tile_data(0,i).get_custom_data("object") == "barrel":
+			#var brl = barrel.instantiate()
+			#add_child(brl)
+			#brl.position = Vector2(i.x*16+7,i.y*16+7)
+		#elif tile_map.get_cell_tile_data(0,i).get_custom_data("object") == "pot":
+			#var pt = pot.instantiate()
+			#add_child(pt)
+			#pt.position = Vector2(i.x*16+7,i.y*16+7)
+		#elif tile_map.get_cell_tile_data(0,i).get_custom_data("object") == "bookshelf":
+			#var brl = bookshelf.instantiate()
+			#add_child(brl)
+			#brl.position = Vector2(i.x*16+7,i.y*16+7)
+		#elif tile_map.get_cell_tile_data(0,i).get_custom_data("object") == "pillar":
+			#var brl = pillar.instantiate()
+			#add_child(brl)
+			#brl.position = Vector2(i.x*16+7,i.y*16+7)
+		#elif tile_map.get_cell_tile_data(0,i).get_custom_data("object") == "tall_pillar":
+			#var brl = tall_pillar.instantiate()
+			#add_child(brl)
+			#brl.position = Vector2(i.x*16+7,i.y*16+7)
 	$NavigationRegion2D.bake_navigation_polygon()
 	load_minimap()
 
@@ -176,7 +201,7 @@ func _add_gate_perimeter(x,y,s):
 	gp.scale = Vector2(s.x,s.y)
 	gp.connect('close_gates',_on_player_enter_perimeter)
 	gp.connect('open_gates',_on_enemies_cleared)
-	
+
 
 func _spawn_gate(x,y,side_facing:bool):
 	var g = gate.instantiate()

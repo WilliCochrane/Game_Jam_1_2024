@@ -8,7 +8,7 @@ func _ready():
 	damage = 4
 	fire_rate = 3
 	mana_cost = 3
-	crit_chance = 20
+	crit_chance = 0
 	bullet_size = 1
 	bullet_speed = 10
 	bullet_spread = 3

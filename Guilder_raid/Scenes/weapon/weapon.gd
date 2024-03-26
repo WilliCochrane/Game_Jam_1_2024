@@ -22,7 +22,7 @@ var bounces : int
 var explotion_size : float
 var explotion_type : String
 
-var fire_rate : float 
+var fire_rate : float
 var mana_cost : float
 var flamethrow : bool
 var projectiles : int

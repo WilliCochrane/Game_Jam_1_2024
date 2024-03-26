@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var player : CharacterBody2D
-var speed = 80
+var speed = 100
 var damage = 1
 var scale_factor = 1
 

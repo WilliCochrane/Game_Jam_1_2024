@@ -25,9 +25,10 @@ func _ready():
 
 func _physics_process(_delta):
 	if can_spawn:
-		if summon_wave == true:
+		if summon_wave:
 			summon_enemies()
-		if enemies_spawned == true && alive_enemies == 0:
+			
+		if enemies_spawned && alive_enemies == 0:
 			emit_signal("open_gates")
 			alive_enemies = 1
 	
@@ -41,7 +42,7 @@ func _physics_process(_delta):
 func summon_enemies():
 	summon_wave = false
 	enemies_spawned = true
-	for i in range(0,randi_range(5,7)):
+	for i in range(0,randi_range(4,6)):
 		invalid_spawn = true
 		skip_spawn = false
 		while invalid_spawn:
@@ -66,13 +67,22 @@ func summon_enemies():
 					skip_spawn = true
 				
 		if !skip_spawn:
-			var e = get_parent().enemy.instantiate()
+			var e = pick_enemy().instantiate()
 			e.scale.x *= 1/scale.x
 			e.scale.y *= 1/scale.y
 			add_child(e)
 			e.global_position.x = spawn_places[-1].x*16 + 8
 			e.global_position.y = spawn_places[-1].y*16 + 8
 			alive_enemies += 1
+
+
+func pick_enemy():
+	var emy = get_parent().enemies.pick_random()
+	if emy.instantiate().rarity > 0:
+		if randi_range(0,1) == 0:
+			while emy.instantiate().rarity > 0:
+				emy = pick_enemy()
+	return emy
 
 
 func _on_body_entered(body):
