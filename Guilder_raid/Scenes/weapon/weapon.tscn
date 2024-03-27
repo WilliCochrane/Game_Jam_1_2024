@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://c6rheyijs8n4l"]
+[gd_scene load_steps=60 format=3 uid="uid://c6rheyijs8n4l"]
 
 [ext_resource type="Script" path="res://Scenes/weapon/weapon.gd" id="1_6mjeb"]
 [ext_resource type="PackedScene" uid="uid://bjwsafueqhnss" path="res://Scenes/Bullet/bullet.tscn" id="2_nq1jh"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b47x0o4i7kh25" path="res://Assets/Weapons/M16.png" id="3_8eaaq"]
 [ext_resource type="Texture2D" uid="uid://djcq7arxmhy7f" path="res://Assets/Weapons/LaserPistol.png" id="3_61pbt"]
 [ext_resource type="Texture2D" uid="uid://dklsv767qqvaw" path="res://Assets/Weapons/MoneyLauncher.png" id="3_atm28"]
+[ext_resource type="Texture2D" uid="uid://dgtspx8qb31o0" path="res://Assets/Weapons/Banana.png" id="3_bsdp2"]
 [ext_resource type="Texture2D" uid="uid://b8w38argxvgxv" path="res://Assets/Weapons/Sniper.png" id="3_c2ys7"]
 [ext_resource type="Texture2D" uid="uid://dpn34j1otriu4" path="res://Assets/Weapons/Sawed-OffWinchester1897.png" id="3_hm10g"]
 [ext_resource type="Texture2D" uid="uid://41m54pblwk2r" path="res://Assets/Weapons/PlasmaBlaster.png" id="3_km61r"]
@@ -37,6 +38,7 @@
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Auto_shotgun.gd" id="33_vehbn"]
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Money_gun.gd" id="35_tj71t"]
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Thompson.gd" id="37_uiui5"]
+[ext_resource type="Script" path="res://Scenes/weapon/weapons/Banana.gd" id="39_cx250"]
 
 [sub_resource type="Animation" id="Animation_q5s8p"]
 resource_name = "Auto_shotgun"
@@ -1061,70 +1063,6 @@ tracks/4/keys = {
 "values": [Vector2(0, -1)]
 }
 
-[sub_resource type="Animation" id="Animation_n4ojb"]
-resource_name = "Trench_gun"
-length = 0.10001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("3_hm10g")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Muzzle:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(14, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(6, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("RayCast2D:target_position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(24, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D:offset")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_kgwtd"]
 resource_name = "Thompson"
 length = 0.10001
@@ -1189,9 +1127,138 @@ tracks/4/keys = {
 "values": [Vector2(0, 2)]
 }
 
+[sub_resource type="Animation" id="Animation_n4ojb"]
+resource_name = "Trench_gun"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_hm10g")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Muzzle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(14, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCast2D:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gttan"]
+resource_name = "Banana"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_bsdp2")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Muzzle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCast2D:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t0lp1"]
 _data = {
 "Auto_shotgun": SubResource("Animation_q5s8p"),
+"Banana": SubResource("Animation_gttan"),
 "Derringer": SubResource("Animation_10ohr"),
 "FlameThrower": SubResource("Animation_qoxwj"),
 "Garand": SubResource("Animation_tsesf"),
@@ -1222,9 +1289,7 @@ raycast = NodePath("RayCast2D")
 shot_interval = NodePath("Shot_interval")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2, 0)
-texture = ExtResource("3_y1gln")
-offset = Vector2(0, 2)
+texture = ExtResource("3_bsdp2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1233,7 +1298,7 @@ libraries = {
 
 [node name="WeaponMachine" type="Node" parent="." node_paths=PackedStringArray("initial_weapon")]
 script = ExtResource("4_w1n20")
-initial_weapon = NodePath("Thompson")
+initial_weapon = NodePath("Banana")
 
 [node name="Pistol" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_7xyep")
@@ -1303,12 +1368,15 @@ anim_player = NodePath("../../AnimationPlayer")
 script = ExtResource("37_uiui5")
 anim_player = NodePath("../../AnimationPlayer")
 
+[node name="Banana" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("39_cx250")
+anim_player = NodePath("../../AnimationPlayer")
+
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(10, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-3, 0)
-target_position = Vector2(24, 0)
+target_position = Vector2(16, 0)
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.1
