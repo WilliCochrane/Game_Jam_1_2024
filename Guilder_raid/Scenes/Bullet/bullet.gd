@@ -21,6 +21,7 @@ var explotion_size : float
 var explotion_type : String
 var expd : bool = false
 var stop : bool = false
+var bounce
 
 var crit : bool
 
