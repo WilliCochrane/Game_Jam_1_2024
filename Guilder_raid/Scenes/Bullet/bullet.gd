@@ -20,12 +20,14 @@ var fire : bool = false
 var explotion_size : float 
 var explotion_type : String
 var expd : bool = false
+var explotion_damage : float
 var stop : bool = false
 var bounce
 
 var crit : bool
 
 func _ready():
+	$Sprite2D.visible = false
 	weapon = get_tree().get_first_node_in_group("Player").get_child(4)
 	damage = weapon.damage * weapon.damage_modifier
 	speed = weapon.bullet_speed
@@ -37,6 +39,9 @@ func _ready():
 	flamethrow = weapon.flamethrow
 	explotion_size = weapon.explotion_size
 	explotion_type = weapon.explotion_type
+	explotion_damage = damage
+	if expd: 
+		damage = 0
 
 
 func _physics_process(delta):
@@ -82,7 +87,7 @@ func explode():
 	var ex = explosion.instantiate()
 	get_parent().add_child(ex)
 	ex.size = explotion_size
-	ex.damage = damage 
+	ex.damage = explotion_damage 
 	ex.type = explotion_type
 	ex.global_position = global_position
 

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://cjwddkwh8nkm5"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/Ability.gd" id="1_vw7cd"]
+
+[resource]
+script = ExtResource("1_vw7cd")
+ability_name = "Proximity damage"
+description = "The closer you are to an enmy the more damage you will do (up to 40%)"
+unnique = true
+rarity = 1
+cost = 50

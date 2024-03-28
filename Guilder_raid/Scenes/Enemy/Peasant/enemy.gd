@@ -53,7 +53,7 @@ var state = IDLE
 
 func _ready():
 	player = get_tree().get_first_node_in_group("Player")
-	attack_timer.start(randf_range(reload.x,reload.y))
+	attack_timer.start(randf_range(1,reload.y))
 	can_move = false
 	spawn = true
 	spawn_value = 1

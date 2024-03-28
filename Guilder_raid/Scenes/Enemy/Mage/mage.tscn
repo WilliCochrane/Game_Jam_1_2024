@@ -139,7 +139,7 @@ reload = Vector2(3, 5)
 attack_type = "Auto"
 shots = Vector2(5, 5)
 flip_h = true
-delay = 0.01
+delay = 0.02
 spread = 30.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

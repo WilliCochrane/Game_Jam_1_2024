@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://c6rheyijs8n4l"]
+[gd_scene load_steps=61 format=3 uid="uid://c6rheyijs8n4l"]
 
 [ext_resource type="Script" path="res://Scenes/weapon/weapon.gd" id="1_6mjeb"]
 [ext_resource type="PackedScene" uid="uid://bjwsafueqhnss" path="res://Scenes/Bullet/bullet.tscn" id="2_nq1jh"]
@@ -39,6 +39,7 @@
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Money_gun.gd" id="35_tj71t"]
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Thompson.gd" id="37_uiui5"]
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Banana.gd" id="39_cx250"]
+[ext_resource type="Texture2D" uid="uid://bpp6pjr5rgsjl" path="res://Assets/Effects/Laser_pointer.png" id="40_a4qrn"]
 
 [sub_resource type="Animation" id="Animation_q5s8p"]
 resource_name = "Auto_shotgun"
@@ -102,6 +103,70 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gttan"]
+resource_name = "Banana"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_bsdp2")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Muzzle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCast2D:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_10ohr"]
@@ -1191,70 +1256,6 @@ tracks/4/keys = {
 "values": [Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_gttan"]
-resource_name = "Banana"
-length = 0.10001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("3_bsdp2")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Muzzle:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("RayCast2D:target_position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(16, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D:offset")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t0lp1"]
 _data = {
 "Auto_shotgun": SubResource("Animation_q5s8p"),
@@ -1289,7 +1290,9 @@ raycast = NodePath("RayCast2D")
 shot_interval = NodePath("Shot_interval")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_bsdp2")
+position = Vector2(4, 0)
+texture = ExtResource("3_5fvpd")
+offset = Vector2(0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1298,7 +1301,7 @@ libraries = {
 
 [node name="WeaponMachine" type="Node" parent="." node_paths=PackedStringArray("initial_weapon")]
 script = ExtResource("4_w1n20")
-initial_weapon = NodePath("Banana")
+initial_weapon = NodePath("P90")
 
 [node name="Pistol" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_7xyep")
@@ -1373,10 +1376,11 @@ script = ExtResource("39_cx250")
 anim_player = NodePath("../../AnimationPlayer")
 
 [node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(10, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-3, 0)
-target_position = Vector2(16, 0)
+target_position = Vector2(24, 0)
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.1
@@ -1384,6 +1388,15 @@ one_shot = true
 
 [node name="Shot_interval" type="Timer" parent="."]
 one_shot = true
+
+[node name="Laser" type="PointLight2D" parent="."]
+position = Vector2(0, 0.5)
+color = Color(1, 0.160784, 0.129412, 1)
+energy = 3.0
+range_item_cull_mask = 32
+shadow_enabled = true
+texture = ExtResource("40_a4qrn")
+offset = Vector2(64, 0)
 
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
 [connection signal="timeout" from="Shot_interval" to="." method="_on_shot_interval_timeout"]

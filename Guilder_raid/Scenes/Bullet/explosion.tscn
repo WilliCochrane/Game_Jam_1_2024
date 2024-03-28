@@ -187,6 +187,8 @@ radius = 14.0
 [node name="Explosion" type="Area2D"]
 light_mask = 4
 z_index = 100
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_ngjja")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

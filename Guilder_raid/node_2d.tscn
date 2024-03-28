@@ -934,6 +934,7 @@ y_sort_enabled = true
 tile_map = NodePath("../Level")
 
 [node name="Level" type="TileMap" parent="." groups=["dungeon", "navigation"]]
+light_mask = 33
 y_sort_enabled = true
 tile_set = SubResource("TileSet_gmpy3")
 format = 2

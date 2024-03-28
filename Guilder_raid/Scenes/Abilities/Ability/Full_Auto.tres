@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://cf27t3i6210u7"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/Ability.gd" id="1_abfts"]
+
+[resource]
+script = ExtResource("1_abfts")
+ability_name = "Full auto"
+description = "All weapons become full auto, fire rate is doubled and damage is halved"
+unnique = true
+rarity = 1
+cost = 60
