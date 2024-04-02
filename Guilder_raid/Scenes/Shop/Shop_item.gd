@@ -38,5 +38,8 @@ func _on_buy_button_pressed():
 		can_buy = false
 		ability_inventory.abilities.push_front(current_ability)
 		current_ability.quantity += 1
+		if current_ability.unique:
+			get_parent().current_avalable_abilities.erase(current_ability)
+			
 		get_parent().update_money()
 	

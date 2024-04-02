@@ -49,7 +49,7 @@ scale_amount_curve = SubResource("Curve_hd3hj")
 color_ramp = SubResource("Gradient_bfyus")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(1, 0.87451, 0.784314, 0.27451)
+self_modulate = Color(1, 0.87451, 0.784314, 0.196078)
 position = Vector2(0, -4)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("1_stipw")

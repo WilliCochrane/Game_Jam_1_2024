@@ -243,4 +243,3 @@ func _on_timer_timeout():
 
 func _on_pause_menu_closed():
 	get_tree().paused = false
-

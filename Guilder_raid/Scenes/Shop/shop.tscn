@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://xybnlqsiurs"]
+[gd_scene load_steps=19 format=3 uid="uid://xybnlqsiurs"]
 
 [ext_resource type="Script" path="res://Scenes/Shop/shop.gd" id="1_g7f4h"]
 [ext_resource type="FontFile" uid="uid://ejil0kwiqa3l" path="res://Assets/UI/m5x7.ttf" id="1_tx80i"]
@@ -11,6 +11,11 @@
 [ext_resource type="Resource" uid="uid://bhjbgtt3ew3vw" path="res://Scenes/Abilities/Ability/Double_bullet.tres" id="5_mbgjc"]
 [ext_resource type="Resource" uid="uid://dyoaun1qwjr7r" path="res://Scenes/Abilities/Ability/Faster_bullets.tres" id="6_wmkof"]
 [ext_resource type="Resource" uid="uid://vwn55v5u5d3o" path="res://Scenes/Abilities/Ability/More_mana.tres" id="7_oe24p"]
+[ext_resource type="Resource" uid="uid://cf27t3i6210u7" path="res://Scenes/Abilities/Ability/Full_Auto.tres" id="8_22f7l"]
+[ext_resource type="Resource" uid="uid://11jo6unxbwbd" path="res://Scenes/Abilities/Ability/Lucky.tres" id="9_1whxv"]
+[ext_resource type="Resource" uid="uid://b1lr4d4guac6g" path="res://Scenes/Abilities/Ability/Laser_pointer.tres" id="10_tddpc"]
+[ext_resource type="Resource" uid="uid://btb6irmyuhh81" path="res://Scenes/Abilities/Ability/Faster_receiver.tres" id="11_gsxgc"]
+[ext_resource type="Resource" uid="uid://duvhodpno2ef0" path="res://Scenes/Abilities/Ability/Belt_fed.tres" id="12_2nfs0"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_yp7al"]
 gradient = ExtResource("2_kdscm")
@@ -31,7 +36,7 @@ shop_item1 = NodePath("Shop_item1")
 shop_item2 = NodePath("Shop_item2")
 shop_item3 = NodePath("Shop_item3")
 money = NodePath("Money")
-avalable_abilities = Array[Resource("res://Scenes/Abilities/Ability.gd")]([ExtResource("2_cljn5"), ExtResource("3_0k2qg"), ExtResource("4_sm6su"), ExtResource("5_mbgjc"), ExtResource("6_wmkof"), ExtResource("7_oe24p")])
+avalable_abilities = Array[Resource("res://Scenes/Abilities/Ability.gd")]([ExtResource("2_cljn5"), ExtResource("3_0k2qg"), ExtResource("4_sm6su"), ExtResource("5_mbgjc"), ExtResource("6_wmkof"), ExtResource("7_oe24p"), ExtResource("8_22f7l"), ExtResource("9_1whxv"), ExtResource("10_tddpc"), ExtResource("11_gsxgc"), ExtResource("12_2nfs0")])
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

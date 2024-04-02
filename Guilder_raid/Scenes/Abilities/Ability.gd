@@ -5,7 +5,7 @@ class_name Ability
 @export var ability_name : String
 @export var description : String
 @export var texture : Texture
-@export var unnique : bool
+@export var unique : bool
 @export var rarity : int  # 0 = common(white), 1 = rare(blue), 2 =  
 @export var cost : int
 

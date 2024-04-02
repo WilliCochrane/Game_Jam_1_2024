@@ -53,6 +53,8 @@ func swap():
 	player_weapon.get_child(2).current_weapon = current_weapon
 	current_weapon = new_weapon
 	weapon_pickup.texture = load(current_weapon.txture)
+	player_weapon.update_weapon_parameters()
+	player_weapon.get_parent().update_abilities()
 
 
 func _on_animation_player_animation_finished(anim_name):

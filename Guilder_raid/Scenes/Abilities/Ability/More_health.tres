@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_dqyyf")
 ability_name = "More health"
-description = "+ 2 health"
+description = "+ 1 max health"
 texture = ExtResource("2_vvdyf")
 unnique = false
 rarity = 0

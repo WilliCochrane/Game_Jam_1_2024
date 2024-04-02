@@ -33,7 +33,7 @@ func _physics_process(_delta):
 			alive_enemies = 1
 	
 	var distance = abs(player.global_position - global_position)
-	if distance.x < 550 && distance.y < 400:
+	if distance.x < 600 && distance.y < 400:
 		$PointLight2D.enabled = true
 	else:
 		$PointLight2D.enabled = false

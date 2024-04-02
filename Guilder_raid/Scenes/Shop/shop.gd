@@ -9,6 +9,7 @@ signal shop_closed
 @export var money : Label
 @export var avalable_abilities : Array[Ability]
 
+var current_avalable_abilities : Array[Ability]
 var player : CharacterBody2D
 var is_open : bool = false
 var reroll_cost : int
@@ -26,12 +27,12 @@ func close():
 	is_open = false
 	get_tree().paused = false
 	shop_closed.emit()
+	player.update_abilities()
 
 
 func _ready():
 	player = get_tree().get_first_node_in_group("Player")
-	reroll_shop()
-	update_money()
+	reset()
 
 
 func dir_contents(path):
@@ -41,24 +42,24 @@ func dir_contents(path):
 		var file_name = dir.get_next()
 		while file_name != "":
 			if dir.current_is_dir() == false:
-				avalable_abilities.push_back(load("res://Scenes/Abilities/Ability/" + file_name))
+				current_avalable_abilities.push_back(load("res://Scenes/Abilities/Ability/" + file_name))
 			file_name = dir.get_next()
 
 func reroll_shop():
 	if reroll_cost <= player.gold:
 		player.gold -= reroll_cost
 		reroll_cost += 5
-		shop_item1.load_item(avalable_abilities.pick_random())
-		shop_item2.load_item(avalable_abilities.pick_random())
-		shop_item3.load_item(avalable_abilities.pick_random())
+		shop_item1.load_item(current_avalable_abilities.pick_random())
+		shop_item2.load_item(current_avalable_abilities.pick_random())
+		shop_item3.load_item(current_avalable_abilities.pick_random())
 		reroll_button.text = "Reroll: " + str(reroll_cost)
 		update_money()
 
 func reset_shop():
 	reroll_button.disabled = false
-	shop_item1.load_item(avalable_abilities.pick_random())
-	shop_item2.load_item(avalable_abilities.pick_random())
-	shop_item3.load_item(avalable_abilities.pick_random())
+	shop_item1.load_item(current_avalable_abilities.pick_random())
+	shop_item2.load_item(current_avalable_abilities.pick_random())
+	shop_item3.load_item(current_avalable_abilities.pick_random())
 	reroll_button.text = "Reroll: " + str(reroll_cost)
 	update_money()
 
@@ -72,6 +73,13 @@ func update_money():
 		shop_item2.price_label.self_modulate = Color(0.749, 0, 0.059)
 	if shop_item3.price > player.gold:
 		shop_item3.price_label.self_modulate = Color(0.749, 0, 0.059)
+
+
+func reset():
+	for ability in avalable_abilities:
+		current_avalable_abilities.push_back(ability)
+	reroll_shop()
+	update_money()
 
 
 func _on_reroll_button_pressed():

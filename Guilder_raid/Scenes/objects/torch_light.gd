@@ -8,7 +8,7 @@ func _ready():
 func _process(_delta):
 	
 	var distance = abs(player.global_position - global_position)
-	if distance.x < 400 && distance.y < 300:
+	if distance.x < 450 && distance.y < 300:
 		enabled = true
 	else:
 		enabled = false

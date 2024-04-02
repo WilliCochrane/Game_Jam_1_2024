@@ -5,9 +5,10 @@ extends CanvasLayer
 @onready var shop = $Shop
 
 func _ready(): 
-	start_menu.open()
+	start_menu.close()
 	pause_menu.close()
-	shop.close()
+	shop.open()
+	
 	get_tree().paused = true
 
 

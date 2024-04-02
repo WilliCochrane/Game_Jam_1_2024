@@ -7,7 +7,7 @@ extends CharacterBody2D
 @onready var explosion = preload("res://Scenes/Bullet/explosion.tscn")
 
 var damage : float 
-var speed : float 
+var speed : float = 0
 var crit_chance : float  
 var size : float
 var spread : float
@@ -23,16 +23,16 @@ var expd : bool = false
 var explotion_damage : float
 var stop : bool = false
 var bounce
+var ff : bool = true
 
 var crit : bool
 
 func _ready():
 	$Sprite2D.visible = false
 	weapon = get_tree().get_first_node_in_group("Player").get_child(4)
-	damage = weapon.damage * weapon.damage_modifier
-	speed = weapon.bullet_speed
-	crit_chance = weapon.crit_chance + weapon.crit_chance_modifier
-	size = weapon.bullet_size * weapon.bullet_size_modifier
+	damage = weapon.damage
+	crit_chance = weapon.crit_chance
+	size = weapon.bullet_size
 	spread = weapon.bullet_spread
 	piercing = weapon.piercing
 	bounces = weapon.bounces
@@ -45,6 +45,12 @@ func _ready():
 
 
 func _physics_process(delta):
+	if ff:
+		speed = 0
+		ff = false
+	else:
+		speed = weapon.bullet_speed
+		$Area2D.monitoring = true
 	$Sprite2D.visible = true
 	if can_move:
 		if flamethrow == true && size < 5:

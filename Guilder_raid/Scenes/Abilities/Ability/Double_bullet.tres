@@ -10,4 +10,4 @@ description = "+ 1 bullet per shot"
 texture = ExtResource("2_1ixo4")
 unnique = false
 rarity = 2
-cost = 60
+cost = 90

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cknh7bpsakn48"]
+[gd_scene load_steps=26 format=3 uid="uid://cknh7bpsakn48"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy/Peasant/enemy.gd" id="1_m1mju"]
 [ext_resource type="Shader" path="res://Shaders/spawn.gdshader" id="2_5k7qk"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://crhj7ox8egomx" path="res://Assets/Enemy/Mage/Run/Run5.png" id="13_vahcq"]
 [ext_resource type="Texture2D" uid="uid://bmkkv2xe15uem" path="res://Assets/Enemy/Mage/Run/Run6.png" id="14_8bupw"]
 [ext_resource type="Texture2D" uid="uid://bjoao34ohdxcj" path="res://Assets/Weapons/Blunderbuss.png" id="15_quehi"]
+[ext_resource type="Texture2D" uid="uid://2pappgmugtue" path="res://Assets/Effects/square.png" id="16_mu4a8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8fwc"]
 shader = ExtResource("2_5k7qk")
@@ -94,14 +95,14 @@ step = 0.0166667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/path = NodePath("Hit:energy")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0501),
+"times": PackedFloat32Array(0, 0.0500001),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(64.2471, 128.498, 128.498, 1), Color(1, 1, 1, 1)]
+"values": [1.0, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ge7c1"]
@@ -144,6 +145,7 @@ spread = 30.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(64.2471, 128.498, 128.498, 1)
+light_mask = 513
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_r8fwc")
 position = Vector2(0, -9.37283e-06)
@@ -217,6 +219,15 @@ shape = SubResource("CapsuleShape2D_isxod")
 visible = false
 target_position = Vector2(50, 0)
 collision_mask = 2
+
+[node name="Hit" type="PointLight2D" parent="."]
+light_mask = 512
+position = Vector2(1, -1)
+scale = Vector2(0.4375, 0.5)
+color = Color(3, 0, 0, 1)
+energy = 0.0
+range_item_cull_mask = 512
+texture = ExtResource("16_mu4a8")
 
 [connection signal="timeout" from="Nav_timer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="Attack_timer" to="." method="_on_attack_timer_timeout"]

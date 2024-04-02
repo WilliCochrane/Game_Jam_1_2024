@@ -29,6 +29,9 @@ signal restart_game
 @export var ability_inventory : Ability_Inventory
 @export var dash : Node2D
 @export var change_pitch : bool
+@export var shop : Control
+
+var abiliites : Array[Ability]
 
 var move_direction : Vector2 = Vector2.ZERO
 var current_damage : float = 5
@@ -42,7 +45,7 @@ var dash_speed : float = 300
 var max_health : float = 5
 var max_dashes : float = 3
 var max_mana : float = 150
-var gold : int = 0
+var gold : int = 10000
 
 var mana_usage_bar_catchup : bool = false
 var dashes_used_catchup : bool = false
@@ -62,7 +65,7 @@ func _ready():
 	mana_bar.value = max_mana
 	mana_bar.max_value = max_mana
 	mana_usage_bar.value = max_mana
-	mana_bar.max_value = max_mana
+	mana_usage_bar.max_value = max_mana
 	current_mana = max_mana
 	
 	health_bar.value = max_health
@@ -77,9 +80,8 @@ func _ready():
 	dash_usage_bar.max_value = max_dashes
 	current_dashes = max_dashes
 
+
 func _physics_process(delta):
-	
-	
 	var speed = dash_speed if dash.is_dashing() else move_speed
 	move_direction = Input.get_vector("ui_left", "ui_right","ui_up","ui_down")
 	velocity = move_direction * speed  * delta
@@ -92,7 +94,14 @@ func _physics_process(delta):
 	if current_health <= 0:
 		you_died.visible = true
 		get_tree().paused = true
-	
+		shop.reset()
+		weapon.reset()
+		for i in ability_inventory.abilities:
+			i.quantity = 0
+			ability_inventory.abilities.erase(i)
+		abiliites = []
+		update_abilities()
+	 
 	low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
 	
 	gold_lable.text = str(gold)
@@ -266,6 +275,86 @@ func _on_dash_usage_timeout():
 func _on_dash_regen_timeout():
 	dash_regen = true
 
+
+func update_abilities():
+#elif ability.ability_name == "":
+	var is_new : bool
+	abiliites = []
+	for ability in ability_inventory.abilities:
+		is_new = true
+		for i in abiliites:
+			if i == ability:
+				is_new = false
+		if is_new:
+			abiliites.push_back(ability)
+	
+	weapon.update_weapon_parameters()
+	
+	weapon.laser_pointer = false
+	max_dashes = 3
+	max_health = 5
+	max_mana = 150
+	
+	for ability in abiliites:
+		if ability.ability_name == "Better Bullets":
+			weapon.damage += ability.quantity
+		elif ability.ability_name == "Bigger bullets":
+			weapon.bullet_size *= 1 + .2*ability.quantity
+			weapon.bullet_speed /=  1 + .2*ability.quantity
+		elif ability.ability_name == "Double bullets":
+			weapon.projectiles += ability.quantity
+			weapon.bullet_spread += 5*ability.quantity
+		elif ability.ability_name == "Faster bullets":
+			weapon.bullet_speed *= 1 + .2*ability.quantity
+		elif ability.ability_name == "Lucky":
+			weapon.crit_chance += (10 * ability.quantity)
+		elif ability.ability_name == "More mana":
+			max_mana += 50 * ability.quantity
+		elif ability.ability_name == "More health":
+			max_health += ability.quantity
+		elif ability.ability_name == "Faster receiver":
+			weapon.fire_rate += ability.quantity
+		elif ability.ability_name == "Metal jacket":
+			weapon.piercing += ability.quantity
+	
+	for ability in abiliites:
+		if ability.ability_name == "Box mag":
+			weapon.full_auto = true
+			weapon.damage *= .5
+			weapon.fire_rate *= 2
+		elif ability.ability_name == "Belt fed":
+			weapon.damage *= .75
+			weapon.fire_rate *= 2
+		elif ability.ability_name == "Laser pointer":
+			weapon.laser_pointer = true
+			weapon.bullet_spread *= .5
+	
+	update_bar_values()
+
+
+func update_bar_values():
+	mana_bar.value = max_mana
+	mana_bar.max_value = max_mana
+	mana_bar.size.x = max_mana/3
+	mana_usage_bar.value = max_mana
+	mana_usage_bar.max_value = max_mana
+	mana_usage_bar.size.x = max_mana/3
+	current_mana = max_mana
+	
+	health_bar.value = max_health
+	health_bar.max_value = max_health 
+	health_bar.size.x = max_health*10
+	damaged_bar.value = max_health
+	damaged_bar.max_value = max_health
+	damaged_bar.size.x = max_health*10
+	current_health = max_health
+	
+	dash_bar.value = max_dashes
+	dash_bar.max_value = max_dashes
+	dash_usage_bar.value = max_dashes
+	dash_usage_bar.max_value = max_dashes
+	current_dashes = max_dashes
+	
 
 func _on_footsteps_finished():
 	$Sounds/footsteps.pitch_scale = 1 + randf_range(-.5,.5)

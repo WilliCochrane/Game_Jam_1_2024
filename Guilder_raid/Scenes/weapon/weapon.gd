@@ -28,22 +28,17 @@ var flamethrow : bool
 var projectiles : int
 var full_auto : bool
 var money_shot : bool
+var laser_pointer : bool 
 
 var projectiles_left : int = 0
 var shooting : bool = false
 var can_shoot : bool = true
 var colliding : bool
 
-var bullet_spread_modifier : float = 1
-var projectiles_modifier : float = 1
-var crit_chance_modifier : float = 0
-var bullet_size_modifier : float = 1
-var fire_rate_modifier : float = 1
-var damage_modifier : float = 1
-
 
 func _ready():
 	raycast.add_exception(get_parent())
+	update_weapon_parameters()
 
 func _physics_process(_delta):
 	var collider = raycast.get_collider()
@@ -58,8 +53,10 @@ func _physics_process(_delta):
 		colliding = false
 		if can_shoot == true:
 				_on_cooldown_timeout()
-	
-	update_weapon_parameters()
+	if laser_pointer:
+		$Laser.visible = true
+		$Laser.rotation = b_rotation
+		$Laser.position = global_position
 
 
 func _on_player_shoot():
@@ -122,6 +119,7 @@ func spawn_bullet():
 
 func reset():
 	weapon_machine.current_weapon = weapon_machine.initial_weapon
+	$Laser.visible = false
 
 
 func update_weapon_parameters():
@@ -142,14 +140,9 @@ func update_weapon_parameters():
 	explotion_size = weapon_machine.current_weapon.explotion_size
 	explotion_type = weapon_machine.current_weapon.explotion_type
 	money_shot = weapon_machine.current_weapon.money_shot
+	flamethrow = weapon_machine.current_weapon.flamethrow
 	
-	cooldown_timer.wait_time = 1/fire_rate * fire_rate_modifier
-	
-	
-	if weapon_machine.current_weapon.flamethrow:
-		flamethrow = true
-	else:
-		flamethrow = false
+	cooldown_timer.wait_time = 1/fire_rate
 
 
 func _on_cooldown_timeout():

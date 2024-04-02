@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_h17n2")
 ability_name = "More mana"
-description = "+75 mana"
+description = "+50 max mana"
 texture = ExtResource("2_2j81y")
 unnique = false
 rarity = 0

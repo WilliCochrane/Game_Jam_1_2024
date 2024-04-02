@@ -66,7 +66,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10, 0)]
+"values": [Vector2(16, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -334,7 +334,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10, 0)]
+"values": [Vector2(22, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -398,7 +398,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(4, 0)]
+"values": [Vector2(14, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -526,7 +526,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(10, 0)]
+"values": [Vector2(24, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -562,7 +562,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 1)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_lm6s8"]
@@ -794,7 +794,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(8, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -882,7 +882,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-5, 0)]
+"values": [Vector2(8, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -906,7 +906,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_c08kc"]
@@ -1025,7 +1025,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(14, 0)]
+"values": [Vector2(18, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -1061,7 +1061,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 3)]
+"values": [Vector2(0, 2)]
 }
 
 [sub_resource type="Animation" id="Animation_sei5l"]
@@ -1089,7 +1089,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(20, 0)]
+"values": [Vector2(36, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1125,7 +1125,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -1)]
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_kgwtd"]
@@ -1153,7 +1153,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, 0)]
+"values": [Vector2(14, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1217,7 +1217,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(14, 0)]
+"values": [Vector2(16, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -1290,9 +1290,8 @@ raycast = NodePath("RayCast2D")
 shot_interval = NodePath("Shot_interval")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(4, 0)
-texture = ExtResource("3_5fvpd")
-offset = Vector2(0, 1)
+position = Vector2(6, 0)
+texture = ExtResource("3_hm10g")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1301,7 +1300,7 @@ libraries = {
 
 [node name="WeaponMachine" type="Node" parent="." node_paths=PackedStringArray("initial_weapon")]
 script = ExtResource("4_w1n20")
-initial_weapon = NodePath("P90")
+initial_weapon = NodePath("Pistol")
 
 [node name="Pistol" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
 script = ExtResource("5_7xyep")
@@ -1376,7 +1375,7 @@ script = ExtResource("39_cx250")
 anim_player = NodePath("../../AnimationPlayer")
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(10, 0)
+position = Vector2(16, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-3, 0)
@@ -1390,6 +1389,8 @@ one_shot = true
 one_shot = true
 
 [node name="Laser" type="PointLight2D" parent="."]
+visible = false
+top_level = true
 position = Vector2(0, 0.5)
 color = Color(1, 0.160784, 0.129412, 1)
 energy = 3.0
