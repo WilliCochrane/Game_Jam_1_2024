@@ -28,6 +28,8 @@ func close():
 	get_tree().paused = false
 	shop_closed.emit()
 	player.update_abilities()
+	player.health_bar.value = player.max_health
+	player.current_health = player.max_health
 
 
 func _ready():

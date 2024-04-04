@@ -45,7 +45,7 @@ var dash_speed : float = 300
 var max_health : float = 5
 var max_dashes : float = 3
 var max_mana : float = 150
-var gold : int = 10000
+var gold : int = 0
 
 var mana_usage_bar_catchup : bool = false
 var dashes_used_catchup : bool = false
@@ -93,15 +93,14 @@ func _physics_process(delta):
 	
 	if current_health <= 0:
 		you_died.visible = true
-		get_tree().paused = true
-		shop.reset()
-		weapon.reset()
 		for i in ability_inventory.abilities:
 			i.quantity = 0
 			ability_inventory.abilities.erase(i)
 		abiliites = []
 		update_abilities()
-	 
+		get_tree().paused = true
+		shop.reset()
+		weapon.reset()
 	low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
 	
 	gold_lable.text = str(gold)
@@ -113,7 +112,6 @@ func _physics_process(delta):
 	
 	if shake_strength > 0:
 		shake_strength = lerpf(shake_strength,0,shake_fade*delta)
-		
 		camera.offset = random_offset()
 	
 	if change_pitch:
@@ -341,13 +339,13 @@ func update_bar_values():
 	mana_usage_bar.size.x = max_mana/3
 	current_mana = max_mana
 	
-	health_bar.value = max_health
+	#health_bar.value = max_health
 	health_bar.max_value = max_health 
 	health_bar.size.x = max_health*10
-	damaged_bar.value = max_health
+	#damaged_bar.value = max_health
 	damaged_bar.max_value = max_health
-	damaged_bar.size.x = max_health*10
-	current_health = max_health
+	damaged_bar.size.x = health_bar.size.x
+	#current_health = max_health
 	
 	dash_bar.value = max_dashes
 	dash_bar.max_value = max_dashes

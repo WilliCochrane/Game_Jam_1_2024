@@ -5,9 +5,7 @@ extends Control
 @export var ability_slot : PackedScene
 
 var is_new : bool 
-
-func _ready():
-	update()
+var first : bool = true
 
 func update():
 	for child in grid_container.get_children():
@@ -24,5 +22,11 @@ func update():
 
 
 func _on_pause_menu_opened():
-	for i in grid_container.get_children():
-		i.update(i.current_ability)
+	if first:
+		first = false
+	else:
+		update()
+
+
+func _on_pause_menu_closed():
+	update()
