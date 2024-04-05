@@ -29,7 +29,9 @@ signal player_damage
 @export var flip_h : bool
 @export var delay : float
 @export var spread : float
+@export var shooot : bool = false
 
+var can_move : bool
 var can_attack : bool = false
 var target_position : Vector2
 var player : CharacterBody2D
@@ -38,7 +40,6 @@ var shots_left : int
 var spawn_value : float
 var random_num : float
 var hit : bool = false
-var can_move : bool
 var wander : bool
 var spawn : bool
 
@@ -78,15 +79,15 @@ func _physics_process(delta: float) -> void:
 			spawn = false
 			can_move = true
 	
+	if shooot:
+		var angle : float = 0
+		var shot = randi_range(shots.x, shots.y)
+		for i in range(shot):
+			spawn_bullet(angle)
+			angle += spread/shot
+		attack_timer.start(randf_range(reload.x,reload.y))
+		shooot = false
 	
-	match state:
-		APROACH:
-			pass
-		IDLE:
-			pass
-		RUN:
-			pass
-			
 	if health <= 0:
 		die()
 		
@@ -97,7 +98,8 @@ func _physics_process(delta: float) -> void:
 			state = APROACH
 	
 	if velocity.length() < 2:
-		animation.play("p_idle")
+		if !animation.is_playing():
+			animation.play("p_idle")
 	else:
 		animation.play("p_run")
 	
@@ -142,22 +144,35 @@ func round_to_dec(num, digit):
 	return round(num * pow(15.0, digit)) / pow(15.0, digit)
 
 
-func spawn_bullet():
+func spawn_bullet(angle):
 	var eb = enemy_bullet.instantiate()
 	get_parent().get_parent().add_child(eb)
 	var direction = global_position - player.global_position
-	eb.rotation_degrees = rad_to_deg(atan2(direction.x,direction.y))*-1 - 90 + randf_range(-spread,spread)
+	if attack_type != "Slime":
+		eb.rotation_degrees = rad_to_deg(atan2(direction.x,direction.y))*-1 - 90 + randf_range(-spread,spread)
+	else:
+		eb.rotation_degrees = angle
 	eb.global_position = $Gun/Muzzel.global_position
 
 
 func shoot():
 	can_attack = false
 	if attack_type == "Single":
-		spawn_bullet()
+		spawn_bullet(0)
 		attack_timer.start(randf_range(reload.x,reload.y))
 	elif attack_type == "Auto":
 		shots_left = randi_range(shots.x,shots.y)
 		$Shot_delay.start(delay)
+	elif attack_type == "Slime":
+		animation.play("jump")
+	elif attack_type == "Even":
+		var angle : float = 0
+		var shot = randi_range(shots.x, shots.y)
+		for i in range(shot):
+			spawn_bullet(angle)
+			angle += spread/shot
+		attack_timer.start(randf_range(reload.x,reload.y))
+		shooot = false
 
 
 func die():
@@ -219,7 +234,7 @@ func _on_collision_damage_area_entered(area):
 
 func _on_shot_delay_timeout():
 	if shots_left > 0:
-		spawn_bullet()
+		spawn_bullet(0)
 		shots_left -= 1
 		$Shot_delay.start(delay)
 	else:

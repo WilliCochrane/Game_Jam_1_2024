@@ -39,3 +39,8 @@ func _process(_delta):
 
 func on_clear_floor():
 	queue_free()
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "side_gate_close" or anim_name == "x_facing_close":
+		anim_player.play("side_gate_idle")

@@ -48,6 +48,7 @@ var max_mana : float = 150
 var gold : int = 0
 
 var mana_usage_bar_catchup : bool = false
+var mana_regen_speed : float = .25
 var dashes_used_catchup : bool = false
 var damadged_bar_catchup : bool = false
 var current_mana_usage : float
@@ -79,6 +80,7 @@ func _ready():
 	dash_usage_bar.value = max_dashes
 	dash_usage_bar.max_value = max_dashes
 	current_dashes = max_dashes
+	_on_dungeon_clear_floor()
 
 
 func _physics_process(delta):
@@ -101,6 +103,8 @@ func _physics_process(delta):
 		get_tree().paused = true
 		shop.reset()
 		weapon.reset()
+		$Dust.color = Color(.78,.78,.78)
+	
 	low_health_indicator.modulate.a = 1 - (current_health*3/max_health)
 	
 	gold_lable.text = str(gold)
@@ -167,18 +171,8 @@ func bar_management():
 	damaged_bar.value = current_damage
 	dash_bar.value = current_dashes
 	dash_usage_bar.value = current_dash_usage
-	
-	if current_mana > max_mana:
-		mana_regen = false
-		current_mana = max_mana
-	if mana_regen:
-		current_mana += .25
-	
-	if current_dashes > max_dashes:
-		dash_regen = false
-		current_dashes = max_dashes
-	if dash_regen:
-		current_dashes += .02
+	$ui/HLabel.text = str(current_health)+"/"+str(max_health)
+	$ui/MLabel.text = str(int(current_mana))+"/"+str(max_mana)
 	
 	if current_mana_usage < current_mana:
 		current_mana_usage = current_mana
@@ -189,18 +183,18 @@ func bar_management():
 		mana_regen = false
 	elif current_mana_usage > current_mana && mana_usage_bar_catchup == true:
 		if weapon.shooting == false && weapon.full_auto == true:
-			current_mana_usage -= 1
+			current_mana_usage -= mana_regen_speed*4
 		elif weapon.shooting == true && weapon.full_auto == false:
 			mana_usage_timer.start()
 			mana_regen_timer.stop()
 			mana_usage_bar_catchup = false
 			mana_regen = false
 		elif weapon.shooting == false && weapon.full_auto == false:
-			current_mana_usage -= 1
+			current_mana_usage -= mana_regen_speed*4
 	elif current_mana_usage <= current_mana:
 		mana_usage_bar_catchup = false
 		if mana_regen_timer.is_stopped():
-			mana_regen_timer.start(2)
+			mana_regen_timer.start(1/(mana_regen_speed*2))
 	
 	if current_dash_usage < current_dashes:
 		current_dash_usage = current_dashes
@@ -230,6 +224,18 @@ func bar_management():
 			damaged_timer.start(2)
 	elif current_damage > current_health && damadged_bar_catchup == true:
 		current_damage -= .01
+		
+	if current_mana > max_mana:
+		mana_regen = false
+		current_mana = max_mana
+	if mana_regen:
+		current_mana += mana_regen_speed
+	
+	if current_dashes > max_dashes:
+		dash_regen = false
+		current_dashes = max_dashes
+	if dash_regen:
+		current_dashes += .02
 
 
 func _on_mana_regen_timeout():
@@ -292,6 +298,7 @@ func update_abilities():
 	max_dashes = 3
 	max_health = 5
 	max_mana = 150
+	mana_regen_speed = .25
 	
 	for ability in abiliites:
 		if ability.ability_name == "Better Bullets":
@@ -314,6 +321,12 @@ func update_abilities():
 			weapon.fire_rate += ability.quantity
 		elif ability.ability_name == "Metal jacket":
 			weapon.piercing += ability.quantity
+		elif ability.ability_name == "Scope":
+			weapon.bullet_spread *= pow(.7,ability.quantity)
+		elif ability.ability_name == "Mana regen":
+			mana_regen_speed += ability.quantity*.25
+		elif ability.ability_name == "TNT":
+			weapon.explotion_size += .5 + (ability.quantity)*.5
 	
 	for ability in abiliites:
 		if ability.ability_name == "Box mag":
@@ -326,6 +339,9 @@ func update_abilities():
 		elif ability.ability_name == "Laser pointer":
 			weapon.laser_pointer = true
 			weapon.bullet_spread *= .5
+		elif ability.ability_name == "Gold shot":
+			weapon.damage *= 2
+			weapon.money_shot = true
 	
 	update_bar_values()
 
@@ -356,3 +372,12 @@ func update_bar_values():
 
 func _on_footsteps_finished():
 	$Sounds/footsteps.pitch_scale = 1 + randf_range(-.5,.5)
+
+
+func _on_dungeon_clear_floor():
+	if get_parent().level == 1:
+		$Dust.color = Color(.78,.78,.78)
+	elif get_parent().level == 1:
+		$Dust.color = Color(.53,.89,.45)
+	elif get_parent().level == 3:
+		$Dust.color = Color(.78,.78,.78)

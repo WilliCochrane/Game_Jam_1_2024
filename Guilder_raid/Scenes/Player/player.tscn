@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=34 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Resource" uid="uid://bq4oofxg3pous" path="res://Scenes/Abilities/Ability_inventory.tres" id="2_o8fdp"]
@@ -248,7 +248,12 @@ size = Vector2(12, 26)
 [sub_resource type="CircleShape2D" id="CircleShape2D_epq4t"]
 radius = 52.0096
 
+[sub_resource type="Gradient" id="Gradient_6ufnj"]
+colors = PackedColorArray(0.484398, 0.484398, 0.484398, 1, 1, 1, 1, 1)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_player", "sprite", "weapon", "health_bar", "damaged_bar", "mana_bar", "mana_usage_bar", "damaged_timer", "mana_usage_timer", "mana_regen_timer", "camera", "ui_sprite", "ui_anim_player", "low_health_indicator", "gold_lable", "dash") groups=["Player"]]
+collision_layer = 65
+collision_mask = 65
 script = ExtResource("1_fqlgg")
 anim_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite2D")
@@ -347,6 +352,14 @@ tint_progress = Color(0.952941, 0.533333, 0.513726, 1)
 position = Vector2(3.5, 3)
 texture = ExtResource("10_ucnwq")
 
+[node name="HLabel" type="Label" parent="ui"]
+offset_left = 27.0
+offset_top = 11.0
+offset_right = 67.0
+offset_bottom = 34.0
+theme_override_fonts/font = ExtResource("6_jyu7f")
+text = "1/2"
+
 [node name="Mana_bar" type="TextureProgressBar" parent="ui"]
 layout_direction = 1
 offset_left = 10.0
@@ -387,6 +400,14 @@ tint_progress = Color(0.643137, 0.737255, 0.87451, 1)
 [node name="mana" type="Sprite2D" parent="ui/Mana_bar"]
 position = Vector2(3, 3)
 texture = ExtResource("11_6lfvd")
+
+[node name="MLabel" type="Label" parent="ui"]
+offset_left = 27.0
+offset_top = 29.0
+offset_right = 67.0
+offset_bottom = 52.0
+theme_override_fonts/font = ExtResource("6_jyu7f")
+text = "1/2"
 
 [node name="Dash_bar" type="TextureProgressBar" parent="ui"]
 layout_direction = 1
@@ -530,6 +551,23 @@ shape = SubResource("CircleShape2D_epq4t")
 
 [node name="footsteps" type="AudioStreamPlayer" parent="Sounds"]
 volume_db = -80.0
+
+[node name="Dust" type="CPUParticles2D" parent="."]
+z_index = 10
+position = Vector2(0, -260)
+amount = 30
+lifetime = 8.0
+emission_shape = 3
+emission_rect_extents = Vector2(400, 1)
+direction = Vector2(0, 1)
+gravity = Vector2(0, 5)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+orbit_velocity_min = -0.03
+orbit_velocity_max = 0.03
+scale_amount_max = 3.0
+color = Color(0.52549, 0.886275, 0.447059, 1)
+color_ramp = SubResource("Gradient_6ufnj")
 
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]

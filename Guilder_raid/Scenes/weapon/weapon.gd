@@ -57,6 +57,7 @@ func _physics_process(_delta):
 		$Laser.visible = true
 		$Laser.rotation = b_rotation
 		$Laser.position = global_position
+		$Laser.offset.x = 60 + $Muzzle.position.x
 
 
 func _on_player_shoot():
@@ -120,6 +121,7 @@ func spawn_bullet():
 func reset():
 	weapon_machine.current_weapon = weapon_machine.initial_weapon
 	$Laser.visible = false
+	update_weapon_parameters()
 
 
 func update_weapon_parameters():

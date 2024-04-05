@@ -4,7 +4,7 @@ class_name Plasma_gun
 
 func _ready():
 	bullet_type = "Plasma_ball"
-	full_auto = true
+	full_auto = false
 	damage = 10
 	fire_rate = 1
 	mana_cost = 10

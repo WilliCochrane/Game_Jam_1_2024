@@ -27,6 +27,11 @@ signal clear_floor
 var gates_up : bool = false
 var dungeon = {}
 var room_size : Vector2
+var dungeon_floor : int = 1
+var level : int = 2
+var map_wrap : Array[Vector2i]
+var map_void : Array[Vector2i]
+var map_tile : Array[Vector2i]
 
 
 func _ready():
@@ -39,6 +44,10 @@ func _physics_process(_delta):
 
 
 func load_map():
+	map_tile = []
+	map_void = []
+	map_wrap = []
+	
 	var cdor_x_st = tile_map.tile_set.get_pattern(0)
 	var cdor_x_md = tile_map.tile_set.get_pattern(1)
 	var cdor_x_en = tile_map.tile_set.get_pattern(2)
@@ -46,6 +55,13 @@ func load_map():
 	var cdor_y_st = tile_map.tile_set.get_pattern(3)
 	var cdor_y_md = tile_map.tile_set.get_pattern(4)
 	var cdor_y_en = tile_map.tile_set.get_pattern(5)
+	
+	if level == 1:
+		$CanvasModulate.color = Color(.1,.1,.1)
+	if level == 2:
+		$CanvasModulate.color = Color(0.25,0.25,0.25)
+	if level == 3:
+		pass
 	
 	for child in get_children():
 		if child.is_in_group("clear"):
@@ -73,7 +89,7 @@ func load_map():
 			rl.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 			rl.scale = Vector2(16,16)
 		else:
-			var rooms = tile_map.tile_set.get_pattern(randi_range(7,13))
+			var rooms = tile_map.tile_set.get_pattern(randi_range(7,19))
 			room_size = Vector2(-5,-6)
 			tile_map.set_pattern(0, Vector2(34, 26)*i, rooms)
 			for l in range(0,35):
@@ -129,41 +145,85 @@ func load_map():
 			minimap.set_cell(0,i,0,Vector2i(0,0))
 		elif tile_map.get_cell_tile_data(0,i).get_custom_data("minimap") == 2:
 			minimap.set_cell(0,i,0,Vector2i(1,0))
+			if tile_map.get_cell_atlas_coords(0,i).x < 5:
+				map_wrap.push_front(i)
+		
+		if tile_map.get_cell_atlas_coords(0,i).x > 5 && tile_map.get_cell_atlas_coords(0,i).y < 3:
+			map_tile.push_back(i)
+		elif tile_map.get_cell_atlas_coords(0,i).x > 5 && tile_map.get_cell_atlas_coords(0,i).y > 2:
+			map_void.push_back(i)
+		
+		if tile_map.get_cell_atlas_coords(0,i).y == 8 && tile_map.get_cell_atlas_coords(0,i).x < 6:
+			if level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,1)
 		
 		if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
 			var tl = torch_light.instantiate()
 			add_child(tl)
 			tl.position = Vector2(i.x*16+8,i.y*16+6)  
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(1,6))
+		
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(3, 3):
-			tile_map.set_cells_terrain_path(0,[i],0,0)
+			if level == 1:
+				tile_map.set_cells_terrain_path(0,[i],0,0)
+			elif level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,1)
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 0):
-			tile_map.set_cells_terrain_path(0,[i],0,1)
-		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 7):
-			tile_map.set_cells_terrain_path(0,[i],0,2)
+			if level == 1:
+				tile_map.set_cells_terrain_path(0,[i],0,1)
+			if level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,4)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 7) or tile_map.get_cell_atlas_coords(0,i) == Vector2i(4, 7):
+			if level == 1:
+				tile_map.set_cells_terrain_path(0,[i],0,2)
+			if level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,5)
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 1):
-			tile_map.set_cells_terrain_path(0,[i],0,3)
+			if level == 1:
+				tile_map.set_cells_terrain_path(0,[i],0,3)
+			if level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,6)
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 1):
-			tile_map.set_cells_terrain_path(0,[i],0,4)
+			if level == 1:
+				tile_map.set_cells_terrain_path(0,[i],0,4)
+			elif level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,7)
+		
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 1):
-			tile_map.set_cells_terrain_path(0,[i],0,5)
-		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(4, 7):
-			pass
+			if level == 1:
+				tile_map.set_cells_terrain_path(0,[i],0,5)
+			if level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,3)
+		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(4, 1):
+			if level == 1:
+				tile_map.set_cells_terrain_path(0,[i],0,5)
+			if level == 2:
+				tile_map.set_cells_terrain_path(0,[i],1,3)
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 7):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(5, 7))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 7):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(0, 7))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 0):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(0, 0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 0):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(5, 0))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 4):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(5, 4))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 5):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(5, 5))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 5):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(0, 5))
 		elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 4):
-			pass
+			if level == 2:
+				tile_map.set_cell(0,i,1,Vector2i(0, 4))
 		
 		#if tile_map.get_cell_tile_data(0,i).get_custom_data("object") == "barrel":
 			#var brl = barrel.instantiate()
@@ -185,7 +245,11 @@ func load_map():
 			#var brl = tall_pillar.instantiate()
 			#add_child(brl)
 			#brl.position = Vector2(i.x*16+7,i.y*16+7)
-	$NavigationRegion2D.bake_navigation_polygon()
+	if level == 2:
+		tile_map.set_cells_terrain_connect(0,map_tile,1,2)
+		tile_map.set_cells_terrain_connect(0,map_void,1,0)
+	
+#	$NavigationRegion2D.bake_navigation_polygon()
 	load_minimap()
 
 

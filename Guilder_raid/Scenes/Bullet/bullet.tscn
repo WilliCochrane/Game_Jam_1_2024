@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bjwsafueqhnss"]
+[gd_scene load_steps=24 format=3 uid="uid://bjwsafueqhnss"]
 
 [ext_resource type="Script" path="res://Scenes/Bullet/bullet.gd" id="1_r4se3"]
 [ext_resource type="Texture2D" uid="uid://hs8sm1r1snpn" path="res://Assets/Bullet/Plasma_ball.png" id="2_3cxrp"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://dch3fe0ug3qv2" path="res://Assets/Bullet/Laser.png" id="2_neq5t"]
 [ext_resource type="Texture2D" uid="uid://ctw4ibpo4yr67" path="res://Assets/Bullet/bb.png" id="2_vaxdt"]
 [ext_resource type="Texture2D" uid="uid://c4dnd5828rcox" path="res://Assets/Bullet/Red_small.png" id="4_woddr"]
-[ext_resource type="Texture2D" uid="uid://dlvkeh3lel4p3" path="res://Assets/Effects/spot.png" id="9_oko2n"]
 
 [sub_resource type="Gradient" id="Gradient_fi76s"]
 offsets = PackedFloat32Array(0, 0.72, 1)
@@ -392,7 +391,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.3, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 0.639216, 1, 1), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(0.835294, 0.360784, 0.643137, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_spka2"]
@@ -542,10 +541,10 @@ scale_amount_max = 3.0
 color_ramp = SubResource("Gradient_fi76s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(1, 0.470588, 0.470588, 1)
+self_modulate = Color(0.957418, 0.83474, 0.907738, 1)
 light_mask = 17
 scale = Vector2(3, 3)
-texture = ExtResource("2_dbcmn")
+texture = ExtResource("2_3cxrp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -553,17 +552,13 @@ libraries = {
 }
 
 [node name="Area2D" type="Area2D" parent="."]
-scale = Vector2(2, 2)
+scale = Vector2(1.125, 1.5)
 collision_layer = 4
 collision_mask = 5
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_qf8se")
-
-[node name="PointLight2D" type="PointLight2D" parent="."]
-range_item_cull_mask = 16
-texture = ExtResource("9_oko2n")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

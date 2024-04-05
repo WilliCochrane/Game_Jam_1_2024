@@ -5,7 +5,7 @@ class_name Sniper
 func _ready():
 	full_auto = false
 	bullet_type = "Large"
-	damage = 20
+	damage = 15
 	fire_rate = 1
 	mana_cost = 10
 	crit_chance = 30
