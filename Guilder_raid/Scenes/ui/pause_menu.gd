@@ -19,6 +19,7 @@ func open():
 	is_open = true
 	opened.emit()
 	get_tree().paused = true
+	$Level_indicator.text = "Level "+str(get_parent().get_parent().level)+ " Floor " + str(get_parent().get_parent().dungeon_floor)
 
 
 func close():

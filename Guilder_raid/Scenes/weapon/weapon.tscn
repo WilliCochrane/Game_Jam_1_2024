@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://c6rheyijs8n4l"]
+[gd_scene load_steps=67 format=3 uid="uid://c6rheyijs8n4l"]
 
 [ext_resource type="Script" path="res://Scenes/weapon/weapon.gd" id="1_6mjeb"]
 [ext_resource type="PackedScene" uid="uid://bjwsafueqhnss" path="res://Scenes/Bullet/bullet.tscn" id="2_nq1jh"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://djcq7arxmhy7f" path="res://Assets/Weapons/LaserPistol.png" id="3_61pbt"]
 [ext_resource type="Texture2D" uid="uid://dklsv767qqvaw" path="res://Assets/Weapons/MoneyLauncher.png" id="3_atm28"]
 [ext_resource type="Texture2D" uid="uid://dgtspx8qb31o0" path="res://Assets/Weapons/Banana.png" id="3_bsdp2"]
+[ext_resource type="Texture2D" uid="uid://b3uamec2v2sfv" path="res://Assets/Weapons/SuperSoaker.png" id="3_bykb5"]
 [ext_resource type="Texture2D" uid="uid://b8w38argxvgxv" path="res://Assets/Weapons/Sniper.png" id="3_c2ys7"]
 [ext_resource type="Texture2D" uid="uid://dpn34j1otriu4" path="res://Assets/Weapons/Sawed-OffWinchester1897.png" id="3_hm10g"]
 [ext_resource type="Texture2D" uid="uid://41m54pblwk2r" path="res://Assets/Weapons/PlasmaBlaster.png" id="3_km61r"]
@@ -18,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dtirwq5q5w7g1" path="res://Assets/Weapons/MiniGun.png" id="3_n7f66"]
 [ext_resource type="Texture2D" uid="uid://dstwhafg7puo4" path="res://Assets/Weapons/FlameThrower.png" id="3_op8js"]
 [ext_resource type="Texture2D" uid="uid://b3cr4f4r3ern2" path="res://Assets/Weapons/GrenadeLauncher.png" id="3_tj8g2"]
+[ext_resource type="Texture2D" uid="uid://b6gbilamfdrvg" path="res://Assets/Weapons/Toilet.png" id="3_v8a40"]
 [ext_resource type="Texture2D" uid="uid://dgqc54cap2rkh" path="res://Assets/Weapons/Derringer.png" id="3_vhk21"]
 [ext_resource type="Texture2D" uid="uid://b4c2bn83wwen" path="res://Assets/Weapons/ThombsonSMG.png" id="3_y1gln"]
 [ext_resource type="Script" path="res://Scenes/weapon/WeaponMachine.gd" id="4_w1n20"]
@@ -40,6 +42,8 @@
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Thompson.gd" id="37_uiui5"]
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Banana.gd" id="39_cx250"]
 [ext_resource type="Texture2D" uid="uid://bpp6pjr5rgsjl" path="res://Assets/Effects/Laser_pointer.png" id="40_a4qrn"]
+[ext_resource type="Script" path="res://Scenes/weapon/weapons/Slimer.gd" id="41_kp4hx"]
+[ext_resource type="Script" path="res://Scenes/weapon/weapons/Toilet.gd" id="42_uipah"]
 
 [sub_resource type="Animation" id="Animation_q5s8p"]
 resource_name = "Auto_shotgun"
@@ -1256,6 +1260,134 @@ tracks/4/keys = {
 "values": [Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_xhicu"]
+resource_name = "Slimer"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_bykb5")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Muzzle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(13, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(4, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCast2D:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(20, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_2sek0"]
+resource_name = "Toilet"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_v8a40")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Muzzle:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(4, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RayCast2D:target_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(20, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t0lp1"]
 _data = {
 "Auto_shotgun": SubResource("Animation_q5s8p"),
@@ -1274,8 +1406,10 @@ _data = {
 "Plasma_gun": SubResource("Animation_c08kc"),
 "RESET": SubResource("Animation_uo3w6"),
 "Shotgun": SubResource("Animation_4qjmp"),
+"Slimer": SubResource("Animation_xhicu"),
 "Sniper": SubResource("Animation_sei5l"),
 "Thompson": SubResource("Animation_kgwtd"),
+"Toilet": SubResource("Animation_2sek0"),
 "Trench_gun": SubResource("Animation_n4ojb")
 }
 
@@ -1290,8 +1424,9 @@ raycast = NodePath("RayCast2D")
 shot_interval = NodePath("Shot_interval")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(6, 0)
-texture = ExtResource("3_hm10g")
+position = Vector2(4, 0)
+texture = ExtResource("3_v8a40")
+offset = Vector2(0, -1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1374,12 +1509,20 @@ anim_player = NodePath("../../AnimationPlayer")
 script = ExtResource("39_cx250")
 anim_player = NodePath("../../AnimationPlayer")
 
+[node name="Slimer" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("41_kp4hx")
+anim_player = NodePath("../../AnimationPlayer")
+
+[node name="Toilet" type="Node" parent="WeaponMachine" node_paths=PackedStringArray("anim_player")]
+script = ExtResource("42_uipah")
+anim_player = NodePath("../../AnimationPlayer")
+
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(16, 0)
+position = Vector2(9, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-3, 0)
-target_position = Vector2(24, 0)
+target_position = Vector2(20, 0)
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.1

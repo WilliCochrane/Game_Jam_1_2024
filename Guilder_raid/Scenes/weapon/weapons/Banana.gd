@@ -9,8 +9,9 @@ func _ready():
 	mana_cost = 5
 	crit_chance = 20
 	bullet_size = 1
-	bullet_speed = 6
+	bullet_speed = 7
 	bullet_spread = 3
+	bounces = 1
 	txture = "res://Assets/Weapons/Banana.png"
 
 

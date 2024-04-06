@@ -53,3 +53,7 @@ self_modulate = Color(1, 0.87451, 0.784314, 0.196078)
 position = Vector2(0, -4)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("1_stipw")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+rect = Rect2(-130, -130, 260, 260)
+enable_mode = 1

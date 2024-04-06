@@ -71,6 +71,7 @@ func summon_enemies():
 			e.scale.x *= 1/scale.x
 			e.scale.y *= 1/scale.y
 			add_child(e)
+			e.health *= get_parent().level + (float(get_parent().dungeon_floor-1))/3
 			e.global_position.x = spawn_places[-1].x*16 + 8
 			e.global_position.y = spawn_places[-1].y*16 + 8
 			alive_enemies += 1

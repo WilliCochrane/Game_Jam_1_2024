@@ -6,11 +6,92 @@
 [ext_resource type="Texture2D" uid="uid://2pappgmugtue" path="res://Assets/Effects/square.png" id="16_i8t5t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8fwc"]
+resource_local_to_scene = true
 shader = ExtResource("2_lglfr")
 shader_parameter/progress = 0.0
 shader_parameter/noise_desnity = 100.0
 shader_parameter/beam_size = 0.15
 shader_parameter/color = Vector4(0, 1.02, 1.2, 1)
+
+[sub_resource type="Animation" id="Animation_fs7db"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_cgciu"]
+resource_name = "jump"
+length = 0.416675
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_scenq")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:shooot")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:move_speed")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 50.0]
+}
 
 [sub_resource type="Animation" id="Animation_jmxst"]
 resource_name = "p_idle"
@@ -96,86 +177,6 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_fs7db"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_cgciu"]
-resource_name = "jump"
-length = 0.416675
-step = 0.0833333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:hframes")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [11]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:texture")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("3_scenq")]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [6, 7, 8, 9, 10]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:shooot")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.333333),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:move_speed")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 50.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o7ip8"]
 _data = {
 "RESET": SubResource("Animation_fs7db"),
@@ -224,12 +225,11 @@ height = 12.0
 z_index = 1
 y_sort_enabled = true
 collision_layer = 0
-collision_mask = 5
+collision_mask = 69
 script = ExtResource("1_pghg8")
 approach_dist = 300.0
 run_dist = 60.0
 gold_drop = Vector2(3, 5)
-move_speed = 50.0
 health = 8.0
 damage = 1.0
 reload = Vector2(3, 5)
@@ -243,8 +243,8 @@ self_modulate = Color(64.2471, 128.498, 128.498, 1)
 light_mask = 513
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_r8fwc")
-position = Vector2(0, -12)
 texture = ExtResource("3_scenq")
+offset = Vector2(0, -12)
 hframes = 11
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -268,7 +268,7 @@ debug_use_custom = true
 debug_path_custom_color = Color(10, 1, 1, 1)
 
 [node name="Nav_timer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.5
 autostart = true
 
 [node name="Attack_timer" type="Timer" parent="."]
@@ -291,22 +291,19 @@ offset = Vector2(4, 0)
 [node name="Muzzel" type="Marker2D" parent="Gun"]
 
 [node name="Area2D" type="Area2D" parent="." groups=["Enemy"]]
-position = Vector2(1, 0)
 collision_layer = 4
 collision_mask = 4
-priority = 1.0
+priority = 1
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, -1)
+position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_isxod")
 
 [node name="collision_damage" type="Area2D" parent="."]
-position = Vector2(0, 1)
-priority = 1.0
+position = Vector2(0, -1)
+priority = 1
 
 [node name="CollisionShape2D1" type="CollisionShape2D" parent="collision_damage"]
-visible = false
-position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_isxod")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
@@ -323,8 +320,8 @@ energy = 0.0
 range_item_cull_mask = 512
 texture = ExtResource("16_i8t5t")
 
-[connection signal="timeout" from="Nav_timer" to="." method="_on_nav_timer_timeout" flags=18]
-[connection signal="timeout" from="Attack_timer" to="." method="_on_attack_timer_timeout" flags=18]
-[connection signal="timeout" from="Idle_timer" to="." method="_on_idle_timer_timeout" flags=18]
-[connection signal="timeout" from="Shot_delay" to="." method="_on_shot_delay_timeout" flags=18]
-[connection signal="area_entered" from="collision_damage" to="." method="_on_collision_damage_area_entered" flags=18]
+[connection signal="timeout" from="Nav_timer" to="." method="_on_nav_timer_timeout"]
+[connection signal="timeout" from="Attack_timer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="Idle_timer" to="." method="_on_idle_timer_timeout"]
+[connection signal="timeout" from="Shot_delay" to="." method="_on_shot_delay_timeout"]
+[connection signal="area_entered" from="collision_damage" to="." method="_on_collision_damage_area_entered"]

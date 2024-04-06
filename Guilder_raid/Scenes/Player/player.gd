@@ -171,8 +171,8 @@ func bar_management():
 	damaged_bar.value = current_damage
 	dash_bar.value = current_dashes
 	dash_usage_bar.value = current_dash_usage
-	$ui/HLabel.text = str(current_health)+"/"+str(max_health)
-	$ui/MLabel.text = str(int(current_mana))+"/"+str(max_mana)
+	$ui/HLabel.text = str(health_bar.value)+"/"+str(max_health)
+	$ui/MLabel.text = str(int(mana_bar.value))+"/"+str(max_mana)
 	
 	if current_mana_usage < current_mana:
 		current_mana_usage = current_mana
@@ -327,6 +327,8 @@ func update_abilities():
 			mana_regen_speed += ability.quantity*.25
 		elif ability.ability_name == "TNT":
 			weapon.explotion_size += .5 + (ability.quantity)*.5
+		elif ability.ability_name == "Bouncy bullets":
+			weapon.bounces += (ability.quantity)*2
 	
 	for ability in abiliites:
 		if ability.ability_name == "Box mag":

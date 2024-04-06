@@ -28,7 +28,7 @@ var gates_up : bool = false
 var dungeon = {}
 var room_size : Vector2
 var dungeon_floor : int = 1
-var level : int = 2
+var level : int = 1
 var map_wrap : Array[Vector2i]
 var map_void : Array[Vector2i]
 var map_tile : Array[Vector2i]
@@ -36,7 +36,6 @@ var map_tile : Array[Vector2i]
 
 func _ready():
 	tile_map.clear()
-	dungeon = dungeon_generation.generate(randf_range(-1000,1000))
 	load_map()
 
 func _physics_process(_delta):
@@ -44,6 +43,7 @@ func _physics_process(_delta):
 
 
 func load_map():
+	dungeon = dungeon_generation.generate(randf_range(-1000,1000))
 	map_tile = []
 	map_void = []
 	map_wrap = []
@@ -111,14 +111,14 @@ func load_map():
 			while true:
 				if tile_map.get_cell_atlas_coords(0,Vector2i(mid_pos.x+count,mid_pos.y)) == Vector2i(5,1):
 					tile_map.set_pattern(0,Vector2i(mid_pos.x+count,mid_pos.y),cdor_x_st)
-					_spawn_gate(mid_pos.x+count,mid_pos.y+3,true)
-					_spawn_gate(mid_pos.x+count,mid_pos.y+4,true)
+					_spawn_gate(mid_pos.x+count+1,mid_pos.y+3,true)
+					_spawn_gate(mid_pos.x+count+1,mid_pos.y+4,true)
 				elif tile_map.get_cell_atlas_coords(0,Vector2i(mid_pos.x+count,mid_pos.y)) == Vector2i(-1,-1) or tile_map.get_cell_atlas_coords(0,Vector2i(mid_pos.x+count,mid_pos.y)) == Vector2i(4,3):
 					tile_map.set_pattern(0,Vector2i(mid_pos.x+count,mid_pos.y),cdor_x_md)
 				elif tile_map.get_cell_atlas_coords(0,Vector2i(mid_pos.x+count,mid_pos.y)) == Vector2i(0,1):
 					tile_map.set_pattern(0,Vector2i(mid_pos.x+count,mid_pos.y),cdor_x_en)
-					_spawn_gate(mid_pos.x+count,mid_pos.y+3,true)
-					_spawn_gate(mid_pos.x+count,mid_pos.y+4,true)
+					_spawn_gate(mid_pos.x+count-1,mid_pos.y+3,true)
+					_spawn_gate(mid_pos.x+count-1,mid_pos.y+4,true)
 					break
 				count += 1
 	
@@ -134,8 +134,8 @@ func load_map():
 					tile_map.set_pattern(0,Vector2i(mid_pos.x,mid_pos.y+count),cdor_y_md)
 				elif tile_map.get_cell_atlas_coords(0,Vector2i(mid_pos.x,mid_pos.y+count)) == Vector2i(1,0):
 					tile_map.set_pattern(0,Vector2i(mid_pos.x,mid_pos.y+count),cdor_y_en)
-					_spawn_gate(mid_pos.x+1,mid_pos.y+count+2,false)
-					_spawn_gate(mid_pos.x+2,mid_pos.y+count+2,false)
+					_spawn_gate(mid_pos.x+1,mid_pos.y+count+1,false)
+					_spawn_gate(mid_pos.x+2,mid_pos.y+count+1,false)
 					break
 				count += 1
 	
@@ -249,7 +249,7 @@ func load_map():
 		tile_map.set_cells_terrain_connect(0,map_tile,1,2)
 		tile_map.set_cells_terrain_connect(0,map_void,1,0)
 	
-#	$NavigationRegion2D.bake_navigation_polygon()
+	$NavigationRegion2D.bake_navigation_polygon()
 	load_minimap()
 
 
@@ -290,15 +290,25 @@ func _on_ladder_next_floor():
 	load_map()
 	shop.open()
 	treasure.reset()
-
+	dungeon_floor += 1
+	if dungeon_floor == 4:
+		level += 1
+		dungeon_floor = 1
+		if level == 4 && dungeon_floor == 1:
+			pass
+		elif level == 4 && dungeon_floor == 2:
+			pass
 
 func _on_player_restart_game():
 	emit_signal("clear_floor")
 	tile_map.clear()
 	minimap.clear()
 	dungeon = dungeon_generation.generate(randf_range(-10,10))
+	dungeon_floor = 1
+	level = 1
 	load_map()
 	treasure.reset()
+	
 
 
 func _on_timer_timeout():

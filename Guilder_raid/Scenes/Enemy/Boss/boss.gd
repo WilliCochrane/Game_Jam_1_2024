@@ -1,5 +1,4 @@
 extends CharacterBody2D
-class_name enemy
 
 signal player_damage
 
@@ -9,12 +8,12 @@ signal player_damage
 @onready var nav_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var animation : AnimationPlayer = $AnimationPlayer
-@onready var attack_timer : Timer = $Attack_timer
-@onready var idle_timer : Timer = $Idle_timer
-@onready var raycast : RayCast2D = $RayCast2D
-@onready var nav_timer : Timer = $Nav_timer
+@onready var attack_timer : Timer = $attackTimer
+@onready var idle_timer : Timer = $idleTimer
+@onready var nav_timer : Timer = $navTimer
+@onready var delay_timer : Timer = $delayTimer
 @onready var sprite : Sprite2D = $Sprite2D
-@onready var gun : Sprite2D = $Gun
+@onready var gun : Sprite2D = $MiniGun
 
 @export var approach_dist : float
 @export var run_dist : float 
@@ -30,6 +29,7 @@ signal player_damage
 @export var delay : float
 @export var spread : float
 @export var shooot : bool = false
+@export var Ashots : Vector2
 
 var spawn_value : float
 var can_move : bool
@@ -42,11 +42,24 @@ var random_num : float
 var hit : bool = false
 var wander : bool
 var spawn : bool
+var current_attack : String
+var current_health : float
+var attacks : Array = ["Circle","Auto","Split"]
+var half = false
+var split : bool = false
+var aproach : bool = false
 
 enum {
 	APROACH,
 	IDLE,
 	RUN,
+}
+
+enum {
+	BEAM,
+	CICLE,
+	AUTO,
+	SPAWN,
 }
 
 var state = IDLE
@@ -59,10 +72,6 @@ func _ready():
 	spawn_value = 1
 	sprite.material.set_shader_parameter("progress", spawn_value)
 	gun.material.set_shader_parameter("progress", spawn_value)
-	if randi_range(0,1) == 1:
-		wander = true
-	else:
-		wander = false
 	y_sort_enabled = true
 	z_index = 1
 	
@@ -80,54 +89,61 @@ func _physics_process(delta: float) -> void:
 			can_move = true
 			attack_timer.start(randf_range(1,reload.y))
 	
-	if shooot:
-		var angle : float = 0
-		var shot = randi_range(shots.x, shots.y)
-		for i in range(shot):
-			spawn_bullet(angle)
-			angle += spread/shot
-		attack_timer.start(randf_range(reload.x,reload.y))
-		shooot = false
-	
 	if health <= 0:
-		if spawn_value == 0:
-			die()
 		velocity = Vector2.ZERO
 		spawn_value += .05
 		sprite.material.set_shader_parameter("progress", spawn_value)
 		gun.material.set_shader_parameter("progress", spawn_value)
-		$collision_damage.monitoring = false
-		$Area2D.monitorable = false
+		$Collision_damage.monitoring = false
+		$Hitbox.monitorable = false
 		can_attack = false
 		if spawn_value >= 1:
-			queue_free()
+			die()
 		
-	if can_attack == true:
-		if !raycast.is_colliding():
-			shoot()
-		else:
-			state = APROACH
+	if can_attack:
+		current_attack = attacks.pick_random()
+		if current_attack == "Circle":
+			attack_type = "Even"
+			spread = 360
+			shots = Vector2(20,30)
+			Ashots = Vector2(2,4)
+			split = false
+			delay = .75
+		elif current_attack == "Auto":
+			attack_type = "Auto"
+			spread = 30
+			shots = Vector2(1,1)
+			Ashots = Vector2(30,50)
+			split = false
+			delay = .1
+			aproach = true
+		elif current_attack == "Split":
+			attack_type = "Even"
+			spread = 360
+			shots = Vector2(8,8)
+			Ashots = Vector2(1,1)
+			split = true
+			delay = .75
+		attack_timer.start(randf_range(reload.x,reload.y))
+		shoot()
 	
 	if velocity.length() < 2:
-		if !animation.current_animation == "jump":
-			animation.play("p_idle")
+		animation.play("idle")
 	else:
-		if !animation.current_animation == "jump":
-			animation.play("p_run")
+		animation.play("run")
 	
 	if hit == true:
 		alt_animation.play("hit")
 		hit = false
 	
-	if can_move && !raycast.is_colliding():
+	if can_move:
 		var direction = (nav_agent.get_next_path_position() - global_position).normalized()
 		var steering = ((direction * move_speed) - velocity) * delta * 1.2
 		velocity += steering
-	elif raycast.is_colliding():
-		velocity = (nav_agent.get_next_path_position() - global_position).normalized() * move_speed/2
 	else:
 		velocity = Vector2.ZERO
 	
+	update_bar()
 	rotate_to_player(delta)
 	move_and_slide()
 
@@ -160,14 +176,12 @@ func spawn_bullet(angle):
 	var eb = enemy_bullet.instantiate()
 	get_parent().get_parent().add_child(eb)
 	var direction = global_position - player.global_position
-	if attack_type == "Slime":
-		eb.rotation_degrees = angle
-	elif attack_type == "Even":
+	if attack_type == "Even":
 		eb.rotation_degrees = angle + gun.rotation_degrees
 	else:
 		eb.rotation_degrees = rad_to_deg(atan2(direction.x,direction.y))*-1 - 90 + randf_range(-spread,spread)
-		eb.can_split = false
-	eb.global_position = $Gun/Muzzel.global_position
+	eb.global_position = $MiniGun/Muzzle.global_position
+	eb.can_split = split
 
 
 func shoot():
@@ -176,18 +190,11 @@ func shoot():
 		spawn_bullet(0)
 		attack_timer.start(randf_range(reload.x,reload.y))
 	elif attack_type == "Auto":
-		shots_left = randi_range(shots.x,shots.y)
-		$Shot_delay.start(delay)
-	elif attack_type == "Slime":
-		animation.play("jump")
+		shots_left = randi_range(Ashots.x,Ashots.y)
+		delay_timer.start(delay)
 	elif attack_type == "Even":
-		var shot = randi_range(shots.x, shots.y)
-		var angle : float = -.5 * spread + (spread*.5/shot)
-		for i in range(shot):
-			spawn_bullet(angle)
-			angle += spread/shot
-		attack_timer.start(randf_range(reload.x,reload.y))
-		shooot = false
+		shots_left = randi_range(Ashots.x,Ashots.y)
+		delay_timer.start(delay)
 
 
 func die():
@@ -196,6 +203,7 @@ func die():
 		var gd = gold.instantiate()
 		get_parent().get_parent().add_child(gd)
 		gd.global_position = Vector2(global_position.x,global_position.y+2)
+	queue_free()
 
 
 func _on_attack_timer_timeout():
@@ -204,15 +212,14 @@ func _on_attack_timer_timeout():
 
 func _on_nav_timer_timeout():
 	var dir = player.global_position - global_position
-	raycast.target_position = player.global_position - raycast.global_position
-	if !raycast.is_colliding():
-		if dir.length() < run_dist:
-			state = RUN
-		elif dir.length() > approach_dist:
-			state = APROACH
-		else: 
-			state = IDLE
-	else:
+	if dir.length() < run_dist:
+		state = RUN
+	elif dir.length() > approach_dist:
+		state = APROACH
+	else: 
+		state = IDLE
+	
+	if aproach:
 		state = APROACH
 	
 	match state:
@@ -224,7 +231,7 @@ func _on_nav_timer_timeout():
 				velocity = Vector2.ZERO
 		RUN:
 			target_position = global_position * 2 - player.global_position
-	
+	print(state)
 	nav_agent.target_position = target_position
 
 
@@ -245,11 +252,22 @@ func _on_collision_damage_area_entered(area):
 			player.current_health -= damage
 			player.hit = true
 
+func update_bar():
+	$CanvasLayer/Boss_bar.value = health
 
-func _on_shot_delay_timeout():
+
+func _on_delay_timer_timeout():
 	if shots_left > 0:
-		spawn_bullet(0)
+		if attack_type == "Auto":
+			spawn_bullet(0)
+		elif attack_type == "Even":
+			var shot = randi_range(shots.x, shots.y)
+			var angle : float = -.5 * spread + (spread*.5/shot)
+			for i in range(shot):
+				spawn_bullet(angle)
+				angle += spread/shot
 		shots_left -= 1
-		$Shot_delay.start(delay)
+		delay_timer.start(delay)
 	else:
 		attack_timer.start(randf_range(reload.x,reload.y))
+		aproach = false

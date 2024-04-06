@@ -25,6 +25,8 @@ var stop : bool = false
 var bounce
 var ff : bool = true
 
+var v : Vector2
+
 var crit : bool
 
 func _ready():
@@ -44,12 +46,11 @@ func _ready():
 		damage = 0
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if ff:
-		speed = 0
+		v = Vector2.RIGHT.rotated(deg_to_rad(rotation_degrees))*(weapon.bullet_speed/200)
 		ff = false
 	else:
-		speed = weapon.bullet_speed
 		$Area2D.monitoring = true
 	$Sprite2D.visible = true
 	if can_move:
@@ -60,9 +61,9 @@ func _physics_process(delta):
 		if rotated == false:
 			rotation_degrees += randf_range(-spread,spread)
 			rotated = true
-		position += transform.x * speed * delta
 		scale = Vector2(size,size)/3
 		z_index = 1
+		velocity = v
 	if fire:
 		$Fire_trail.emitting = true
 	else:
@@ -75,18 +76,32 @@ func _physics_process(delta):
 		crit = false
 	if expd:
 		explode()
+		expd = false
 	if stop:
 		queue_free()
+	var collision_info = move_and_collide(velocity)
+	if collision_info:
+		v = velocity.bounce(collision_info.get_normal())
+		rotation = v.angle()
+		if bounces == 0:
+			if explotion_size > 0:
+				explode()
+			queue_free()
+		else:
+			bounces -= 1
+			if explotion_size > 0:
+				explode()
 
 
 func _on_area_2d_body_entered(body):
 	if !body.is_in_group("Player"):
-		if explotion_size > 0:
+		if explotion_size > 0 && bounces == 0:
 			expd = true
 			stop = true
 		else:
 			if !body.is_in_group("Enemy"):
-				queue_free()
+				#queue_free()
+				pass
 
 
 func explode():

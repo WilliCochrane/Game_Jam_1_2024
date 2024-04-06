@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Guilder_raid"
 run/main_scene="res://node_2d.tscn"
-config/features=PackedStringArray("4.0", "Mobile")
+config/features=PackedStringArray("4.2", "Mobile")
 boot_splash/show_image=false
 boot_splash/image="res://Assets/UI/Game Logo.png"
 boot_splash/use_filter=false
@@ -71,7 +71,7 @@ ui_down={
 }
 ui_shoot={
 "deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(147, 20),"global_position":Vector2(153, 82),"factor":1.0,"button_index":1,"pressed":true,"double_click":false,"script":null)
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(147, 20),"global_position":Vector2(153, 82),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
 ui_interact={
@@ -80,11 +80,21 @@ ui_interact={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_6="Bullet Bounce"
+
+[physics]
+
+2d/default_gravity=0.0
+2d/default_gravity_vector=Vector2(0, 0)
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
 renderer/rendering_method.web="mobile"
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
-lightmapping/probe_capture/update_speed=1.0
+lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
+2d/shadow_atlas/size=512
 2d/snap/snap_2d_vertices_to_pixel=true

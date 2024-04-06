@@ -213,6 +213,16 @@ theme_override_font_sizes/font_size = 16
 text = "give us feedback"
 uri = "https://docs.google.com/forms/d/e/1FAIpQLSe-YpJKodUQyHjHOEqzBeCoi0ulcXgPvGiWaCC160M7ZaYSEw/viewform?usp=sf_link"
 
+[node name="Level_indicator" type="Label" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 49.0
+offset_bottom = 30.0
+theme_override_fonts/font = ExtResource("4_7itmm")
+text = "Level 3 Floor 2"
+autowrap_mode = 2
+
 [connection signal="closed" from="." to="Ability_display" method="_on_pause_menu_closed"]
 [connection signal="opened" from="." to="Ability_display" method="_on_pause_menu_opened"]
 [connection signal="value_changed" from="VBoxContainer/Minimap_slider" to="." method="_on_minimap_slider_value_changed"]
