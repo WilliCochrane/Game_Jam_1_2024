@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://uk6yrsv45ei4"]
+[gd_scene load_steps=103 format=3 uid="uid://uk6yrsv45ei4"]
 
 [ext_resource type="Script" path="res://Scrips/Map/Dungeon.gd" id="1_l1dci"]
 [ext_resource type="PackedScene" uid="uid://cu5irw5yngrsi" path="res://Scenes/Player/player.tscn" id="1_l5ov3"]
@@ -29,6 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://0l6gj1c2uyq8" path="res://Scenes/ui/minimap_item.tscn" id="15_sjw4r"]
 [ext_resource type="Texture2D" uid="uid://doxquwst4dayw" path="res://Assets/UI/Minimap/minimap_ladder.png" id="16_0t7gc"]
 [ext_resource type="Texture2D" uid="uid://nl7j0wp0xv5e" path="res://Assets/TileSet/lvl2tiles.png" id="16_vs1oa"]
+[ext_resource type="PackedScene" uid="uid://dx328x5es88mf" path="res://Scenes/ui/credits.tscn" id="22_2tg3p"]
 [ext_resource type="Resource" uid="uid://bdyxg27srsgt4" path="res://Scenes/Abilities/Ability/Better_bullets.tres" id="22_p8f8k"]
 [ext_resource type="Resource" uid="uid://ct76npqclpoim" path="res://Scenes/Abilities/Ability/bigger_bullet.tres" id="23_ys05c"]
 [ext_resource type="Resource" uid="uid://cesj4wh6a8g6f" path="res://Scenes/Abilities/Ability/More_health.tres" id="24_kk44p"]
@@ -2089,10 +2090,10 @@ layer_0/tile_data = PackedInt32Array(-1179715, 262146, 3, -1114179, 262146, 3, -
 layer_1/y_sort_enabled = true
 layer_1/tile_data = PackedInt32Array()
 
-[node name="Treasure" parent="." instance=ExtResource("5_ee60j")]
+[node name="Treasure" parent="." groups=["Treasure"] instance=ExtResource("5_ee60j")]
 z_index = 1
 
-[node name="Ladder" parent="." instance=ExtResource("9_ve3sl")]
+[node name="Ladder" parent="." groups=["Ladder"] instance=ExtResource("9_ve3sl")]
 z_index = 1
 y_sort_enabled = true
 
@@ -2122,6 +2123,8 @@ avalable_abilities = Array[Resource("res://Scenes/Abilities/Ability.gd")]([ExtRe
 
 [node name="Start_menu" parent="Menus" instance=ExtResource("12_g12ls")]
 process_mode = 3
+
+[node name="Credits" parent="Menus" instance=ExtResource("22_2tg3p")]
 
 [node name="Minimap" type="CanvasLayer" parent="."]
 layer = 0

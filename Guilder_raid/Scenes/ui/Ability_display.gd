@@ -6,27 +6,27 @@ extends Control
 
 var is_new : bool 
 var first : bool = true
+var ab_list = []
 
 func update():
-	for child in grid_container.get_children():
-		child.queue_free()
 	for ability in ability_inventory.abilities:
 		is_new = true
-		for i in grid_container.get_children():
-			if i.current_ability == ability:
+		for i in ab_list:
+			if i == ability:
 				is_new = false
 		if is_new:
 			var ab = ability_slot.instantiate()
 			grid_container.add_child(ab)
 			ab.update(ability)
+			ab_list.push_back(ability)
 
 
 func _on_pause_menu_opened():
-	if first:
-		first = false
-	else:
-		update()
+	for child in grid_container.get_children():
+		child.queue_free()
+	ab_list = []
+	call_deferred("update")
 
 
 func _on_pause_menu_closed():
-	update()
+	pass

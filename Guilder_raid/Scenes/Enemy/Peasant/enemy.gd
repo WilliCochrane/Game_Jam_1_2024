@@ -63,8 +63,8 @@ func _ready():
 		wander = true
 	else:
 		wander = false
-	y_sort_enabled = true
-	z_index = 1
+	y_sort_enabled = false
+	z_index = 2
 	
 
 
@@ -90,7 +90,7 @@ func _physics_process(delta: float) -> void:
 		shooot = false
 	
 	if health <= 0:
-		if spawn_value == 0:
+		if spawn_value <= 0:
 			die()
 		velocity = Vector2.ZERO
 		spawn_value += .05

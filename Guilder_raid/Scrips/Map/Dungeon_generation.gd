@@ -9,15 +9,18 @@ var generation_chance = 15
 func generate(room_seed):
 	seed(room_seed)
 	var dungeon = {}
-	var size = floor(randi_range(min_number_rooms, max_number_rooms))
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var size = floor(rng.randi_range(min_number_rooms, max_number_rooms))
 	
 	dungeon[Vector2(0,0)] = room.instantiate()
 	size -= 1
 	
+	
 	while size > 0:
 		for i in dungeon.keys():
-			if randf_range(0,100) < generation_chance && size > 0:
-				var direction = randi_range(0,4)
+			if rng.randf_range(0,100) < generation_chance && size > 0:
+				var direction = rng.randi_range(0,4)
 				if(direction < 1):
 					var new_room_position = i + Vector2(1, 0)
 					if(!dungeon.has(new_room_position)):
@@ -49,7 +52,7 @@ func generate(room_seed):
 	while !is_interesting(dungeon):
 		for i in dungeon.keys():
 			dungeon.get(i).queue_free()
-		var sed = room_seed * randf_range(-1,1) + randf_range(-100,100)
+		var sed = room_seed * rng.randf_range(-1,1) + rng.randf_range(-100,100)
 		dungeon = generate(sed)
 	return dungeon
 

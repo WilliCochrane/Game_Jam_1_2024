@@ -230,6 +230,7 @@ script = ExtResource("1_pghg8")
 approach_dist = 300.0
 run_dist = 60.0
 gold_drop = Vector2(3, 5)
+move_speed = 50.0
 health = 8.0
 damage = 1.0
 reload = Vector2(3, 5)

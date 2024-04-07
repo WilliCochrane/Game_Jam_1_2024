@@ -45,7 +45,7 @@ var dash_speed : float = 300
 var max_health : float = 5
 var max_dashes : float = 3
 var max_mana : float = 150
-var gold : int = 0
+var gold : int = 1000
 
 var mana_usage_bar_catchup : bool = false
 var mana_regen_speed : float = .25

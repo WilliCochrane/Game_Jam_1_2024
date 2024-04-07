@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bx3muipehkgd6"]
+[gd_scene load_steps=6 format=3 uid="uid://bx3muipehkgd6"]
 
 [ext_resource type="Texture2D" uid="uid://dlvkeh3lel4p3" path="res://Assets/Effects/spot.png" id="1_stipw"]
 [ext_resource type="Script" path="res://Scenes/objects/torch_light.gd" id="2_xyvr1"]
@@ -11,7 +11,10 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.76779, 0.94702)
 colors = PackedColorArray(10.001, 0.046, 0.026, 1, 1, 0.822072, 0.734947, 1, 0.984314, 0.705882, 0, 0.0627451)
 
-[node name="torch_light" type="PointLight2D" groups=["clear", "light"]]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d43ho"]
+blend_mode = 1
+
+[node name="torch_light" type="PointLight2D" groups=["Shadow", "clear", "light"]]
 z_index = 10
 color = Color(1, 0.733333, 0.533333, 1)
 energy = 0.3
@@ -50,6 +53,7 @@ color_ramp = SubResource("Gradient_bfyus")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(1, 0.87451, 0.784314, 0.196078)
+material = SubResource("CanvasItemMaterial_d43ho")
 position = Vector2(0, -4)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("1_stipw")

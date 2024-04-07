@@ -405,7 +405,7 @@ _data = {
 "x_facing_open": SubResource("Animation_wflnj")
 }
 
-[node name="Gate" type="StaticBody2D" node_paths=PackedStringArray("anim_player", "collision_shape") groups=["Gate", "clear"]]
+[node name="Gate" type="StaticBody2D" node_paths=PackedStringArray("anim_player", "collision_shape") groups=["Gate", "clear", "navigation"]]
 collision_layer = 33
 collision_mask = 33
 script = ExtResource("1_1d0d3")
@@ -415,13 +415,12 @@ collision_shape = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(8, -8)
 shape = SubResource("RectangleShape2D_e7n7e")
-disabled = true
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(8, -16)
 texture = ExtResource("2_0tbxj")
-hframes = 100
+hframes = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

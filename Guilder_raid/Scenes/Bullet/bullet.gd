@@ -48,6 +48,7 @@ func _ready():
 
 func _physics_process(_delta):
 	if ff:
+		rotation_degrees += randf_range(-spread,spread)
 		v = Vector2.RIGHT.rotated(deg_to_rad(rotation_degrees))*(weapon.bullet_speed/200)
 		ff = false
 	else:
@@ -58,9 +59,6 @@ func _physics_process(_delta):
 			size += .03
 			speed -= .1
 				
-		if rotated == false:
-			rotation_degrees += randf_range(-spread,spread)
-			rotated = true
 		scale = Vector2(size,size)/3
 		z_index = 1
 		velocity = v

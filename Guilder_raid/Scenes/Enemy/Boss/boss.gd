@@ -48,6 +48,8 @@ var attacks : Array = ["Circle","Auto","Split"]
 var half = false
 var split : bool = false
 var aproach : bool = false
+var b_scale : float
+var b_speed : float
 
 enum {
 	APROACH,
@@ -80,6 +82,7 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	if spawn == true:
 		spawn_value -= .015
+		$CanvasLayer/Boss_bar.modulate.a += .015
 		sprite.material.set_shader_parameter("progress", spawn_value)
 		gun.material.set_shader_parameter("progress", spawn_value)
 		can_move = false
@@ -91,6 +94,7 @@ func _physics_process(delta: float) -> void:
 	
 	if health <= 0:
 		velocity = Vector2.ZERO
+		$CanvasLayer/Boss_bar.modulate.a += .05
 		spawn_value += .05
 		sprite.material.set_shader_parameter("progress", spawn_value)
 		gun.material.set_shader_parameter("progress", spawn_value)
@@ -106,25 +110,30 @@ func _physics_process(delta: float) -> void:
 			attack_type = "Even"
 			spread = 360
 			shots = Vector2(20,30)
-			Ashots = Vector2(2,4)
+			Ashots = Vector2(3,5)
 			split = false
 			delay = .75
+			b_scale = 1
+			b_speed = 1
 		elif current_attack == "Auto":
 			attack_type = "Auto"
 			spread = 30
 			shots = Vector2(1,1)
-			Ashots = Vector2(30,50)
+			Ashots = Vector2(70,150)
 			split = false
 			delay = .1
+			b_scale = 1
 			aproach = true
+			b_speed = 1.5
 		elif current_attack == "Split":
 			attack_type = "Even"
 			spread = 360
 			shots = Vector2(8,8)
-			Ashots = Vector2(1,1)
+			Ashots = Vector2(2,3)
 			split = true
 			delay = .75
-		attack_timer.start(randf_range(reload.x,reload.y))
+			b_scale = 2
+			b_speed = 1
 		shoot()
 	
 	if velocity.length() < 2:
@@ -176,6 +185,8 @@ func spawn_bullet(angle):
 	var eb = enemy_bullet.instantiate()
 	get_parent().get_parent().add_child(eb)
 	var direction = global_position - player.global_position
+	eb.scale_factor = b_scale
+	eb.speed *= b_speed
 	if attack_type == "Even":
 		eb.rotation_degrees = angle + gun.rotation_degrees
 	else:
@@ -231,7 +242,6 @@ func _on_nav_timer_timeout():
 				velocity = Vector2.ZERO
 		RUN:
 			target_position = global_position * 2 - player.global_position
-	print(state)
 	nav_agent.target_position = target_position
 
 
@@ -249,8 +259,9 @@ func _on_idle_timer_timeout():
 func _on_collision_damage_area_entered(area):
 	if area.is_in_group("Player_hitbox"):
 		if player.dash.is_dashing() == false:
-			player.current_health -= damage
+			player.current_health -= 1
 			player.hit = true
+
 
 func update_bar():
 	$CanvasLayer/Boss_bar.value = health

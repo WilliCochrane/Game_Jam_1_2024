@@ -471,7 +471,7 @@ approach_dist = 300.0
 run_dist = 50.0
 gold_drop = Vector2(100, 100)
 move_speed = 50.0
-health = 420.0
+health = 1000.0
 damage = 1.0
 reload = Vector2(3, 4)
 flip_h = true
@@ -540,6 +540,7 @@ libraries = {
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Boss_bar" type="TextureProgressBar" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -551,7 +552,7 @@ offset_right = 150.0
 offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 0
-max_value = 420.0
+max_value = 1000.0
 value = 80.0
 nine_patch_stretch = true
 stretch_margin_left = 4
@@ -571,7 +572,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-max_value = 420.0
+max_value = 1000.0
 value = 90.0
 nine_patch_stretch = true
 stretch_margin_left = 3

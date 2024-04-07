@@ -10,11 +10,13 @@ var is_open : bool = false
 func _ready():
 	u_sure.visible = false
 
+
 func open():
 	get_tree().paused = true
 	visible = true
 	is_open = true
 	opened.emit()
+
 
 func close():
 	get_tree().paused = false
@@ -37,3 +39,7 @@ func _on_yes_pressed():
 
 func _on_no_pressed():
 	u_sure.visible = false
+
+
+func _on_credits_pressed():
+	get_parent().credits.open()

@@ -25,8 +25,8 @@ func open():
 func close():
 	visible = false
 	is_open = false
-	closed.emit()
 	get_tree().paused = false
+	closed.emit()
 
 
 func _on_shop_shop_closed():
@@ -49,3 +49,14 @@ func _on_resume_pressed():
 func _on_minimap_slider_value_changed(value):
 	minimap.modulate.a = value/100
 	minimap.get_child(0).modulate.a = value/100
+
+
+func _on_check_box_toggled(toggled_on):
+	if toggled_on:
+		for i in get_parent().get_parent().get_children():
+			if i.is_in_group("Shadow"):
+				i.shadow_enabled = false
+	else:
+		for i in get_parent().get_parent().get_children():
+			if i.is_in_group("Shadow"):
+				i.shadow_enabled = true

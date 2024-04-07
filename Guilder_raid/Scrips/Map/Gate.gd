@@ -9,10 +9,6 @@ var first_update : bool = true
 var side_facing = false
 
 
-func _ready():
-	get_parent().connect("clear_floor",on_clear_floor)
-
-
 func _process(_delta):
 	if first_update == true:
 		if side_facing == true:
@@ -35,10 +31,6 @@ func _process(_delta):
 		else:
 			anim_player.play("x_facing_close")
 		open_animation_finished = false
-
-
-func on_clear_floor():
-	queue_free()
 
 
 func _on_animation_player_animation_finished(anim_name):

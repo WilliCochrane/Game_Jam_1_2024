@@ -58,6 +58,8 @@ func _physics_process(_delta):
 		$Laser.rotation = b_rotation
 		$Laser.position = global_position
 		$Laser.offset.x = 60 + $Muzzle.position.x
+	else:
+		$Laser.visible = false
 
 
 func _on_player_shoot():
@@ -65,7 +67,7 @@ func _on_player_shoot():
 		if get_parent().gold > 0 or get_parent().current_mana == get_parent().max_mana:
 			shooting = true
 			if can_shoot == true && colliding == false:
-				cooldown_timer.start()
+				cooldown_timer.start(1/fire_rate)
 				can_shoot = false
 				emit_signal("mana_used")
 				if randi_range(0,100) <= crit_chance:
@@ -82,7 +84,7 @@ func _on_player_shoot():
 	elif get_parent().current_mana > 0:
 		shooting = true
 		if can_shoot == true && colliding == false:
-			cooldown_timer.start()
+			cooldown_timer.start(1/fire_rate)
 			can_shoot = false
 			emit_signal("mana_used")
 			if randi_range(0,100) <= crit_chance:
