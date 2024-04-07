@@ -45,7 +45,7 @@ var dash_speed : float = 300
 var max_health : float = 5
 var max_dashes : float = 3
 var max_mana : float = 150
-var gold : int = 1000
+var gold : int = 0
 
 var mana_usage_bar_catchup : bool = false
 var mana_regen_speed : float = .25
@@ -121,6 +121,9 @@ func _physics_process(delta):
 	if change_pitch:
 		$Sounds/footsteps.pitch_scale = 1 + randf_range(-1,1)
 		change_pitch = false
+	
+	if get_parent().level == 4:
+		$Sounds/Music.playing = false
 	
 	bar_management()
 	weapon_rotate_to_mouse(get_global_mouse_position(),delta)
@@ -383,3 +386,7 @@ func _on_dungeon_clear_floor():
 		$Dust.color = Color(.53,.89,.45)
 	elif get_parent().level == 3:
 		$Dust.color = Color(.78,.78,.78)
+
+
+func _on_audio_stream_player_finished():
+	$Sounds/Music.playing = true

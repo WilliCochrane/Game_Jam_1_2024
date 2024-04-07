@@ -29,8 +29,9 @@ top_level = true
 layout_mode = 0
 offset_right = 74.0
 offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(0.435294, 0.741176, 0.439216, 1)
-theme_override_colors/font_hover_color = Color(0.639216, 0.639216, 0.639216, 1)
+theme_override_colors/font_hover_color = Color(0.63648, 0.63648, 0.63648, 1)
 theme_override_fonts/font = ExtResource("2_gk5bf")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_hpwt8")
@@ -153,9 +154,11 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_gk5bf")
 theme_override_font_sizes/font_size = 16
-text = "William Cochrane
-Jayden Lim
-Nicky Parker"
+text = "Robbie de Groot-Tsuji
+William Cochrane
+Nicky Parker
+Benson Lee
+Jayden Lim"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="Return" to="." method="_on_return_pressed"]

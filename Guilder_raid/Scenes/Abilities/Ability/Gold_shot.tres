@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_dd0lc")
 ability_name = "Money shot"
-description = "Shooting your gold gives you a 2x damage boost"
+description = "You shoot money now 2x damage"
 texture = ExtResource("2_xcgcf")
 unique = true
 rarity = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=35 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Resource" uid="uid://bq4oofxg3pous" path="res://Scenes/Abilities/Ability_inventory.tres" id="2_o8fdp"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://oohfcgut53a" path="res://Assets/UI/sprint_bar_filler.png" id="13_dtjdo"]
 [ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 [ext_resource type="Texture2D" uid="uid://dh3qy7jaxjh5e" path="res://Assets/UI/dash_icon.png" id="14_yvwd1"]
+[ext_resource type="AudioStream" uid="uid://cyf7jiwcqeqqo" path="res://audio/Level music/Green_Gobby_Stobby.wav" id="19_nuylb"]
 
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001
@@ -552,6 +553,11 @@ shape = SubResource("CircleShape2D_epq4t")
 [node name="footsteps" type="AudioStreamPlayer" parent="Sounds"]
 volume_db = -80.0
 
+[node name="Music" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("19_nuylb")
+volume_db = 10.0
+autoplay = true
+
 [node name="Dust" type="CPUParticles2D" parent="."]
 z_index = 10
 position = Vector2(0, -260)
@@ -579,3 +585,4 @@ color_ramp = SubResource("Gradient_6ufnj")
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
 [connection signal="timeout" from="Dash_regen" to="." method="_on_dash_regen_timeout"]
 [connection signal="finished" from="Sounds/footsteps" to="." method="_on_footsteps_finished"]
+[connection signal="finished" from="Sounds/Music" to="." method="_on_audio_stream_player_finished"]

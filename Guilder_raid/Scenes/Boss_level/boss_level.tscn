@@ -466,6 +466,8 @@ shape = SubResource("RectangleShape2D_3bsid")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_cg1q0")
+volume_db = 10.0
+stream_paused = true
 
 [node name="Gate" parent="." instance=ExtResource("5_nx421")]
 position = Vector2(-16, -929)
