@@ -431,6 +431,7 @@ size = Vector2(98, 20)
 script = ExtResource("1_6tmdf")
 
 [node name="TileMap" type="TileMap" parent="." groups=["navigation"]]
+light_mask = 33
 y_sort_enabled = true
 tile_set = SubResource("TileSet_jy8t3")
 format = 2
@@ -467,7 +468,6 @@ shape = SubResource("RectangleShape2D_3bsid")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_cg1q0")
 volume_db = 10.0
-stream_paused = true
 
 [node name="Gate" parent="." instance=ExtResource("5_nx421")]
 position = Vector2(-16, -929)

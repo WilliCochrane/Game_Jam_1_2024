@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dx328x5es88mf"]
+[gd_scene load_steps=9 format=3 uid="uid://b1ptp3jujfcee"]
 
 [ext_resource type="Script" path="res://Scenes/ui/credits.gd" id="1_wsj11"]
 [ext_resource type="FontFile" uid="uid://ejil0kwiqa3l" path="res://Assets/UI/m5x7.ttf" id="2_gk5bf"]
@@ -140,7 +140,8 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_gk5bf")
 theme_override_font_sizes/font_size = 16
-text = "Jayden Lim"
+text = "Jayden Lim
+Ethan Zhao"
 horizontal_alignment = 1
 
 [node name="Label11" type="Label" parent="VBoxContainer"]

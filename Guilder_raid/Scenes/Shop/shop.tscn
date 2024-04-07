@@ -16,7 +16,7 @@
 [ext_resource type="Resource" uid="uid://b1lr4d4guac6g" path="res://Scenes/Abilities/Ability/Laser_pointer.tres" id="10_tddpc"]
 [ext_resource type="Resource" uid="uid://btb6irmyuhh81" path="res://Scenes/Abilities/Ability/Faster_receiver.tres" id="11_gsxgc"]
 [ext_resource type="Resource" uid="uid://duvhodpno2ef0" path="res://Scenes/Abilities/Ability/Belt_fed.tres" id="12_2nfs0"]
-[ext_resource type="Resource" uid="uid://cvexgwyw7hwud" path="res://Scenes/Abilities/Ability/Scope.tres" id="13_03bm0"]
+[ext_resource type="Resource" path="res://Scenes/Abilities/Ability/Scope.tres" id="13_03bm0"]
 [ext_resource type="Resource" uid="uid://cwxsnmqpqfgjy" path="res://Scenes/Abilities/Ability/Metal_jacket.tres" id="15_kwkym"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_yp7al"]
