@@ -23,6 +23,13 @@ signal clear_floor
 @onready var treasure : StaticBody2D = $Treasure
 @onready var minimap : TileMap = $Minimap/Container/MiniMap
 @onready var boss_lvl : PackedScene = preload("res://Scenes/Boss_level/boss_level.tscn")
+@onready var pause_menu : Control = $Menus/Pause_menu
+@onready var start_menu : Control = $Menus/Start_menu
+@onready var credits : Control = $Menus/Credits
+@onready var music : AudioStreamPlayer = $Music
+
+@onready var lvl1_music = preload("res://audio/Level music/Green_Gobby_Stobby.wav")
+@onready var lvl2_music = preload("res://audio/Level music/ZHAO_Ethan_Ambience_and_Dance_-_First_Draft.mp3")
 
 
 var gates_up : bool = false
@@ -33,23 +40,26 @@ var level : int = 1
 var map_wrap : Array[Vector2i]
 var map_void : Array[Vector2i]
 var map_tile : Array[Vector2i]
+var shadows : bool = true
 
 
 func _ready():
 	tile_map.clear()
-	load_map()
 
 func _physics_process(_delta):
 	minimap.position = Vector2(-player.global_position.x/16+64,-player.global_position.y/16+64)
 
 
 func load_map():
+	minimap.clear()
+	tile_map.clear()
 	var rng = RandomNumberGenerator.new()
 	rng.randomize()
 	dungeon = dungeon_generation.generate(rng.randf_range(-100,100))
 	map_tile = []
 	map_void = []
 	map_wrap = []
+	shadows = pause_menu.shadows
 	
 	var cdor_x_st = tile_map.tile_set.get_pattern(0)
 	var cdor_x_md = tile_map.tile_set.get_pattern(1)
@@ -63,27 +73,31 @@ func load_map():
 	if dungeon_floor == 4:
 		level += 1
 		dungeon_floor = 1
-		if level == 4 && dungeon_floor == 1:
-			pass
-		elif level == 4 && dungeon_floor == 2:
-			pass
 	
 	if level == 1:
 		$CanvasModulate.color = Color(.1,.1,.1)
+		$Music.stream = lvl1_music
+		$Music.playing = true
 	if level == 2:
 		$CanvasModulate.color = Color(0.25,0.25,0.25)
+		$Music.stream = lvl2_music
+		$Music.playing = true
 	if level == 3:
-		pass
+		$CanvasModulate.color = Color(.1,.1,.1)
+		$Music.stream = lvl1_music
+		$Music.playing = true
 	
 	for child in get_children():
 		if child.is_in_group("clear"):
 			child.queue_free()
 	
 	if level == 4:
-		$CanvasModulate.color = Color(.1,.1,.1)
-		var bl = boss_lvl.instantiate()
-		add_child(bl)
-		minimap.visible = false
+		if dungeon_floor == 1:
+			$Music.playing = false
+			$CanvasModulate.color = Color(.1,.1,.1)
+			var bl = boss_lvl.instantiate()
+			add_child(bl)
+			minimap.visible = false
 	else:
 		minimap.visible = true
 	
@@ -109,7 +123,7 @@ func load_map():
 				rl.position = Vector2((34*i.x+16)*16,(26*i.y+13)*16)
 				rl.scale = Vector2(16,16)
 			else:
-				var rooms = tile_map.tile_set.get_pattern(rng.randi_range(7,19))
+				var rooms = tile_map.tile_set.get_pattern(rng.randi_range(7,21))
 				room_size = Vector2(-5,-6)
 				tile_map.set_pattern(0, Vector2(34, 26)*i, rooms)
 				for l in range(0,35):
@@ -180,6 +194,7 @@ func load_map():
 			if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
 				var tl = torch_light.instantiate()
 				add_child(tl)
+				tl.shadow_enabled = shadows
 				tl.position = Vector2(i.x*16+8,i.y*16+6)  
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(1,6))
@@ -304,18 +319,19 @@ func _on_enemies_cleared():
 
 func _on_ladder_next_floor():
 	emit_signal("clear_floor")
-	tile_map.clear()
-	minimap.clear()
-	load_map()
-	shop.open()
-	treasure.reset()
+	if level != 4 && dungeon_floor != 2:
+		shop.open()
+		tile_map.clear()
+		minimap.clear()
+		load_map()
+		treasure.reset()
+	else:
+		player.win = true
 
 func _on_player_restart_game():
 	emit_signal("clear_floor")
 	tile_map.clear()
 	minimap.clear()
-	dungeon_floor = 0
-	level = 1
 	load_map()
 	treasure.reset()
 	
@@ -327,3 +343,7 @@ func _on_timer_timeout():
 
 func _on_pause_menu_closed():
 	get_tree().paused = false
+
+
+func _on_music_finished():
+	$Music.playing = true

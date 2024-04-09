@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://c6rheyijs8n4l"]
+[gd_scene load_steps=68 format=3 uid="uid://c6rheyijs8n4l"]
 
 [ext_resource type="Script" path="res://Scenes/weapon/weapon.gd" id="1_6mjeb"]
 [ext_resource type="PackedScene" uid="uid://bjwsafueqhnss" path="res://Scenes/Bullet/bullet.tscn" id="2_nq1jh"]
@@ -44,6 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://bpp6pjr5rgsjl" path="res://Assets/Effects/Laser_pointer.png" id="40_a4qrn"]
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Slimer.gd" id="41_kp4hx"]
 [ext_resource type="Script" path="res://Scenes/weapon/weapons/Toilet.gd" id="42_uipah"]
+[ext_resource type="AudioStream" uid="uid://d4c7wbcdnpbmi" path="res://audio/Weapon/gunshot.wav" id="45_sxgo1"]
 
 [sub_resource type="Animation" id="Animation_q5s8p"]
 resource_name = "Auto_shotgun"
@@ -1413,7 +1414,7 @@ _data = {
 "Trench_gun": SubResource("Animation_n4ojb")
 }
 
-[node name="Weapon" type="CharacterBody2D" node_paths=PackedStringArray("cooldown_timer", "weapon_machine", "raycast", "shot_interval") groups=["Weapon"]]
+[node name="Weapon" type="CharacterBody2D" node_paths=PackedStringArray("cooldown_timer", "weapon_machine", "raycast", "shot_interval", "sound") groups=["Weapon"]]
 z_index = 1
 y_sort_enabled = true
 script = ExtResource("1_6mjeb")
@@ -1422,11 +1423,12 @@ cooldown_timer = NodePath("Cooldown")
 weapon_machine = NodePath("WeaponMachine")
 raycast = NodePath("RayCast2D")
 shot_interval = NodePath("Shot_interval")
+sound = NodePath("Gunshot")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(4, 0)
-texture = ExtResource("3_v8a40")
-offset = Vector2(0, -1)
+texture = ExtResource("3_5fvpd")
+offset = Vector2(0, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -1518,11 +1520,11 @@ script = ExtResource("42_uipah")
 anim_player = NodePath("../../AnimationPlayer")
 
 [node name="Muzzle" type="Marker2D" parent="."]
-position = Vector2(9, 0)
+position = Vector2(16, 0)
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-3, 0)
-target_position = Vector2(20, 0)
+target_position = Vector2(24, 0)
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.1
@@ -1541,6 +1543,10 @@ range_item_cull_mask = 32
 shadow_enabled = true
 texture = ExtResource("40_a4qrn")
 offset = Vector2(64, 0)
+
+[node name="Gunshot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("45_sxgo1")
+max_polyphony = 100
 
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
 [connection signal="timeout" from="Shot_interval" to="." method="_on_shot_interval_timeout"]

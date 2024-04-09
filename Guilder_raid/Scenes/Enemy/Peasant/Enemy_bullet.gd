@@ -19,6 +19,7 @@ func _ready():
 	
 func _physics_process(delta):
 	if ff:
+		visible = true
 		ff = false
 	else:
 		$Area2D.monitoring = true
@@ -37,6 +38,7 @@ func _on_area_2d_area_entered(area):
 	if area.is_in_group("Player_hitbox"):
 		if player.dash.is_dashing() == false:
 			player.current_health -= damage
+			player.damage_taken += damage
 			player.hit = true
 			queue_free()
 
@@ -54,3 +56,11 @@ func spawn_bullet(angle):
 	eb.rotation_degrees = angle
 	eb.can_split = false
 	eb.global_position = global_position
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered():
+	$Sprite2D.visible = true
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	$Sprite2D.visible = false

@@ -47,6 +47,7 @@ func _on_lock_on_timeout():
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("Player_hitbox"):
 		player.gold += 1
+		player.gold_collected += 1
 		queue_free()
 
 

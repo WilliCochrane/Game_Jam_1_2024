@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_wakjb")
 ability_name = "Bigger bullets"
-description = "+ 20% bullet size"
+description = "+ 40% bullet size"
 texture = ExtResource("2_lrv22")
-unnique = false
+unique = false
 rarity = 0
 cost = 30

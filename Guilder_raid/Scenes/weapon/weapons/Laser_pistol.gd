@@ -13,6 +13,7 @@ func _ready():
 	bullet_spread = 3
 	piercing = 1
 	txture = "res://Assets/Weapons/LaserPistol.png"
+	sound = "res://audio/Weapon/Laser.wav"
 
 
 func Update(_delta):

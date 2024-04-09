@@ -24,6 +24,7 @@ var explotion_damage : float
 var stop : bool = false
 var bounce
 var ff : bool = true
+var particles : bool = true
 
 var v : Vector2
 
@@ -62,10 +63,6 @@ func _physics_process(_delta):
 		scale = Vector2(size,size)/3
 		z_index = 1
 		velocity = v
-	if fire:
-		$Fire_trail.emitting = true
-	else:
-		$Fire_trail.emitting = false
 	if crit:
 		modulate.r = 5
 		modulate.b = .2
@@ -77,6 +74,7 @@ func _physics_process(_delta):
 		expd = false
 	if stop:
 		queue_free()
+	
 	var collision_info = move_and_collide(velocity)
 	if collision_info:
 		v = velocity.bounce(collision_info.get_normal())
@@ -89,17 +87,6 @@ func _physics_process(_delta):
 			bounces -= 1
 			if explotion_size > 0:
 				explode()
-
-
-func _on_area_2d_body_entered(body):
-	if !body.is_in_group("Player"):
-		if explotion_size > 0 && bounces == 0:
-			expd = true
-			stop = true
-		else:
-			if !body.is_in_group("Enemy"):
-				#queue_free()
-				pass
 
 
 func explode():
@@ -126,14 +113,25 @@ func _on_area_2d_area_entered(area):
 				expd = true
 			else:
 				area.get_parent().health -= damage
+				weapon.get_parent().damage_done += damage
 				area.get_parent().hit = true
-				splat()
+				if particles:
+					splat()
 		else:
 			if explotion_size > 0:
 				expd = true
 				stop = true
 			else:
 				area.get_parent().health -= damage
+				weapon.get_parent().damage_done += damage
 				area.get_parent().hit = true
-				splat()
+				if particles:
+					splat()
 				queue_free()
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered():
+	$Sprite2D.visible = true
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	$Sprite2D.visible = true

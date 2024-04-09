@@ -7,9 +7,11 @@ extends CanvasLayer
 
 func _ready(): 
 	start_menu.open()
+	start_menu.modulate.a = 1
 	pause_menu.close()
 	shop.close()
 	credits.close()
+	credits.modulate.a = 0
 	get_tree().paused = true
 
 
@@ -27,3 +29,7 @@ func _input(event):
 func _on_timer_timeout():
 	if shop.is_open:
 		get_tree().paused = true
+
+
+func _on_you_win_closed():
+	credits.open()

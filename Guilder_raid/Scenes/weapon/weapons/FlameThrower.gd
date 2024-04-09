@@ -14,6 +14,7 @@ func _ready():
 	bullet_speed = 4
 	bullet_spread = 1.5
 	txture = "res://Assets/Weapons/FlameThrower.png"
+	sound = "res://audio/Weapon/flamethrower.wav"
 
 
 func Update(_delta):

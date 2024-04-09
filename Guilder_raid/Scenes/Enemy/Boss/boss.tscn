@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dr5x17poy4eyt"]
+[gd_scene load_steps=23 format=3 uid="uid://dr5x17poy4eyt"]
 
 [ext_resource type="Texture2D" uid="uid://x5tha10n7wx4" path="res://Assets/UI/progress_bar_wrap.png.png" id="1_2wrjp"]
 [ext_resource type="Script" path="res://Scenes/Enemy/Boss/boss.gd" id="1_420et"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dy1f3lvtumltt" path="res://Assets/UI/progress_bar_filler.png" id="2_yrrd4"]
 [ext_resource type="Texture2D" uid="uid://dtirwq5q5w7g1" path="res://Assets/Weapons/MiniGun.png" id="4_tloj4"]
 [ext_resource type="Texture2D" uid="uid://2pappgmugtue" path="res://Assets/Effects/square.png" id="8_l8mwi"]
+[ext_resource type="AudioStream" uid="uid://d4c7wbcdnpbmi" path="res://audio/Weapon/gunshot.wav" id="9_22r0a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hxqab"]
 size = Vector2(16, 10)
@@ -564,7 +565,7 @@ texture_progress = ExtResource("2_yrrd4")
 tint_over = Color(0.737255, 0.345098, 0.00392157, 1)
 tint_progress = Color(0.87451, 0.0941176, 0.0784314, 1)
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="CanvasLayer/Boss_bar"]
+[node name="damage_bar" type="TextureProgressBar" parent="CanvasLayer/Boss_bar"]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -609,6 +610,8 @@ one_shot = true
 wait_time = 0.5
 autostart = true
 
+[node name="damageTimer" type="Timer" parent="."]
+
 [node name="Hit" type="PointLight2D" parent="."]
 light_mask = 512
 position = Vector2(-1.5, -6)
@@ -618,7 +621,11 @@ energy = 0.0
 range_item_cull_mask = 512
 texture = ExtResource("8_l8mwi")
 
+[node name="Gunshot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_22r0a")
+
 [connection signal="timeout" from="idleTimer" to="." method="_on_idle_timer_timeout"]
 [connection signal="timeout" from="attackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="delayTimer" to="." method="_on_delay_timer_timeout"]
 [connection signal="timeout" from="navTimer" to="." method="_on_nav_timer_timeout"]
+[connection signal="timeout" from="damageTimer" to="." method="_on_damage_timer_timeout"]

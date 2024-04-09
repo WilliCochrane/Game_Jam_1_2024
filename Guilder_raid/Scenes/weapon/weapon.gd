@@ -7,6 +7,7 @@ signal mana_used
 @export var weapon_machine : Node
 @export var raycast : RayCast2D
 @export var shot_interval : Timer
+@export var sound : AudioStreamPlayer
 
 var b_rotation : float
 var crit : bool
@@ -34,6 +35,8 @@ var projectiles_left : int = 0
 var shooting : bool = false
 var can_shoot : bool = true
 var colliding : bool
+
+var particles : bool = true
 
 
 func _ready():
@@ -111,6 +114,8 @@ func shoot_projectiles():
 
 
 func spawn_bullet():
+	sound.stream = load(weapon_machine.current_weapon.sound)
+	sound.play()
 	var b = bullet.instantiate()
 	owner.owner.add_child(b)
 	b.anim_player.play(bullet_type)
@@ -118,6 +123,8 @@ func spawn_bullet():
 	b.sprite.scale.y *= $Sprite2D.scale.y
 	b.rotation = b_rotation
 	b.crit = crit
+	b.particles = particles
+	get_parent().bullets_shot += 1
 
 
 func reset():

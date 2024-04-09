@@ -5,6 +5,8 @@ signal player_damage
 
 @onready var enemy_bullet : PackedScene = preload("res://Scenes/Enemy/Peasant/enemy_bullet.tscn")
 @onready var gold : PackedScene = preload("res://Scenes/Treasure/gold.tscn")
+@onready var gunshot = preload("res://audio/Weapon/gunshot.wav")
+@onready var die_sound = preload("res://audio/Enemy/human_die.wav")
 @onready var alt_animation : AnimationPlayer = $hit_AnimationPlayer
 @onready var nav_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
@@ -30,8 +32,8 @@ signal player_damage
 @export var delay : float
 @export var spread : float
 @export var shooot : bool = false
+@export var spawn_value : float
 
-var spawn_value : float
 var can_move : bool
 var can_attack : bool = false
 var target_position : Vector2
@@ -42,6 +44,7 @@ var random_num : float
 var hit : bool = false
 var wander : bool
 var spawn : bool
+var gold_spawned : bool = false
 
 enum {
 	APROACH,
@@ -63,9 +66,10 @@ func _ready():
 		wander = true
 	else:
 		wander = false
-	y_sort_enabled = false
-	z_index = 2
-	
+	y_sort_enabled = true
+	z_index = 1
+	$Hit.energy = 0
+	$sound.pitch_scale = randf_range(.75,1.4)
 
 
 func _physics_process(delta: float) -> void:
@@ -90,18 +94,19 @@ func _physics_process(delta: float) -> void:
 		shooot = false
 	
 	if health <= 0:
-		if spawn_value <= 0:
+		if !gold_spawned:
 			die()
+			$sound.stream = die_sound
+			$sound.play()
+			gold_spawned = true
+		spawn_value += .02
 		velocity = Vector2.ZERO
-		spawn_value += .05
 		sprite.material.set_shader_parameter("progress", spawn_value)
 		gun.material.set_shader_parameter("progress", spawn_value)
 		$collision_damage.monitoring = false
 		$Area2D.monitorable = false
 		can_attack = false
-		if spawn_value >= 1:
-			queue_free()
-		
+	
 	if can_attack == true:
 		if !raycast.is_colliding():
 			shoot()
@@ -157,6 +162,8 @@ func round_to_dec(num, digit):
 
 
 func spawn_bullet(angle):
+	$sound.stream = gunshot
+	$sound.play()
 	var eb = enemy_bullet.instantiate()
 	get_parent().get_parent().add_child(eb)
 	var direction = global_position - player.global_position
@@ -192,6 +199,7 @@ func shoot():
 
 func die():
 	get_parent().alive_enemies -= 1
+	player.enemies_killed += 1
 	for i in range(0,randi_range(gold_drop.x,gold_drop.y)):
 		var gd = gold.instantiate()
 		get_parent().get_parent().add_child(gd)
@@ -247,9 +255,14 @@ func _on_collision_damage_area_entered(area):
 
 
 func _on_shot_delay_timeout():
-	if shots_left > 0:
+	if shots_left > 0 && !gold_spawned:
 		spawn_bullet(0)
 		shots_left -= 1
 		$Shot_delay.start(delay)
 	else:
 		attack_timer.start(randf_range(reload.x,reload.y))
+
+
+func _on_sound_finished():
+	if gold_spawned:
+		queue_free()

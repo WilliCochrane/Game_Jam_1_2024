@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c21u3b11dd227"]
+[gd_scene load_steps=11 format=3 uid="uid://c21u3b11dd227"]
 
 [ext_resource type="Script" path="res://Scenes/ui/start_menu.gd" id="1_hq4rm"]
 [ext_resource type="FontFile" uid="uid://ejil0kwiqa3l" path="res://Assets/UI/m5x7.ttf" id="2_3ryvb"]
@@ -14,35 +14,11 @@ fill_from = Vector2(0.4, 1)
 fill_to = Vector2(0.5, 0)
 metadata/_snap_enabled = true
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7v7eo"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sy8oj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oc2hi"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wqvku"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k4yo6"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_35pod"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tl6tr"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lxvol"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5vmsn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cis1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jjx17"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ox4qv"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5v08u"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t675q"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a4iu1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ycybs"]
 
@@ -86,7 +62,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 5
 
 [node name="Start" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -94,11 +70,17 @@ theme_override_colors/font_pressed_color = Color(0.435294, 0.741176, 0.439216, 1
 theme_override_colors/font_hover_color = Color(0.639216, 0.639216, 0.639216, 1)
 theme_override_fonts/font = ExtResource("2_3ryvb")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxEmpty_7v7eo")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_sy8oj")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_oc2hi")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wqvku")
 text = "Start"
+
+[node name="Boss_fight" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0.435294, 0.741176, 0.439216, 1)
+theme_override_colors/font_hover_color = Color(0.639216, 0.639216, 0.639216, 1)
+theme_override_fonts/font = ExtResource("2_3ryvb")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wqvku")
+text = "Boss battle"
 
 [node name="Credits" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -106,9 +88,6 @@ theme_override_colors/font_pressed_color = Color(0.435294, 0.741176, 0.439216, 1
 theme_override_colors/font_hover_color = Color(0.639216, 0.639216, 0.639216, 1)
 theme_override_fonts/font = ExtResource("2_3ryvb")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxEmpty_7v7eo")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_sy8oj")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_oc2hi")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wqvku")
 text = "Credits"
 
@@ -118,9 +97,6 @@ theme_override_colors/font_pressed_color = Color(0.643137, 0.203922, 0.203922, 1
 theme_override_colors/font_hover_color = Color(0.639216, 0.639216, 0.639216, 1)
 theme_override_fonts/font = ExtResource("2_3ryvb")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxEmpty_k4yo6")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_35pod")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_tl6tr")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_lxvol")
 text = "Quit"
 
@@ -132,10 +108,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -53.0
-offset_right = 50.0
-offset_bottom = 50.0
+offset_left = -65.0
+offset_top = -77.0
+offset_right = 65.0
+offset_bottom = 77.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_51jo0")
@@ -173,34 +149,32 @@ offset_right = 25.0
 offset_bottom = -13.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_constants/separation = 10
 
 [node name="Yes" type="Button" parent="u_sure?/VBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(0.47451, 0.47451, 0.47451, 1)
 theme_override_colors/font_hover_color = Color(0.65098, 0.65098, 0.65098, 1)
 theme_override_fonts/font = ExtResource("2_3ryvb")
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxEmpty_5vmsn")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_5cis1")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_jjx17")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ox4qv")
 text = "Yes"
 
 [node name="No" type="Button" parent="u_sure?/VBoxContainer"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(0.47451, 0.47451, 0.47451, 1)
 theme_override_colors/font_hover_color = Color(0.65098, 0.65098, 0.65098, 1)
 theme_override_fonts/font = ExtResource("2_3ryvb")
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxEmpty_5v08u")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_t675q")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_a4iu1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ycybs")
 text = "No"
 
 [connection signal="pressed" from="VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Boss_fight" to="." method="_on_boss_fight_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="u_sure?/VBoxContainer/Yes" to="." method="_on_yes_pressed"]

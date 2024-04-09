@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d2mi006v0avas"]
+[gd_scene load_steps=22 format=3 uid="uid://d2mi006v0avas"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy/Peasant/enemy.gd" id="1_je01r"]
 [ext_resource type="Shader" path="res://Shaders/spawn.gdshader" id="2_m0ukp"]
@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://con7ukapqwiy6" path="res://Assets/Enemy/Peasant_idle.png" id="4_ajola"]
 [ext_resource type="Texture2D" uid="uid://qxn1k3r7wf5k" path="res://Assets/Enemy/Knight Pixel Art/Spritesheet/Hero-idle-Sheet.png" id="5_8ymu0"]
 [ext_resource type="Texture2D" uid="uid://tr62bj3li6jm" path="res://Assets/Weapons/Ak-47.png" id="6_qiyen"]
+[ext_resource type="AudioStream" uid="uid://wj6jbx6v42xb" path="res://audio/Enemy/human_die.wav" id="6_upke0"]
 [ext_resource type="Texture2D" uid="uid://2pappgmugtue" path="res://Assets/Effects/square.png" id="7_enmli"]
+[ext_resource type="AudioStream" uid="uid://d4c7wbcdnpbmi" path="res://audio/Weapon/gunshot.wav" id="9_t3l6a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8fwc"]
 resource_local_to_scene = true
@@ -201,6 +203,36 @@ _data = {
 "p_run": SubResource("Animation_win4v")
 }
 
+[sub_resource type="Animation" id="Animation_an52m"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:spawn_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("6_upke0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
 [sub_resource type="Animation" id="Animation_klfcq"]
 resource_name = "hit"
 length = 0.0666683
@@ -220,6 +252,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ge7c1"]
 _data = {
+"die": SubResource("Animation_an52m"),
 "hit": SubResource("Animation_klfcq")
 }
 
@@ -343,9 +376,11 @@ light_mask = 512
 position = Vector2(5.96046e-08, 1.5)
 scale = Vector2(0.375, 0.65625)
 color = Color(3, 0, 0, 1)
-energy = 0.0
 range_item_cull_mask = 512
 texture = ExtResource("7_enmli")
+
+[node name="sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_t3l6a")
 
 [connection signal="timeout" from="Nav_timer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="Attack_timer" to="." method="_on_attack_timer_timeout"]

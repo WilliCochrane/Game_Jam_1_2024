@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3p13rbn88ucs"]
+[gd_scene load_steps=18 format=3 uid="uid://b3p13rbn88ucs"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy/Peasant/enemy.gd" id="1_pghg8"]
 [ext_resource type="Shader" path="res://Shaders/spawn.gdshader" id="2_lglfr"]
 [ext_resource type="Texture2D" uid="uid://ctjgjxno2nq7j" path="res://Assets/Enemy/Slime/red-slime-spritesheet.png" id="3_scenq"]
+[ext_resource type="AudioStream" uid="uid://wj6jbx6v42xb" path="res://audio/Enemy/human_die.wav" id="4_gbf0d"]
 [ext_resource type="Texture2D" uid="uid://2pappgmugtue" path="res://Assets/Effects/square.png" id="16_i8t5t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8fwc"]
@@ -202,8 +203,39 @@ tracks/0/keys = {
 "values": [1.0, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_0ic5g"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:spawn_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_gbf0d")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ge7c1"]
 _data = {
+"die": SubResource("Animation_0ic5g"),
 "hit": SubResource("Animation_klfcq")
 }
 
@@ -317,9 +349,11 @@ light_mask = 512
 position = Vector2(1, -4)
 scale = Vector2(0.4375, 0.5)
 color = Color(3, 0, 0, 1)
-energy = 0.0
 range_item_cull_mask = 512
 texture = ExtResource("16_i8t5t")
+
+[node name="sound" type="AudioStreamPlayer2D" parent="."]
+pitch_scale = 1.4
 
 [connection signal="timeout" from="Nav_timer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="Attack_timer" to="." method="_on_attack_timer_timeout"]

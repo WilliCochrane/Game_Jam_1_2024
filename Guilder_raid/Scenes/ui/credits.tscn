@@ -89,7 +89,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.8, 0, 1)
 theme_override_fonts/font = ExtResource("2_gk5bf")
-text = "Interface"
+text = "Sound"
 horizontal_alignment = 1
 
 [node name="Label14" type="Label" parent="VBoxContainer"]
@@ -151,15 +151,26 @@ theme_override_fonts/font = ExtResource("2_gk5bf")
 text = "Play Testing"
 horizontal_alignment = 1
 
-[node name="Label12" type="Label" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label12" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_gk5bf")
 theme_override_font_sizes/font_size = 16
 text = "Robbie de Groot-Tsuji
 William Cochrane
-Nicky Parker
-Benson Lee
 Jayden Lim"
+horizontal_alignment = 1
+
+[node name="Label13" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_gk5bf")
+theme_override_font_sizes/font_size = 16
+text = "Nicky Parker
+Benson Lee
+Aaron Zheng"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="Return" to="." method="_on_return_pressed"]

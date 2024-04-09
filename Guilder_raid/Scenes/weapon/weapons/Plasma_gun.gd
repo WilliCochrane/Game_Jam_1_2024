@@ -15,6 +15,7 @@ func _ready():
 	explotion_size = 1.5
 	explotion_type = "Plasma"
 	txture = "res://Assets/Weapons/PlasmaBlaster.png"
+	sound = "res://audio/Weapon/Laser.wav"
 
 
 func Update(_delta):

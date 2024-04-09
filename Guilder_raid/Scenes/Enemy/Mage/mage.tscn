@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cknh7bpsakn48"]
+[gd_scene load_steps=31 format=3 uid="uid://cknh7bpsakn48"]
 
 [ext_resource type="Script" path="res://Scenes/Enemy/Peasant/enemy.gd" id="1_m1mju"]
 [ext_resource type="Shader" path="res://Shaders/spawn.gdshader" id="2_5k7qk"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bmkkv2xe15uem" path="res://Assets/Enemy/Mage/Run/Run6.png" id="14_8bupw"]
 [ext_resource type="Texture2D" uid="uid://bjoao34ohdxcj" path="res://Assets/Weapons/Blunderbuss.png" id="15_quehi"]
 [ext_resource type="Texture2D" uid="uid://2pappgmugtue" path="res://Assets/Effects/square.png" id="16_mu4a8"]
+[ext_resource type="AudioStream" uid="uid://wj6jbx6v42xb" path="res://audio/Enemy/human_die.wav" id="17_qh3kd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8fwc"]
 resource_local_to_scene = true
@@ -161,6 +162,21 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, 1.0]
 }
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("17_qh3kd")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
 
 [sub_resource type="Animation" id="Animation_klfcq"]
 resource_name = "hit"
@@ -225,7 +241,7 @@ light_mask = 513
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_r8fwc")
 position = Vector2(0, 1)
-texture = ExtResource("6_rd71b")
+texture = ExtResource("3_ffwtd")
 offset = Vector2(0, -5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -285,6 +301,8 @@ shape = SubResource("CapsuleShape2D_isxod")
 
 [node name="collision_damage" type="Area2D" parent="."]
 position = Vector2(1, -4)
+monitoring = false
+monitorable = false
 priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="collision_damage"]
@@ -298,11 +316,13 @@ collision_mask = 2
 
 [node name="Hit" type="PointLight2D" parent="."]
 light_mask = 512
-position = Vector2(29, -19)
-scale = Vector2(0.4375, 0.5)
+position = Vector2(1.66893e-06, -3)
+scale = Vector2(0.5, 0.5)
 color = Color(3, 0, 0, 1)
 range_item_cull_mask = 512
 texture = ExtResource("16_mu4a8")
+
+[node name="sound" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="timeout" from="Nav_timer" to="." method="_on_nav_timer_timeout"]
 [connection signal="timeout" from="Attack_timer" to="." method="_on_attack_timer_timeout"]

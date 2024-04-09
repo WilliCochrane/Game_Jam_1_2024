@@ -14,6 +14,7 @@ signal player_damage
 @onready var delay_timer : Timer = $delayTimer
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var gun : Sprite2D = $MiniGun
+@onready var damaged_timer : Timer = $damageTimer
 
 @export var approach_dist : float
 @export var run_dist : float 
@@ -50,6 +51,9 @@ var split : bool = false
 var aproach : bool = false
 var b_scale : float
 var b_speed : float
+
+var damaged : float 
+var damadged_bar_catchup : bool = false
 
 enum {
 	APROACH,
@@ -132,8 +136,8 @@ func _physics_process(delta: float) -> void:
 			Ashots = Vector2(2,3)
 			split = true
 			delay = .75
-			b_scale = 2
-			b_speed = 1
+			b_scale = 1.5
+			b_speed = .75
 		shoot()
 	
 	if velocity.length() < 2:
@@ -182,10 +186,11 @@ func round_to_dec(num, digit):
 
 
 func spawn_bullet(angle):
+	$Gunshot.play()
 	var eb = enemy_bullet.instantiate()
 	get_parent().get_parent().add_child(eb)
 	var direction = global_position - player.global_position
-	eb.scale_factor = b_scale
+	eb.scale *= b_scale
 	eb.speed *= b_speed
 	if attack_type == "Even":
 		eb.rotation_degrees = angle + gun.rotation_degrees
@@ -265,6 +270,14 @@ func _on_collision_damage_area_entered(area):
 
 func update_bar():
 	$CanvasLayer/Boss_bar.value = health
+	if damaged <= health:
+		damaged = health
+		damadged_bar_catchup = false
+	elif damaged > health && !damadged_bar_catchup:
+		if damaged_timer.is_stopped():
+			damaged_timer.start(2)
+	elif damaged > health && damadged_bar_catchup == true:
+		damaged -= 2
 
 
 func _on_delay_timer_timeout():
@@ -282,3 +295,7 @@ func _on_delay_timer_timeout():
 	else:
 		attack_timer.start(randf_range(reload.x,reload.y))
 		aproach = false
+
+
+func _on_damage_timer_timeout():
+	pass # Replace with function body.

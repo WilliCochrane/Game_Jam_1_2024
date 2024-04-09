@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var boss : PackedScene = preload("res://Scenes/Enemy/Boss/boss.tscn")
-@onready var boss_music : AudioStreamPlayer = $AudioStreamPlayer
 @onready var music_start = preload("res://audio/Boss_music/Start.wav")
 @onready var music_mid = preload("res://audio/Boss_music/Middle.wav")
 
@@ -10,6 +9,7 @@ var gates_up : bool = false
 var spawn_boss : bool = false
 var boss_spawned : bool = false
 var alive_enemies : int
+var shadows : bool = true
 
 func _ready():
 	boss_killed = false
@@ -24,7 +24,6 @@ func _ready():
 
 func _process(_delta):
 	if boss_killed:
-		boss_music.volume_db -= .01
 		gates_up = false
 	if spawn_boss:
 		var b = boss.instantiate()
@@ -36,16 +35,31 @@ func _process(_delta):
 		gates_up = true
 	else:
 		gates_up = false
+	if get_parent().pause_menu.shadows:
+		if !shadows:
+			shadows = true
+			shadow()
+	else:
+		if shadows:
+			shadows = false
+			shadow()
+
+
+func shadow():
+	for i in $Lights.get_children():
+		if i.is_in_group("Shadow"):
+			i.shadow_enabled = shadows
 
 
 func _on_audio_stream_player_finished():
-	boss_music.stream = music_mid
-	boss_music.playing = true
+	get_parent().music.stream = music_mid
+	get_parent().music.playing = true
 
 
 func _on_music_start_body_entered(body):
 	if body.is_in_group("Player"):
-		boss_music.playing = true
+		if !get_parent().music.playing:
+			get_parent().music.play()
 
 
 func _on_door_close_body_entered(body):

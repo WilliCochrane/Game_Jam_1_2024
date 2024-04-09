@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cu5irw5yngrsi"]
+[gd_scene load_steps=37 format=3 uid="uid://cu5irw5yngrsi"]
 
 [ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_fqlgg"]
 [ext_resource type="Resource" uid="uid://bq4oofxg3pous" path="res://Scenes/Abilities/Ability_inventory.tres" id="2_o8fdp"]
@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://oohfcgut53a" path="res://Assets/UI/sprint_bar_filler.png" id="13_dtjdo"]
 [ext_resource type="PackedScene" uid="uid://dxyosoat6icc4" path="res://Scenes/Player/dash.tscn" id="14_gqmwi"]
 [ext_resource type="Texture2D" uid="uid://dh3qy7jaxjh5e" path="res://Assets/UI/dash_icon.png" id="14_yvwd1"]
-[ext_resource type="AudioStream" uid="uid://cyf7jiwcqeqqo" path="res://audio/Level music/Green_Gobby_Stobby.wav" id="19_nuylb"]
+[ext_resource type="AudioStream" uid="uid://dvyxkuimg0wsy" path="res://audio/player/sad trombone.mp3" id="19_i0iom"]
 
 [sub_resource type="Animation" id="Animation_626wt"]
 length = 0.001
@@ -235,6 +235,12 @@ _data = {
 "RESET": SubResource("Animation_l1s83")
 }
 
+[sub_resource type="Gradient" id="Gradient_hdlee"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_071r5"]
+gradient = SubResource("Gradient_hdlee")
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3oqcv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h7owo"]
@@ -244,7 +250,7 @@ _data = {
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ebal1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7im"]
-size = Vector2(12, 26)
+size = Vector2(11, 14.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_epq4t"]
 radius = 52.0096
@@ -471,38 +477,171 @@ position = Vector2(320, 180)
 scale = Vector2(0.333, 0.333)
 texture = ExtResource("8_a5rkc")
 
-[node name="You_died" type="Label" parent="ui"]
-visible = false
+[node name="You_died" type="TextureRect" parent="ui"]
+self_modulate = Color(0.0901961, 0.0901961, 0.0901961, 0.705882)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_071r5")
+
+[node name="You_died" type="TextureRect" parent="ui/You_died"]
+self_modulate = Color(0.0901961, 0.0901961, 0.0901961, 0.705882)
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -34.5
-offset_top = -11.5
-offset_right = 34.5
-offset_bottom = 11.5
+offset_left = -155.0
+offset_top = -140.0
+offset_right = 155.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = SubResource("GradientTexture1D_071r5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/You_died/You_died"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.0
+offset_top = -20.0
+offset_right = 39.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="You_x" type="Label" parent="ui/You_died/You_died/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("6_jyu7f")
-theme_override_font_sizes/font_size = 64
-text = "You Died
-Git gud"
+theme_override_font_sizes/font_size = 32
+text = "You died"
 horizontal_alignment = 1
 
-[node name="restart" type="Button" parent="ui/You_died"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -39.0
-offset_top = -5.5
-offset_right = 39.0
-offset_bottom = 20.5
-grow_horizontal = 2
-grow_vertical = 0
+[node name="HBoxContainer" type="HBoxContainer" parent="ui/You_died/You_died/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MU" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Mana used
+"
+
+[node name="BS" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Bullets shot"
+
+[node name="DU" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Dashes used"
+
+[node name="DD" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Damage done"
+
+[node name="DT" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Damage taken"
+
+[node name="GC" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Gold collected
+"
+
+[node name="EK" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Enemies killed
+"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MU" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Mana used
+"
+
+[node name="BS" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Bullets shot"
+
+[node name="DU" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Dashes used"
+
+[node name="DD" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Damage done"
+
+[node name="DT" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Damage taken"
+
+[node name="GC" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Gold collected
+"
+
+[node name="EK" type="Label" parent="ui/You_died/You_died/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("6_jyu7f")
+theme_override_font_sizes/font_size = 32
+text = "Enemies killed
+"
+
+[node name="restart" type="Button" parent="ui/You_died/You_died/VBoxContainer"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("6_jyu7f")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3oqcv")
@@ -535,8 +674,7 @@ one_shot = true
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-visible = false
-position = Vector2(0, 1)
+position = Vector2(-0.5, 3.25)
 shape = SubResource("RectangleShape2D_2t7im")
 
 [node name="attraction_radius" type="Area2D" parent="." groups=["player_attract_radius"]]
@@ -555,10 +693,9 @@ shape = SubResource("CircleShape2D_epq4t")
 [node name="footsteps" type="AudioStreamPlayer" parent="Sounds"]
 volume_db = -80.0
 
-[node name="Music" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("19_nuylb")
+[node name="Death" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("19_i0iom")
 volume_db = 10.0
-autoplay = true
 
 [node name="Dust" type="CPUParticles2D" parent="."]
 z_index = 10
@@ -580,11 +717,10 @@ color_ramp = SubResource("Gradient_6ufnj")
 [connection signal="shoot" from="." to="Weapon" method="_on_player_shoot"]
 [connection signal="shoot_stop" from="." to="Weapon" method="_on_player_shoot_stop"]
 [connection signal="mana_used" from="Weapon" to="." method="_on_weapon_mana_used"]
-[connection signal="pressed" from="ui/You_died/restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="ui/You_died/You_died/VBoxContainer/restart" to="." method="_on_restart_pressed"]
 [connection signal="timeout" from="Damaged" to="." method="_on_damaged_timeout"]
 [connection signal="timeout" from="Mana_usage" to="." method="_on_mana_usage_timeout"]
 [connection signal="timeout" from="Dash_usage" to="." method="_on_dash_usage_timeout"]
 [connection signal="timeout" from="Mana_regen" to="." method="_on_mana_regen_timeout"]
 [connection signal="timeout" from="Dash_regen" to="." method="_on_dash_regen_timeout"]
 [connection signal="finished" from="Sounds/footsteps" to="." method="_on_footsteps_finished"]
-[connection signal="finished" from="Sounds/Music" to="." method="_on_audio_stream_player_finished"]
