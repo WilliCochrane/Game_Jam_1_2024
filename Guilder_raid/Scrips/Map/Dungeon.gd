@@ -28,7 +28,7 @@ signal clear_floor
 @onready var credits : Control = $Menus/Credits
 @onready var music : AudioStreamPlayer = $Music
 
-@onready var lvl1_music = preload("res://audio/Level music/Green_Gobby_Stobby.wav")
+@onready var lvl1_music = preload("res://audio/Level music/Green Gobby Stobby.mp3")
 @onready var lvl2_music = preload("res://audio/Level music/ZHAO_Ethan_Ambience_and_Dance_-_First_Draft.mp3")
 
 
@@ -51,6 +51,7 @@ func _physics_process(_delta):
 
 
 func load_map():
+	gates_up = false
 	minimap.clear()
 	tile_map.clear()
 	var rng = RandomNumberGenerator.new()
@@ -190,6 +191,8 @@ func load_map():
 			if tile_map.get_cell_atlas_coords(0,i).y == 8 && tile_map.get_cell_atlas_coords(0,i).x < 6:
 				if level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,1)
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,1)
 			
 			if tile_map.get_cell_atlas_coords(0,i) == Vector2i(1,6):
 				var tl = torch_light.instantiate()
@@ -198,67 +201,98 @@ func load_map():
 				tl.position = Vector2(i.x*16+8,i.y*16+6)  
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(1,6))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(1,6))
 			
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(3, 3):
 				if level == 1:
 					tile_map.set_cells_terrain_path(0,[i],0,0)
 				elif level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,1)
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,1)
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 0):
 				if level == 1:
 					tile_map.set_cells_terrain_path(0,[i],0,1)
-				if level == 2:
+				elif level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,4)
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,3)
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 7) or tile_map.get_cell_atlas_coords(0,i) == Vector2i(4, 7):
 				if level == 1:
 					tile_map.set_cells_terrain_path(0,[i],0,2)
 				if level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,5)
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,4)
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 1):
 				if level == 1:
 					tile_map.set_cells_terrain_path(0,[i],0,3)
 				if level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,6)
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,5)
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 1):
 				if level == 1:
 					tile_map.set_cells_terrain_path(0,[i],0,4)
 				elif level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,7)
-			
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,6)
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(1, 1):
 				if level == 1:
 					tile_map.set_cells_terrain_path(0,[i],0,5)
 				if level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,3)
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,2)
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(4, 1):
 				if level == 1:
 					tile_map.set_cells_terrain_path(0,[i],0,5)
 				if level == 2:
 					tile_map.set_cells_terrain_path(0,[i],1,3)
+				elif level == 3:
+					tile_map.set_cells_terrain_path(0,[i],2,2)
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 7):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(5, 7))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(5, 7))
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 7):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(0, 7))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(0, 7))
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 0):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(0, 0))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(0, 0))
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 0):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(5, 0))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(5, 0))
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 4):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(5, 4))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(5, 4))
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(5, 5):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(5, 5))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(5, 5))
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 5):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(0, 5))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(0, 5))
 			elif tile_map.get_cell_atlas_coords(0,i) == Vector2i(0, 4):
 				if level == 2:
 					tile_map.set_cell(0,i,1,Vector2i(0, 4))
+				elif level == 3:
+					tile_map.set_cell(0,i,0,Vector2i(0, 4))
 			
 			#if tile_map.get_cell_tile_data(0,i).get_custom_data("object") == "barrel":
 				#var brl = barrel.instantiate()
@@ -283,7 +317,10 @@ func load_map():
 		if level == 2:
 			tile_map.set_cells_terrain_connect(0,map_tile,1,2)
 			tile_map.set_cells_terrain_connect(0,map_void,1,0)
-			
+		elif level == 3:
+			tile_map.set_cells_terrain_connect(0,map_tile,2,1)
+			tile_map.set_cells_terrain_connect(0,map_void,2,0)
+		
 		load_minimap()
 	$NavigationRegion2D.bake_navigation_polygon()
 

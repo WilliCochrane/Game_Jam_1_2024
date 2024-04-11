@@ -116,6 +116,7 @@ func _physics_process(delta: float) -> void:
 			shots = Vector2(20,30)
 			Ashots = Vector2(3,5)
 			split = false
+			aproach = true
 			delay = .75
 			b_scale = 1
 			b_speed = 1
@@ -123,17 +124,17 @@ func _physics_process(delta: float) -> void:
 			attack_type = "Auto"
 			spread = 30
 			shots = Vector2(1,1)
-			Ashots = Vector2(70,150)
+			Ashots = Vector2(60,90)
 			split = false
 			delay = .1
 			b_scale = 1
 			aproach = true
-			b_speed = 1.5
+			b_speed = 1.6
 		elif current_attack == "Split":
 			attack_type = "Even"
 			spread = 360
 			shots = Vector2(8,8)
-			Ashots = Vector2(2,3)
+			Ashots = Vector2(1,3)
 			split = true
 			delay = .75
 			b_scale = 1.5
@@ -148,6 +149,7 @@ func _physics_process(delta: float) -> void:
 	if hit == true:
 		alt_animation.play("hit")
 		hit = false
+		damadged_bar_catchup = false
 	
 	if can_move:
 		var direction = (nav_agent.get_next_path_position() - global_position).normalized()
@@ -270,12 +272,13 @@ func _on_collision_damage_area_entered(area):
 
 func update_bar():
 	$CanvasLayer/Boss_bar.value = health
+	$CanvasLayer/Boss_bar/damage_bar.value = damaged
 	if damaged <= health:
 		damaged = health
 		damadged_bar_catchup = false
 	elif damaged > health && !damadged_bar_catchup:
 		if damaged_timer.is_stopped():
-			damaged_timer.start(2)
+			damaged_timer.start(1)
 	elif damaged > health && damadged_bar_catchup == true:
 		damaged -= 2
 
@@ -298,4 +301,4 @@ func _on_delay_timer_timeout():
 
 
 func _on_damage_timer_timeout():
-	pass # Replace with function body.
+	damadged_bar_catchup = true
