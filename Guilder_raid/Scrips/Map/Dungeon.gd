@@ -30,7 +30,8 @@ signal clear_floor
 
 @onready var lvl1_music = preload("res://audio/Level music/Green Gobby Stobby.mp3")
 @onready var lvl2_music = preload("res://audio/Level music/ZHAO_Ethan_Ambience_and_Dance_-_First_Draft.mp3")
-
+@onready var lvl3_music = preload("res://audio/Level music/Fuck_I_hate_being_poor.wav")
+@onready var boss_music = preload("res://audio/Boss_music/Middle.wav")
 
 var gates_up : bool = false
 var dungeon = {}
@@ -85,7 +86,7 @@ func load_map():
 		$Music.playing = true
 	if level == 3:
 		$CanvasModulate.color = Color(.1,.1,.1)
-		$Music.stream = lvl1_music
+		$Music.stream = lvl3_music
 		$Music.playing = true
 	
 	for child in get_children():
@@ -356,14 +357,15 @@ func _on_enemies_cleared():
 
 func _on_ladder_next_floor():
 	emit_signal("clear_floor")
-	if level != 4 && dungeon_floor != 2:
+	if level == 4 && dungeon_floor == 2:
+		player.win = true
+	else:
 		shop.open()
 		tile_map.clear()
 		minimap.clear()
 		load_map()
 		treasure.reset()
-	else:
-		player.win = true
+
 
 func _on_player_restart_game():
 	emit_signal("clear_floor")
@@ -371,7 +373,6 @@ func _on_player_restart_game():
 	minimap.clear()
 	load_map()
 	treasure.reset()
-	
 
 
 func _on_timer_timeout():
@@ -383,4 +384,6 @@ func _on_pause_menu_closed():
 
 
 func _on_music_finished():
+	if level == 4:
+		$Music.streaming = boss_music
 	$Music.playing = true

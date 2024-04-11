@@ -520,5 +520,8 @@ position = Vector2(-40, -1691)
 [node name="torch_light10" parent="Lights" instance=ExtResource("6_kpm8x")]
 position = Vector2(40, -1691)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = 7.0
+
 [connection signal="body_entered" from="Music_start" to="." method="_on_music_start_body_entered"]
 [connection signal="body_entered" from="Door_close" to="." method="_on_door_close_body_entered"]

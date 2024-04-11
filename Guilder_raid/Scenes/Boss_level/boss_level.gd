@@ -12,6 +12,8 @@ var alive_enemies : int
 var shadows : bool = true
 
 func _ready():
+	get_parent().music.stream = music_start
+	get_parent().music.playing = true
 	boss_killed = false
 	for i in get_parent().get_children():
 		if i.is_in_group("Player"):

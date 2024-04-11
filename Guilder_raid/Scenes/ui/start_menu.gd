@@ -38,7 +38,7 @@ func close():
 
 
 func _on_start_pressed():
-	get_parent().get_parent().level = 2
+	get_parent().get_parent().level = 1
 	get_parent().get_parent().dungeon_floor = 0
 	get_parent().get_parent().load_map()
 	get_parent().get_parent().treasure.reset()
