@@ -53,11 +53,6 @@ func shadow():
 			i.shadow_enabled = shadows
 
 
-func _on_audio_stream_player_finished():
-	get_parent().music.stream = music_mid
-	get_parent().music.playing = true
-
-
 func _on_music_start_body_entered(body):
 	if body.is_in_group("Player"):
 		if !get_parent().music.playing:
