@@ -161,16 +161,19 @@ theme_override_fonts/font = ExtResource("2_gk5bf")
 theme_override_font_sizes/font_size = 16
 text = "Robbie de Groot-Tsuji
 William Cochrane
-Jayden Lim"
+Conor Gracey
+Jayden Lim
+"
 horizontal_alignment = 1
 
 [node name="Label13" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_gk5bf")
 theme_override_font_sizes/font_size = 16
-text = "Nicky Parker
-Benson Lee
-Aaron Zheng"
+text = "Aaron Zheng
+Angel Zheng
+Nicky Parker
+Benson Lee"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="Return" to="." method="_on_return_pressed"]

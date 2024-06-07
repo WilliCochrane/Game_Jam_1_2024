@@ -385,5 +385,5 @@ func _on_pause_menu_closed():
 
 func _on_music_finished():
 	if level == 4:
-		$Music.streaming = boss_music
+		$Music.stream = boss_music
 	$Music.playing = true

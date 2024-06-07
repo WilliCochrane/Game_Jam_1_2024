@@ -286,6 +286,13 @@ func reset():
 	$Dust.color = Color(.78,.78,.78)
 	you_died.modulate.a = 0
 	win = false
+	gold_collected  = 0
+	enemies_killed  = 0
+	damage_done  = 0
+	mana_used  = 0
+	damage_taken  = 0
+	dashes_used  = 0
+	bullets_shot  = 0
 
 
 func _on_mana_regen_timeout():
